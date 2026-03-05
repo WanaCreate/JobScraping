@@ -1,0 +1,27 @@
+{
+  "startedAt": "2026-03-05T19:14:37.453Z",
+  "completedAt": "2026-03-05T19:14:37.607Z",
+  "inputFile": "/home/user/JobScraping/outputs/api-ready/latest/Joblistings.csv",
+  "totalCsvRows": 20,
+  "fetchedPages": 0,
+  "fetchFailed": 20,
+  "jsonLdFound": 0,
+  "aiEnriched": 0,
+  "aiFailed": 0,
+  "finalJobs": 0,
+  "qualityReview": {
+    "reviewed": 0,
+    "ok": 0,
+    "fixed": 0,
+    "dropped": 0,
+    "issues": [],
+    "pipelineInstructions": []
+  },
+  "quality": {
+    "withDescription": 0,
+    "withLocation": 0,
+    "withSalary": 0,
+    "withCompany": 0,
+    "withSkills": 0
+  }
+}
