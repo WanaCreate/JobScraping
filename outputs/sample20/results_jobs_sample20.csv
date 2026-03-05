@@ -1,129 +1,21 @@
 title,description,jobType,deadline,keywords,skills,jobLink,hiringTeam,workType,workEmail,allowEmailApplications,numberOfPositions,company,companyWebsite,companyLogo,companyEmail,locationName,formattedAddress,city,state,country,latitude,longitude,salaryMin,salaryMax,salaryCurrency,salaryPeriod
-Product Designer,"<div class=""job-description"">
-      We seek a skilled product designer with experience in user research and design systems.
-      <p>Required skills: Figma, Sketch, Prototyping</p>
-      
-      
-      <p>Apply: <a href=""mailto:jobs@studio.io"">jobs@studio.io</a></p>
-    </div>",FULLTIME,,design|ui|product design|research,figma|sketch|prototyping|design_systems|ux_research,https://studio.io/careers/designer,test-scraper,,jobs@studio.io,true,,Studio,https://studio.io,,jobs@studio.io,,,,,,,,,,,
-UX Lead,"<div class=""job-description"">
-      Lead our UX team building beautiful interfaces.
-      <p>Required skills: Figma, UX Research</p>
-      
-      
-      <p>Apply: <a href=""mailto:hr@example.com"">hr@example.com</a></p>
-    </div>",FULLTIME,,ux|ui|research,figma|ux_research,https://example.com/jobs/ux-lead,test-scraper,,hr@example.com,true,,Example,https://example.com,,hr@example.com,"New York, NY","New York, NY, United States",New York,NY,United States,0,0,100000,140000,USD,ANNUAL
-Motion Designer,"<div class=""job-description"">
-      Create compelling motion graphics for our clients. 100% remote position.
-      <p>Required skills: After Effects, Premiere, Cinema 4D</p>
-      
-      
-      
-    </div>",FULLTIME,,design|motion|ui,after_effects|motion_graphics|cinema_4d|premiere_pro,https://agency.co/jobs/motion,test-scraper,REMOTE,,false,,Agency,https://agency.co,,,,,,,,,,,,,
-Frontend Engineer,"<div class=""job-description"">
-      Build scalable frontend applications using modern frameworks.
-      <p>Required skills: React, TypeScript, CSS</p>
-      
-      
-      
-    </div>",FULLTIME,,ui,react|typescript|css|graphql|javascript,https://techcorp.com/careers/frontend,test-scraper,,,false,,Techcorp,https://techcorp.com,,,,,,,,,,,,,
-Creative Director,"<div class=""job-description"">
-      Lead our creative studio. Send CV to creative@boutique.agency for consideration.
-      <p>Required skills: Branding, Art Direction, Copywriting</p>
-      
-      
-      
-    </div>",FULLTIME,,creative|brand|ui|art direction|copywriting,branding|copywriting|art_direction,https://boutique.agency/apply/creative-director,test-scraper,,creative@boutique.agency,true,,Boutique,https://boutique.agency,,creative@boutique.agency,,,,,,,,,,,
-Brand Designer,"<div class=""job-description"">
-      Shape the visual identity of our growing startup. Compensation $80,000 - $100,000 per year.
-      <p>Required skills: Illustrator, Branding, Visual Design</p>
-      <p>Salary: $80,000 - $100,000 per year</p>
-      
-      <p>Apply: <a href=""mailto:apply@startup.io"">apply@startup.io</a></p>
-    </div>",FULLTIME,,design|brand|visual|ui,illustrator|branding|visual_design_salary,https://startup.io/jobs/brand-designer,test-scraper,,apply@startup.io,true,,Startup,https://startup.io,,apply@startup.io,,,,,,,,80000,100000,USD,ANNUAL
-Illustrator (Contract),"<div class=""job-description"">
-      6-month contract illustrator role for editorial and marketing work.
-      <p>Required skills: Illustration, Procreate, Photoshop</p>
-      
-      
-      <p>Apply: <a href=""mailto:gigs@freelance.net"">gigs@freelance.net</a></p>
-    </div>",FULLTIME,,ui,photoshop|illustrator|procreate|illustration,https://freelance.net/gig/illustrator,test-scraper,,gigs@freelance.net,true,,Freelance,https://freelance.net,,gigs@freelance.net,,,,,,,,,,,
-Content Strategist,"<div class=""job-description"">
-      Hybrid role (3 days onsite in Austin, TX). Drive our content strategy across channels.
-      <p>Required skills: SEO, Content Writing, Analytics</p>
-      
-      
-      
-    </div>",FULLTIME,,content|ui,seo|content_writing|analytics,https://media.com/jobs/content-strategist,test-scraper,HYBRID,,false,,Media,https://media.com,,,,,,,,,,,,,
-VP of Design,"<div class=""job-description"">
-      Lead design across product, brand, and marketing.
-      
-      
-      
-      <p>Apply: <a href=""mailto:talent@agency.com"">talent@agency.com</a></p>
-    </div>",FULLTIME,2026-04-30,design|brand,,https://agency.com/jobs/vp-design,test-scraper,,talent@agency.com,true,,Agency Inc,https://agency.com,,talent@agency.com,,,,,,,,,,,
-Adjunct Instructor - Graphic Design,"<div class=""job-description"">
-      Part-time adjunct instructor for graphic design courses. MFA required.
-      <p>Required skills: Teaching, Graphic Design, Typography</p>
-      
-      <p>Location: Chicago, IL</p>
-      <p>Apply: <a href=""mailto:faculty@university.edu"">faculty@university.edu</a></p>
-    </div>",FULLTIME,,design|ui|graphic design,typography|teaching|graphic_design,https://university.edu/jobs/adjunct,test-scraper,,faculty@university.edu,true,,University,https://university.edu,,faculty@university.edu,,,,,,,,,,,
-Design Systems Engineer,"<div class=""job-description"">
-      Build and maintain our design system used by 200+ engineers.
-      <p>Required skills: Design Tokens, Storybook, React</p>
-      
-      
-      
-    </div>",FULLTIME,,design|ui,design_systems|javascript|storybook|design_tokens,https://bigco.com/careers/design-systems,test-scraper,,,false,,Bigco,https://bigco.com,,,,,,,,,,,,,
+Product Designer,"<div class=""job-description""> We seek a skilled product designer with experience in user research and design systems. <p>Required skills: Figma, Sketch, Prototyping</p> <p>Apply: <a href=""mailto:jobs@studio.io"">jobs@studio.io</a></p> </div>",FULLTIME,,design|ui|product design|research,figma|sketch|prototyping|design_systems|ux_research,https://studio.io/careers/designer,test-scraper,,jobs@studio.io,true,,Studio,https://studio.io,,jobs@studio.io,,,,,,,,,,,
+UX Lead,"<div class=""job-description""> Lead our UX team building beautiful interfaces. <p>Required skills: Figma, UX Research</p> <p>Apply: <a href=""mailto:hr@example.com"">hr@example.com</a></p> </div>",FULLTIME,,ux|ui|research,figma|ux_research,https://example.com/jobs/ux-lead,test-scraper,,hr@example.com,true,,Example,https://example.com,,hr@example.com,"New York, NY","New York, NY, United States",New York,NY,United States,0,0,100000,140000,USD,ANNUAL
+Motion Designer,"<div class=""job-description""> Create compelling motion graphics for our clients. 100% remote position. <p>Required skills: After Effects, Premiere, Cinema 4D</p> </div>",FULLTIME,,design|motion|ui,after_effects|motion_graphics|cinema_4d|premiere_pro,https://agency.co/jobs/motion,test-scraper,REMOTE,,false,,Agency,https://agency.co,,,,,,,,,,,,,
+Frontend Engineer,"<div class=""job-description""> Build scalable frontend applications using modern frameworks. <p>Required skills: React, TypeScript, CSS</p> </div>",FULLTIME,,ui,react|typescript|css|graphql|javascript,https://techcorp.com/careers/frontend,test-scraper,,,false,,Techcorp,https://techcorp.com,,,,,,,,,,,,,
+Creative Director,"<div class=""job-description""> Lead our creative studio. Send CV to creative@boutique.agency for consideration. <p>Required skills: Branding, Art Direction, Copywriting</p> </div>",FULLTIME,,creative|brand|ui|art direction|copywriting,branding|copywriting|art_direction,https://boutique.agency/apply/creative-director,test-scraper,,creative@boutique.agency,true,,Boutique,https://boutique.agency,,creative@boutique.agency,,,,,,,,,,,
+Brand Designer,"<div class=""job-description""> Shape the visual identity of our growing startup. Compensation $80,000 - $100,000 per year. <p>Required skills: Illustrator, Branding, Visual Design</p> <p>Salary: $80,000 - $100,000 per year</p> <p>Apply: <a href=""mailto:apply@startup.io"">apply@startup.io</a></p> </div>",FULLTIME,,design|brand|visual|ui,illustrator|branding|visual_design_salary,https://startup.io/jobs/brand-designer,test-scraper,,apply@startup.io,true,,Startup,https://startup.io,,apply@startup.io,,,,,,,,80000,100000,USD,ANNUAL
+Illustrator (Contract),"<div class=""job-description""> 6-month contract illustrator role for editorial and marketing work. <p>Required skills: Illustration, Procreate, Photoshop</p> <p>Apply: <a href=""mailto:gigs@freelance.net"">gigs@freelance.net</a></p> </div>",FULLTIME,,ui,photoshop|illustrator|procreate|illustration,https://freelance.net/gig/illustrator,test-scraper,,gigs@freelance.net,true,,Freelance,https://freelance.net,,gigs@freelance.net,,,,,,,,,,,
+Content Strategist,"<div class=""job-description""> Hybrid role (3 days onsite in Austin, TX). Drive our content strategy across channels. <p>Required skills: SEO, Content Writing, Analytics</p> </div>",FULLTIME,,content|ui,seo|content_writing|analytics,https://media.com/jobs/content-strategist,test-scraper,HYBRID,,false,,Media,https://media.com,,,,,,,,,,,,,
+VP of Design,"<div class=""job-description""> Lead design across product, brand, and marketing. <p>Apply: <a href=""mailto:talent@agency.com"">talent@agency.com</a></p> </div>",FULLTIME,2026-04-30,design|brand,,https://agency.com/jobs/vp-design,test-scraper,,talent@agency.com,true,,Agency Inc,https://agency.com,,talent@agency.com,,,,,,,,,,,
+Adjunct Instructor - Graphic Design,"<div class=""job-description""> Part-time adjunct instructor for graphic design courses. MFA required. <p>Required skills: Teaching, Graphic Design, Typography</p> <p>Location: Chicago, IL</p> <p>Apply: <a href=""mailto:faculty@university.edu"">faculty@university.edu</a></p> </div>",FULLTIME,,design|ui|graphic design,typography|teaching|graphic_design,https://university.edu/jobs/adjunct,test-scraper,,faculty@university.edu,true,,University,https://university.edu,,faculty@university.edu,,,,,,,,,,,
+Design Systems Engineer,"<div class=""job-description""> Build and maintain our design system used by 200+ engineers. <p>Required skills: Design Tokens, Storybook, React</p> </div>",FULLTIME,,design|ui,design_systems|javascript|storybook|design_tokens,https://bigco.com/careers/design-systems,test-scraper,,,false,,Bigco,https://bigco.com,,,,,,,,,,,,,
 Product Manager,"For job details, click apply.",FULLTIME,,,,https://studio.design/jobs/pm,test-scraper,,,false,,Studio Design,https://studio.design,,,,,,,,,,,,,
-"Department of Art & Design, Art History, Art Education — Part Time Lecturer Pool","<div class=""description"">
-        <p>The Department of Art &amp; Design invites applications for a part-time lecturer pool.</p>
-        <p>Responsibilities: Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses.</p>
-        <p>Required skills: Drawing, Painting, Art History, Sculpture, Photography</p>
-        <p>Location: San Bernardino, CA</p>
-        <p>Contact: kgray@csusb.edu</p>
-      </div>",FULLTIME,,design|ui,drawing|painting|sculpture|photography|art_history,https://university.edu/jobs/art-design-lecturer,test-scraper,,kgray@csusb.edu,true,,University,https://university.edu,,kgray@csusb.edu,,,,,,,,,,,
-Senior Software Engineer,"<div class=""job-description"">
-      Join our platform engineering team building scalable infrastructure.
-      <p>Required skills: Python, Kubernetes, AWS</p>
-      <p>Salary: $150,000 - $200,000 + equity</p>
-      
-      <p>Apply: <a href=""mailto:recruiting@techstartup.com"">recruiting@techstartup.com</a></p>
-    </div>",FULLTIME,,ui,python|kubernetes|aws_salary,https://techstartup.com/jobs/senior-engineer,test-scraper,,recruiting@techstartup.com,true,,Techstartup,https://techstartup.com,,recruiting@techstartup.com,,,,,,,,150000,200000,USD,ANNUAL
+"Department of Art & Design, Art History, Art Education — Part Time Lecturer Pool","<div class=""description""> <p>The Department of Art &amp; Design invites applications for a part-time lecturer pool.</p> <p>Responsibilities: Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses. Teach undergraduate art courses.</p> <p>Required skills: Drawing, Painting, Art History, Sculpture, Photography</p> <p>Location: San Bernardino, CA</p> <p>Contact: kgray@csusb.edu</p> </div>",FULLTIME,,design|ui,drawing|painting|sculpture|photography|art_history,https://university.edu/jobs/art-design-lecturer,test-scraper,,kgray@csusb.edu,true,,University,https://university.edu,,kgray@csusb.edu,,,,,,,,,,,
+Senior Software Engineer,"<div class=""job-description""> Join our platform engineering team building scalable infrastructure. <p>Required skills: Python, Kubernetes, AWS</p> <p>Salary: $150,000 - $200,000 + equity</p> <p>Apply: <a href=""mailto:recruiting@techstartup.com"">recruiting@techstartup.com</a></p> </div>",FULLTIME,,ui,python|kubernetes|aws_salary,https://techstartup.com/jobs/senior-engineer,test-scraper,,recruiting@techstartup.com,true,,Techstartup,https://techstartup.com,,recruiting@techstartup.com,,,,,,,,150000,200000,USD,ANNUAL
 UI Designer,"For job details, click apply.",FULLTIME,,design|ui,,https://jobs.lever.co/company/abc123,test-scraper,,,false,,Company,,,,,,,,,,,,,,
-Animator,"<div class=""job-description"">
-      Create 2D and 3D animations. Do not contact privacy@gdpr-example.com.
-      <p>Required skills: After Effects, Blender, Maya</p>
-      
-      
-      <p>Apply: <a href=""mailto:apply@creative.studio"">apply@creative.studio</a></p>
-    </div>",FULLTIME,,creative|animation|ui,after_effects|blender|maya_apply,https://creative.studio/jobs/animator,test-scraper,,apply@creative.studio,true,,Creative,https://creative.studio,,apply@creative.studio,,,,,,,,,,,
-Copywriter,"<div class=""job-description"">
-      Write compelling copy for digital campaigns.
-      <p>Required skills: Copywriting, SEO Writing</p>
-      
-      
-      <p>Apply: <a href=""mailto:jobs@remoteagency.com"">jobs@remoteagency.com</a></p>
-    </div>",FULLTIME,,ui|copywriting,copywriting|seo,https://remoteagency.com/jobs/copywriter,test-scraper,REMOTE,jobs@remoteagency.com,true,,Remoteagency,https://remoteagency.com,,jobs@remoteagency.com,,,,,,,,,,,
-Design Intern (Summer 2026),"<div class=""job-description"">
-      10-week summer internship for design students. Paid position.
-      <p>Required skills: Figma, Adobe Creative Suite</p>
-      <p>Salary: $25/hr</p>
-      
-      <p>Apply: <a href=""mailto:internships@designfirm.io"">internships@designfirm.io</a></p>
-    </div>",FULLTIME,,design|creative|ui,figma|adobe_creative_suite,https://designfirm.io/internships/summer,test-scraper,,internships@designfirm.io,true,,Designfirm,https://designfirm.io,,internships@designfirm.io,,,,,,,,25,,USD,HOURLY
-Art Director,"<div class=""job-description"">
-      Lead our visual communications team. For privacy inquiries: privacy@nonprofit.org
-      <p>Required skills: Art Direction, Print Design, Branding</p>
-      
-      
-      
-    </div>",FULLTIME,,design|brand|visual|ui|art direction,branding|art_direction|print_design,https://nonprofit.org/careers/art-director,test-scraper,,,false,,Nonprofit,https://nonprofit.org,,,,,,,,,,,,,
-Design Ops Manager,"<div class=""job-description"">
-      Scale design operations across 15 product teams.
-      <p>Required skills: Design Systems, Process, Jira, Figma</p>
-      
-      
-      <p>Apply: <a href=""mailto:design.ops@enterprise.com"">design.ops@enterprise.com</a></p>
-    </div>",FULLTIME,2026-05-01,design|ui,design_systems|process_improvement|figma|process|jira,https://enterprise.com/jobs/design-ops,test-scraper,,design.ops@enterprise.com,true,,Enterprise Co,https://enterprise.com,,design.ops@enterprise.com,"San Francisco, CA","San Francisco, CA, United States",San Francisco,CA,United States,0,0,120000,160000,USD,ANNUAL
+Animator,"<div class=""job-description""> Create 2D and 3D animations. Do not contact privacy@gdpr-example.com. <p>Required skills: After Effects, Blender, Maya</p> <p>Apply: <a href=""mailto:apply@creative.studio"">apply@creative.studio</a></p> </div>",FULLTIME,,creative|animation|ui,after_effects|blender|maya_apply,https://creative.studio/jobs/animator,test-scraper,,apply@creative.studio,true,,Creative,https://creative.studio,,apply@creative.studio,,,,,,,,,,,
+Copywriter,"<div class=""job-description""> Write compelling copy for digital campaigns. <p>Required skills: Copywriting, SEO Writing</p> <p>Apply: <a href=""mailto:jobs@remoteagency.com"">jobs@remoteagency.com</a></p> </div>",FULLTIME,,ui|copywriting,copywriting|seo,https://remoteagency.com/jobs/copywriter,test-scraper,REMOTE,jobs@remoteagency.com,true,,Remoteagency,https://remoteagency.com,,jobs@remoteagency.com,,,,,,,,,,,
+Design Intern (Summer 2026),"<div class=""job-description""> 10-week summer internship for design students. Paid position. <p>Required skills: Figma, Adobe Creative Suite</p> <p>Salary: $25/hr</p> <p>Apply: <a href=""mailto:internships@designfirm.io"">internships@designfirm.io</a></p> </div>",FULLTIME,,design|creative|ui,figma|adobe_creative_suite,https://designfirm.io/internships/summer,test-scraper,,internships@designfirm.io,true,,Designfirm,https://designfirm.io,,internships@designfirm.io,,,,,,,,25,,USD,HOURLY
+Art Director,"<div class=""job-description""> Lead our visual communications team. For privacy inquiries: privacy@nonprofit.org <p>Required skills: Art Direction, Print Design, Branding</p> </div>",FULLTIME,,design|brand|visual|ui|art direction,branding|art_direction|print_design,https://nonprofit.org/careers/art-director,test-scraper,,,false,,Nonprofit,https://nonprofit.org,,,,,,,,,,,,,
+Design Ops Manager,"<div class=""job-description""> Scale design operations across 15 product teams. <p>Required skills: Design Systems, Process, Jira, Figma</p> <p>Apply: <a href=""mailto:design.ops@enterprise.com"">design.ops@enterprise.com</a></p> </div>",FULLTIME,2026-05-01,design|ui,design_systems|process_improvement|figma|process|jira,https://enterprise.com/jobs/design-ops,test-scraper,,design.ops@enterprise.com,true,,Enterprise Co,https://enterprise.com,,design.ops@enterprise.com,"San Francisco, CA","San Francisco, CA, United States",San Francisco,CA,United States,0,0,120000,160000,USD,ANNUAL

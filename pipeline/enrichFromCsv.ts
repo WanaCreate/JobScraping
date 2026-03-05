@@ -882,8 +882,9 @@ export function toCsvRows(records: ApiCreateJobRequest[]): string {
   const rows = [headers.join(",")];
 
   for (const job of records) {
+    const descOneLine = job.description.replace(/\r?\n/g, " ").replace(/\s{2,}/g, " ");
     const row = [
-      job.title, job.description, job.jobType, job.deadline ?? "",
+      job.title, descOneLine, job.jobType, job.deadline ?? "",
       (job.keywords ?? []).join("|"), (job.skills ?? []).join("|"),
       job.jobLink ?? "", (job.hiringTeam ?? []).join("|"),
       job.workType ?? "", job.workEmail ?? "",
