@@ -257,6 +257,23 @@ const SKILL_TAXONOMY: Record<string, string[]> = {
   html: ["html"],
   css: ["css"],
   javascript: ["javascript", "typescript", "react", "next.js", "nextjs"],
+  drawing: ["drawing", "hand drawing", "life drawing"],
+  painting: ["painting", "oil painting", "watercolor"],
+  sculpture: ["sculpture", "3d sculpting"],
+  photography: ["photography", "photo editing"],
+  art_history: ["art history"],
+  typography: ["typography", "typesetting"],
+  branding: ["branding", "brand identity", "brand design"],
+  motion_graphics: ["motion graphics", "motion design"],
+  video_editing: ["video editing", "video production"],
+  blender: ["blender"],
+  cinema_4d: ["cinema 4d", "c4d"],
+  procreate: ["procreate"],
+  storybook: ["storybook"],
+  design_tokens: ["design tokens"],
+  information_architecture: ["information architecture", "ia"],
+  copywriting: ["copywriting", "copy writing"],
+  seo: ["seo", "search engine optimization"],
 };
 
 const SKILL_STOP_WORDS = new Set([
@@ -513,7 +530,7 @@ function extractSkillsFromText(title: string, description: string): string[] {
   }
 
   const skillPhrasePattern =
-    /\b(proficiency in|experience with|expertise in|strong knowledge of|hands[- ]on with|skilled in)\s+([^.;:\n]{3,160})/gi;
+    /\b(proficiency in|experience with|expertise in|strong knowledge of|hands[- ]on with|skilled in|required skills[:\s]*|skills[:\s]*|qualifications[:\s]*)\s+([^.;:\n]{3,160})/gi;
   let match = skillPhrasePattern.exec(description);
   while (match) {
     const phrase = match[2] ?? "";
@@ -543,8 +560,8 @@ function extractWorkEmail(html: string, description: string): string | null {
 
   const candidates = dedupeStrings([...mailtoMatches, ...textMatches]);
   if (candidates.length === 0) return null;
-  const preferred = candidates.find(value => !/no-?reply|donotreply/i.test(value));
-  return preferred ?? candidates[0] ?? null;
+  const preferred = candidates.find(value => !/no-?reply|donotreply|privacy|gdpr|legal|unsubscribe|support|info|hello|contact|admin|postmaster/i.test(value));
+  return preferred ?? null;
 }
 /** Extract salary from description text when JSON-LD has no baseSalary */
 function extractSalaryFromText(description: string): ApiSalary | null {
@@ -714,6 +731,12 @@ function extractTitleFromPage(html: string, seedTitle: string, jsonLd: Record<st
   return seedTitle;
 }
 
+function inferWorkTypeFromJsonLd(jsonLd: Record<string, unknown>): WorkTypeValue | null {
+  const locationType = cleanText(String(jsonLd.jobLocationType ?? "")).toUpperCase();
+  if (locationType === "TELECOMMUTE") return "REMOTE";
+  return null;
+}
+
 function inferWorkType(title: string, description: string, location: ApiLocation | null): WorkTypeValue | null {
   const combined = `${title} ${description} ${location?.formattedAddress ?? ""}`.toLowerCase();
   if (/\b(remote|work from home|distributed)\b/.test(combined)) return "REMOTE";
@@ -730,7 +753,7 @@ function getVisibleText(html: string): string {
 
 // ─── Build job from heuristic extraction ─────────────────────────
 
-function buildJobFromHeuristics(
+export function buildJobFromHeuristics(
   html: string,
   finalUrl: string,
   seedTitle: string,
@@ -742,7 +765,8 @@ function buildJobFromHeuristics(
   const location = jsonLd ? extractLocationFromJsonLd(jsonLd) : null;
   const salary = (jsonLd ? extractSalaryFromJsonLd(jsonLd) : null) ?? extractSalaryFromText(description);
   const jobType = jsonLd ? inferJobTypeFromJsonLd(jsonLd) : "FULLTIME";
-  const workType = inferWorkType(title, description, location);
+  const jsonLdWorkType = jsonLd ? inferWorkTypeFromJsonLd(jsonLd) : null;
+  const workType = jsonLdWorkType ?? inferWorkType(title, description, location);
 
   const plainDescription = stripHtmlToPlain(description);
   const jsonLdSkills = jsonLd ? extractSkillsFromJsonLd(jsonLd) : [];
@@ -805,7 +829,8 @@ function mergeWithAi(heuristic: ApiCreateJobRequest, aiResult: ApiCreateJobReque
     numberOfPositions: heuristic.numberOfPositions ?? aiResult.numberOfPositions,
     screeningQuestions: [],
     screeningRequired: false,
-    allowEmailApplications: false,
+    workEmail: heuristic.workEmail,
+    allowEmailApplications: heuristic.allowEmailApplications ?? false,
   };
 }
 
@@ -845,10 +870,10 @@ function csvEscape(value: string): string {
   return value;
 }
 
-function toCsvRows(records: ApiCreateJobRequest[]): string {
+export function toCsvRows(records: ApiCreateJobRequest[]): string {
   const headers = [
     "title", "description", "jobType", "deadline", "keywords", "skills",
-    "jobLink", "hiringTeam", "workType", "workEmail", "numberOfPositions",
+    "jobLink", "hiringTeam", "workType", "workEmail", "allowEmailApplications", "numberOfPositions",
     "company", "companyWebsite", "companyLogo", "companyEmail",
     "locationName", "formattedAddress", "city", "state", "country",
     "latitude", "longitude", "salaryMin", "salaryMax", "salaryCurrency", "salaryPeriod",
@@ -862,6 +887,7 @@ function toCsvRows(records: ApiCreateJobRequest[]): string {
       (job.keywords ?? []).join("|"), (job.skills ?? []).join("|"),
       job.jobLink ?? "", (job.hiringTeam ?? []).join("|"),
       job.workType ?? "", job.workEmail ?? "",
+      job.allowEmailApplications ? "true" : "false",
       job.numberOfPositions ? String(job.numberOfPositions) : "",
       job.company?.name ?? "", job.company?.website ?? "",
       job.company?.logo ?? "", job.company?.email ?? "",
