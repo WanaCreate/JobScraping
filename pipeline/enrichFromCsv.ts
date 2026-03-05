@@ -268,9 +268,6 @@ function stripHtmlToPlain(input: string): string {
   return cleanText(input.replace(/<[^>]+>/g, " "));
 }
 
-function hasHtmlTags(input: string): boolean {
-  return /<[^>]+>/.test(input);
-}
 
 function dedupeStrings(values: string[]): string[] {
   return Array.from(new Set(values.map(v => cleanText(v.toLowerCase())).filter(Boolean)));
@@ -744,11 +741,23 @@ function buildJobFromHeuristics(
   const description = extractDescriptionHtml(html, jsonLd) || extractDescriptionFromHtml(html, jsonLd) || "For job details, click apply.";
   const location = jsonLd ? extractLocationFromJsonLd(jsonLd) : null;
   const salary = (jsonLd ? extractSalaryFromJsonLd(jsonLd) : null) ?? extractSalaryFromText(description);
-  const company = jsonLd ? extractCompanyFromJsonLd(jsonLd, finalUrl) : extractCompanyFromJsonLd({}, finalUrl);
   const jobType = jsonLd ? inferJobTypeFromJsonLd(jsonLd) : "FULLTIME";
   const workType = inferWorkType(title, description, location);
-  const skills = jsonLd ? extractSkillsFromJsonLd(jsonLd) : [];
-  const keywords = jsonLd ? extractKeywordsFromJsonLd(jsonLd) : [];
+
+  const plainDescription = stripHtmlToPlain(description);
+  const jsonLdSkills = jsonLd ? extractSkillsFromJsonLd(jsonLd) : [];
+  const textSkills = extractSkillsFromText(title, plainDescription);
+  const skills = dedupeStrings([...jsonLdSkills, ...textSkills]);
+
+  const jsonLdKeywords = jsonLd ? extractKeywordsFromJsonLd(jsonLd) : [];
+  const textKeywords = extractKeywordsFromText(title, plainDescription);
+  const keywords = dedupeStrings([...jsonLdKeywords, ...textKeywords]);
+
+  const workEmail = extractWorkEmail(html, plainDescription);
+  let company = jsonLd ? extractCompanyFromJsonLd(jsonLd, finalUrl) : extractCompanyFromJsonLd({}, finalUrl);
+  if (company && !company.email && workEmail) {
+    company = { ...company, email: workEmail };
+  }
 
   return {
     title,
@@ -764,9 +773,10 @@ function buildJobFromHeuristics(
     numberOfPositions: null,
     jobLink: finalUrl,
     hiringTeam: [hiringTeamUid],
+    workEmail: workEmail ?? undefined,
     screeningQuestions: [],
     screeningRequired: false,
-    allowEmailApplications: false,
+    allowEmailApplications: workEmail !== null,
   };
 }
 
