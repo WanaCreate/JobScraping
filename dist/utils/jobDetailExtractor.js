@@ -462,8 +462,13 @@ function extractDescription(html, jsonLdJob) {
         return sanitizeDescription(best);
     const metaDescription = nonEmpty($("meta[property='og:description']").attr("content")) ??
         nonEmpty($("meta[name='description']").attr("content"));
-    if (metaDescription)
-        return sanitizeDescription(metaDescription);
+    if (metaDescription) {
+        const cleanedMeta = sanitizeDescription(metaDescription);
+        if (/^Explore corporate jobs and career programs at Amazon/i.test(cleanedMeta)) {
+            return "For job details, click apply.";
+        }
+        return cleanedMeta;
+    }
     return "For job details, click apply.";
 }
 function emptyLocation() {

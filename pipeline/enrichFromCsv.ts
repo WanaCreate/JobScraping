@@ -281,6 +281,31 @@ const SKILL_STOP_WORDS = new Set([
   "experience", "proficiency", "knowledge", "ability", "skills", "skill",
 ]);
 
+const DESCRIPTION_ALLOWED_TAGS = new Set([
+  "a", "b", "blockquote", "br", "code", "em", "h1", "h2", "h3", "h4", "h5", "h6",
+  "hr", "i", "li", "ol", "p", "pre", "strong", "u", "ul",
+]);
+
+const DESCRIPTION_BLOCK_TAGS = new Set([
+  "blockquote", "h1", "h2", "h3", "h4", "h5", "h6", "hr", "li", "ol", "p", "pre", "ul",
+]);
+
+const DESCRIPTION_WRAPPER_TAGS = new Set([
+  "article", "div", "main", "section", "span",
+]);
+
+const DESCRIPTION_NOISE_TEXT = [
+  /^back to jobs?$/i,
+  /^careers?$/i,
+  /^home\s*(>|&gt;).+$/i,
+  /^home\s*>\s*careers?(?:\s*>\s*.+)?$/i,
+  /^view all jobs?$/i,
+  /^share (this )?job$/i,
+  /^refer (a )?friend$/i,
+  /^apply( now| for this job)?$/i,
+  /^save job$/i,
+];
+
 function stripHtmlToPlain(input: string): string {
   return cleanText(input.replace(/<[^>]+>/g, " "));
 }
@@ -290,6 +315,15 @@ function dedupeStrings(values: string[]): string[] {
   return Array.from(new Set(values.map(v => cleanText(v.toLowerCase())).filter(Boolean)));
 }
 
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 function sanitizeDescriptionHtml(fragment: string): string {
   if (!fragment) return "";
   const $ = load(`<div id="desc-root">${fragment}</div>`);
@@ -297,9 +331,86 @@ function sanitizeDescriptionHtml(fragment: string): string {
 
   root.find("script,style,noscript,svg,canvas,iframe,nav,header,footer").remove();
   root.find("form,input,button,select,textarea,fieldset,legend").remove();
+  root.find("img,picture,source,video,audio,figure,figcaption").remove();
   root.find("[id*='apply' i],[class*='apply' i],[data-qa*='apply' i],[data-testid*='apply' i]").remove();
   root.find("[id*='application' i],[class*='application' i],[data-qa*='application' i]").remove();
   root.find("[id*='cookie' i],[class*='cookie' i],[aria-label*='cookie' i]").remove();
+  root.find("[class*='nav' i],[class*='breadcrumb' i],[class*='share' i],[class*='social' i]").remove();
+
+  root.find("a,button").each((_, element) => {
+    const label = cleanText($(element).text());
+    if (DESCRIPTION_NOISE_TEXT.some(pattern => pattern.test(label))) {
+      $(element).remove();
+    }
+  });
+
+  root.find("*").toArray().reverse().forEach(element => {
+    const tag = String(element.tagName || element.name || "").toLowerCase();
+    if (!tag) return;
+
+    if (tag === "a") {
+      const href = cleanText($(element).attr("href"));
+      const safeHref = /^(https?:\/\/|mailto:)/i.test(href) ? href : "";
+      for (const attr of Object.keys(element.attribs ?? {})) {
+        $(element).removeAttr(attr);
+      }
+
+      if (!cleanText($(element).text())) {
+        $(element).remove();
+        return;
+      }
+
+      if (safeHref) {
+        $(element).attr("href", safeHref);
+      } else {
+        $(element).replaceWith($(element).contents());
+      }
+      return;
+    }
+
+    if (DESCRIPTION_WRAPPER_TAGS.has(tag)) {
+      const html = $(element).html()?.trim() ?? "";
+      const text = cleanText($(element).text());
+      const hasBlockChildren = $(element)
+        .children()
+        .toArray()
+        .some(child => {
+          const childTag = String(child.tagName || child.name || "").toLowerCase();
+          return DESCRIPTION_BLOCK_TAGS.has(childTag) || DESCRIPTION_WRAPPER_TAGS.has(childTag);
+        });
+
+      for (const attr of Object.keys(element.attribs ?? {})) {
+        $(element).removeAttr(attr);
+      }
+
+      if (!text && !/<br\s*\/?>|<hr\s*\/?>/i.test(html)) {
+        $(element).remove();
+      } else if (tag === "div" && !hasBlockChildren) {
+        $(element).replaceWith(`<p>${html}</p>`);
+      } else {
+        $(element).replaceWith($(element).contents());
+      }
+      return;
+    }
+
+    if (!DESCRIPTION_ALLOWED_TAGS.has(tag)) {
+      $(element).replaceWith($(element).contents());
+      return;
+    }
+
+    for (const attr of Object.keys(element.attribs ?? {})) {
+      $(element).removeAttr(attr);
+    }
+
+    const text = cleanText($(element).text());
+    if (
+      (DESCRIPTION_NOISE_TEXT.some(pattern => pattern.test(text)) || !text)
+      && !["br", "hr"].includes(tag)
+      && $(element).children().length === 0
+    ) {
+      $(element).remove();
+    }
+  });
 
   let cleaned = (root.html() ?? "").trim();
   if (!cleaned) return "";
@@ -308,6 +419,18 @@ function sanitizeDescriptionHtml(fragment: string): string {
   const cutoffMatch = cleaned.match(cutoff);
   if (cutoffMatch && typeof cutoffMatch.index === "number" && cutoffMatch.index > 180) {
     cleaned = cleaned.slice(0, cutoffMatch.index).trim();
+  }
+
+  cleaned = cleaned
+    .replace(/>\s+</g, "><")
+    .replace(/\s*<br\s*\/?>\s*/gi, "<br>")
+    .replace(/(<br>){3,}/gi, "<br><br>")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+
+  const plain = stripHtmlToPlain(cleaned);
+  if (plain.length < 80) {
+    return plain ? `<p>${escapeHtml(plain)}</p>` : "";
   }
 
   return cleaned;
@@ -870,6 +993,12 @@ function csvEscape(value: string): string {
   return value;
 }
 
+function formatDescriptionForCsv(description: string): string {
+  const normalized = description.replace(/\r\n?/g, " ").trim();
+  if (!normalized) return "";
+  return normalized.replace(/>\s+</g, "><").replace(/\s{2,}/g, " ").trim();
+}
+
 export function toCsvRows(records: ApiCreateJobRequest[]): string {
   const headers = [
     "title", "description", "jobType", "deadline", "keywords", "skills",
@@ -882,9 +1011,9 @@ export function toCsvRows(records: ApiCreateJobRequest[]): string {
   const rows = [headers.join(",")];
 
   for (const job of records) {
-    const descOneLine = job.description.replace(/\r?\n/g, " ").replace(/\s{2,}/g, " ");
+    const descForCsv = formatDescriptionForCsv(job.description);
     const row = [
-      job.title, descOneLine, job.jobType, job.deadline ?? "",
+      job.title, descForCsv, job.jobType, job.deadline ?? "",
       (job.keywords ?? []).join("|"), (job.skills ?? []).join("|"),
       job.jobLink ?? "", (job.hiringTeam ?? []).join("|"),
       job.workType ?? "", job.workEmail ?? "",

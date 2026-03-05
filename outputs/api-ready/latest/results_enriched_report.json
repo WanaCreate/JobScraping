@@ -1,6 +1,6 @@
 {
-  "startedAt": "2026-03-05T18:17:17.035Z",
-  "completedAt": "2026-03-05T18:17:43.009Z",
+  "startedAt": "2026-03-05T20:35:51.202Z",
+  "completedAt": "2026-03-05T20:36:17.454Z",
   "inputFile": "C:\\Users\\vyash\\Desktop\\Business\\Wana\\_Code\\JobScraping\\outputs\\api-ready\\latest\\Joblistings.csv",
   "totalCsvRows": 20,
   "fetchedPages": 20,
@@ -52,6 +52,6 @@
     "withLocation": 12,
     "withSalary": 11,
     "withCompany": 20,
-    "withSkills": 10
+    "withSkills": 18
   }
 }
