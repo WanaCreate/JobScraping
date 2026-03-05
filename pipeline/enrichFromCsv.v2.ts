@@ -872,10 +872,13 @@ async function runConcurrent<T, R>(
 // ─── CSV Output ──────────────────────────────────────────────────
 
 function csvEscape(value: string): string {
-  if (value.includes(",") || value.includes("\n") || value.includes('"')) {
-    return `"${value.replace(/"/g, '""')}"`;
+  // Collapse newlines/tabs into single spaces so HTML descriptions don't spill
+  // across multiple CSV rows when opened in spreadsheet applications.
+  const flat = value.replace(/[\r\n\t]+/g, " ").replace(/ {2,}/g, " ");
+  if (flat.includes(",") || flat.includes('"')) {
+    return `"${flat.replace(/"/g, '""')}"`;
   }
-  return value;
+  return flat;
 }
 
 function toCsvRows(records: ApiCreateJobRequest[]): string {
