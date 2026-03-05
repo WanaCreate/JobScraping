@@ -190,9 +190,30 @@ const US_STATES = new Set([
   "TX","UT","VT","VA","WA","WV","WI","WY","DC",
 ]);
 
+/** Fix common Windows-1252 → UTF-8 mojibake sequences */
+function fixMojibake(text: string): string {
+  return text
+    .replace(/â€™/g, "\u2019") // '
+    .replace(/â€˜/g, "\u2018") // '
+    .replace(/â€œ/g, "\u201C") // "
+    .replace(/â€\u009D/g, "\u201D") // "
+    .replace(/â€"/g, "\u2014") // —
+    .replace(/â€"/g, "\u2013") // –
+    .replace(/â€¦/g, "\u2026") // …
+    .replace(/Â /g, " ")        // non-breaking space artifact
+    .replace(/Â·/g, "\u00B7")   // ·
+    .replace(/â€‹/g, "")        // zero-width space artifact
+    .replace(/\u00E2\u0080[\u0090-\u009F]/g, "-") // misc dash artifacts
+    // Normalize smart quotes/dashes to ASCII equivalents for consistency
+    .replace(/[\u2018\u2019]/g, "'")
+    .replace(/[\u201C\u201D]/g, '"')
+    .replace(/[\u2013\u2014]/g, "-")
+    .replace(/\u2026/g, "...");
+}
+
 function cleanText(value: string | null | undefined): string {
   if (!value) return "";
-  return value.replace(/\u00A0/g, " ").replace(/[\t\r\n]+/g, " ").replace(/\s+/g, " ").trim();
+  return fixMojibake(value).replace(/\u00A0/g, " ").replace(/[\t\r\n]+/g, " ").replace(/\s+/g, " ").trim();
 }
 
 const DESCRIPTION_SELECTORS = [
@@ -245,6 +266,30 @@ const KEYWORD_TERMS = [
   "video",
   "research",
 ];
+
+/** Keywords that are too generic or indicate missing data — filter these out */
+const KEYWORD_BLOCKLIST = new Set([
+  "other",
+  "not specified",
+  "other / not specified",
+  "other/not specified",
+  "n/a",
+  "na",
+  "none",
+  "unspecified",
+  "unknown",
+  "general",
+  "miscellaneous",
+  "misc",
+  "various",
+  "all",
+  "any",
+  "tbd",
+  "see description",
+  "see below",
+  "not applicable",
+  "other category",
+]);
 
 const SKILL_TAXONOMY: Record<string, string[]> = {
   figma: ["figma"],
@@ -310,6 +355,21 @@ const DESCRIPTION_NOISE_TEXT = [
   /^refer (a )?friend$/i,
   /^apply( now| for this job)?$/i,
   /^save job$/i,
+  /^expand show other jobs?$/i,
+  /^show other jobs?$/i,
+  /^posted:?\s*(unknown)?$/i,
+  /^salary:?\s*$/i,
+  /^location:?\s*$/i,
+  /^title$/i,
+  /^employer$/i,
+  /^details$/i,
+  /^summary:?\s*$/i,
+  /^keywords?$/i,
+  /^only show (hybrid|remote)[\s/]*(remote|hybrid)? jobs\.?$/i,
+  /^active advanced search filters/i,
+  /^create (a )?job alert$/i,
+  /^interested in building your career/i,
+  /^get future opportunities/i,
 ];
 
 function stripHtmlToPlain(input: string): string {
@@ -418,10 +478,18 @@ function sanitizeDescriptionHtml(fragment: string): string {
     }
   });
 
+  // Remove elements that are just noise labels (e.g., "Posted:", "Salary:", "Title", "Employer")
+  root.find("p,span,div,li,td,th,dt,dd").each((_, element) => {
+    const text = cleanText($(element).text());
+    if (DESCRIPTION_NOISE_TEXT.some(pattern => pattern.test(text))) {
+      $(element).remove();
+    }
+  });
+
   let cleaned = (root.html() ?? "").trim();
   if (!cleaned) return "";
 
-  const cutoff = /(?:submit application|voluntary self identification|first name\*|resume\/cv|cover letter|attach dropbox|google drive)/i;
+  const cutoff = /(?:submit application|voluntary self identification|first name\*|resume\/cv|cover letter|attach dropbox|google drive|create a job alert|interested in building your career)/i;
   const cutoffMatch = cleaned.match(cutoff);
   if (cutoffMatch && typeof cutoffMatch.index === "number" && cutoffMatch.index > 180) {
     cleaned = cleaned.slice(0, cutoffMatch.index).trim();
@@ -434,6 +502,7 @@ function sanitizeDescriptionHtml(fragment: string): string {
     .replace(/\s{2,}/g, " ")
     .trim();
 
+  cleaned = fixMojibake(cleaned);
   const plain = stripHtmlToPlain(cleaned);
   if (plain.length < 80) {
     return plain ? `<p>${escapeHtml(plain)}</p>` : "";
@@ -455,7 +524,7 @@ function scoreDescriptionCandidate(htmlFragment: string, priorityBoost: number):
   return score;
 }
 
-function extractDescriptionHtml(html: string, _jsonLd: Record<string, unknown> | null): string {
+function extractDescriptionHtml(html: string, jsonLd: Record<string, unknown> | null): string {
   const $ = load(html);
   let bestHtml = "";
   let bestScore = -1;
@@ -478,6 +547,23 @@ function extractDescriptionHtml(html: string, _jsonLd: Record<string, unknown> |
     }
   }
 
+  // Also consider JSON-LD description as a candidate (often has the complete text)
+  if (jsonLd) {
+    const rawDesc = String(jsonLd.description ?? "");
+    if (rawDesc.length >= 80) {
+      const isHtml = /<[^>]+>/.test(rawDesc);
+      const jsonLdHtml = isHtml ? sanitizeDescriptionHtml(rawDesc) : `<p>${escapeHtml(fixMojibake(cleanText(rawDesc)))}</p>`;
+      if (jsonLdHtml) {
+        // Give JSON-LD a moderate boost — it's reliable but may lack formatting
+        const jsonLdScore = scoreDescriptionCandidate(jsonLdHtml, 100);
+        if (jsonLdScore > bestScore) {
+          bestScore = jsonLdScore;
+          bestHtml = jsonLdHtml;
+        }
+      }
+    }
+  }
+
   return bestScore >= 120 ? bestHtml : "";
 }
 
@@ -486,6 +572,15 @@ function extractDescriptionFromHtml(html: string, jsonLd: Record<string, unknown
   if (htmlDescription) {
     const plain = stripHtmlToPlain(htmlDescription);
     if (plain.length >= 80) return plain;
+  }
+
+  // Try JSON-LD description early — it often has the full text when HTML selectors truncate
+  if (jsonLd) {
+    const rawDesc = String(jsonLd.description ?? "");
+    // JSON-LD description may be HTML or plain text
+    const jsonLdHtml = /<[^>]+>/.test(rawDesc) ? sanitizeDescriptionHtml(rawDesc) : "";
+    const jsonLdPlain = jsonLdHtml ? stripHtmlToPlain(jsonLdHtml) : fixMojibake(cleanText(rawDesc));
+    if (jsonLdPlain.length >= 200) return jsonLdPlain;
   }
 
   const $ = load(html);
@@ -511,8 +606,9 @@ function extractDescriptionFromHtml(html: string, jsonLd: Record<string, unknown
 
   if (best.length >= 80) return best;
 
+  // Fallback: shorter JSON-LD description
   if (jsonLd) {
-    const desc = cleanText(String(jsonLd.description ?? ""));
+    const desc = fixMojibake(cleanText(String(jsonLd.description ?? "")));
     if (desc.length >= 80) return desc;
   }
 
@@ -575,21 +671,56 @@ function extractSalaryFromJsonLd(jsonLd: Record<string, unknown>): ApiSalary | n
   };
 }
 
+/** Validate that a skill token looks like an actual skill, not a sentence fragment */
+function isValidSkillToken(token: string): boolean {
+  // Reject empty or very short
+  if (!token || token.length < 2) return false;
+  // Count words (underscores = word separators in snake_case)
+  const words = token.split(/_+/).filter(Boolean);
+  if (words.length > 4) return false;
+  // Reject tokens that look like sentence fragments (contain common sentence words)
+  const sentenceWords = new Set(["the", "to", "they", "that", "this", "their", "them", "need", "deliver", "enable", "companies", "tracks"]);
+  const sentenceWordCount = words.filter(w => sentenceWords.has(w)).length;
+  if (sentenceWordCount >= 2) return false;
+  // Reject if total character count is too long (long snake_case phrases)
+  if (token.length > 40) return false;
+  return true;
+}
+
 function extractSkillsFromJsonLd(jsonLd: Record<string, unknown>): string[] {
   const raw = jsonLd.skills;
   if (!raw) return [];
 
+  let tokens: string[] = [];
   if (typeof raw === "string") {
-    return dedupeStrings(
-      raw.split(/[,;|]/).map(s => s.trim().toLowerCase().replace(/\s+/g, "_")).filter(Boolean),
-    );
-  }
-  if (Array.isArray(raw)) {
-    return dedupeStrings(raw
+    tokens = raw.split(/[,;|]/).map(s => s.trim().toLowerCase().replace(/\s+/g, "_")).filter(Boolean);
+  } else if (Array.isArray(raw)) {
+    tokens = raw
       .filter((s): s is string => typeof s === "string" && s.trim().length > 0)
-      .map(s => s.trim().toLowerCase().replace(/\s+/g, "_")));
+      .map(s => s.trim().toLowerCase().replace(/\s+/g, "_"));
   }
-  return [];
+
+  // Validate each token and try to canonicalize against known taxonomy
+  const validated: string[] = [];
+  for (const token of tokens) {
+    const canonical = canonicalizeSkill(token.replace(/_/g, " "));
+    if (canonical && isValidSkillToken(canonical)) {
+      validated.push(canonical);
+    } else if (isValidSkillToken(token)) {
+      validated.push(token);
+    }
+  }
+
+  return dedupeStrings(validated);
+}
+
+function isRelevantKeyword(keyword: string): boolean {
+  const normalized = keyword.trim().toLowerCase().replace(/\s+/g, " ");
+  if (!normalized || normalized.length < 2) return false;
+  if (KEYWORD_BLOCKLIST.has(normalized)) return false;
+  // Filter out keywords with slashes that are just "other / not specified" variants
+  if (/^other\s*[/\\|]\s*/i.test(normalized)) return false;
+  return true;
 }
 
 function extractKeywordsFromJsonLd(jsonLd: Record<string, unknown>): string[] {
@@ -605,7 +736,7 @@ function extractKeywordsFromJsonLd(jsonLd: Record<string, unknown>): string[] {
     }
   }
 
-  return dedupeStrings(keywords);
+  return dedupeStrings(keywords).filter(isRelevantKeyword);
 }
 
 function extractKeywordsFromText(title: string, description: string): string[] {
@@ -614,7 +745,7 @@ function extractKeywordsFromText(title: string, description: string): string[] {
   for (const term of KEYWORD_TERMS) {
     if (combined.includes(term)) found.push(term);
   }
-  return dedupeStrings(found).slice(0, 20);
+  return dedupeStrings(found).filter(isRelevantKeyword).slice(0, 20);
 }
 
 function normalizeSkillToken(raw: string): string | null {
@@ -626,6 +757,9 @@ function normalizeSkillToken(raw: string): string | null {
     .toLowerCase();
   if (!cleaned || cleaned.length < 2 || cleaned.length > 45) return null;
   if (SKILL_STOP_WORDS.has(cleaned)) return null;
+  // Reject sentence-like fragments (more than 4 words are unlikely to be a skill)
+  const wordCount = cleaned.split(/\s+/).length;
+  if (wordCount > 4) return null;
   return cleaned;
 }
 
@@ -900,11 +1034,11 @@ export function buildJobFromHeuristics(
   const plainDescription = stripHtmlToPlain(description);
   const jsonLdSkills = jsonLd ? extractSkillsFromJsonLd(jsonLd) : [];
   const textSkills = extractSkillsFromText(title, plainDescription);
-  const skills = dedupeStrings([...jsonLdSkills, ...textSkills]);
+  const skills = dedupeStrings([...jsonLdSkills, ...textSkills]).filter(isValidSkillToken);
 
   const jsonLdKeywords = jsonLd ? extractKeywordsFromJsonLd(jsonLd) : [];
   const textKeywords = extractKeywordsFromText(title, plainDescription);
-  const keywords = dedupeStrings([...jsonLdKeywords, ...textKeywords]);
+  const keywords = dedupeStrings([...jsonLdKeywords, ...textKeywords]).filter(isRelevantKeyword);
 
   const workEmail = extractWorkEmail(html, plainDescription);
   let company = jsonLd ? extractCompanyFromJsonLd(jsonLd, finalUrl) : extractCompanyFromJsonLd({}, finalUrl);
