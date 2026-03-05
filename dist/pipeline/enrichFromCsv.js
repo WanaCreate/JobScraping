@@ -17,6 +17,12 @@
  *   --skipAi               Skip AI enrichment, use heuristic only
  *   --outputDir <dir>      Output directory (default: outputs/api-ready/latest)
  */
+/**
+ * Maintainer note:
+ * Before changing extraction, sanitization, merge, or CSV serialization logic here,
+ * read and update job-collection-instructions.json in the repo root so behavior and
+ * documented collection rules stay in sync.
+ */
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { pathToFileURL } from "node:url";

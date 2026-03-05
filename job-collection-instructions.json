@@ -1,9 +1,13 @@
 {
-  "purpose": "Instructions for creative job detail collection and API-ready export via enrichFromCsv.v2.ts pipeline",
-  "version": "2.1",
+  "purpose": "Instructions for creative job detail collection and API-ready export via pipeline/enrichFromCsv.ts",
+  "version": "2.3",
   "instructions": {
     "pipeline_overview": {
-      "entry_point": "pipeline/enrichFromCsv.v2.ts",
+      "entry_point": "pipeline/enrichFromCsv.ts",
+      "source_of_truth": "pipeline/enrichFromCsv.ts",
+      "generated_artifacts": [
+        "dist/pipeline/enrichFromCsv.js (generated; do not edit directly)"
+      ],
       "phases": [
         "Phase 1: Fetch pages (HTTP first, Playwright fallback for JS shells / ATS domains)",
         "Phase 2: Heuristic extraction (JSON-LD + scored HTML description candidates + text patterns)",
@@ -33,7 +37,7 @@
           "field": "description",
           "required": true,
           "source": "Scored HTML selectors (ATS-specific first) -> cleaned text fallback -> JSON-LD description -> meta description",
-          "notes": "Prefers rich HTML from job body containers. Candidate scoring favors responsibilities/qualifications structure and penalizes cookie/login/apply-form content. Apply-form sections (Submit application, Resume/CV, First Name, etc.) are trimmed."
+          "notes": "Store frontend-safe rich HTML only (not raw full-page wrappers). Candidate scoring favors responsibilities/qualifications structure and penalizes cookie/login/apply-form content. Apply-form sections (Submit application, Resume/CV, First Name, etc.) are trimmed."
         },
         {
           "field": "location",
@@ -100,12 +104,58 @@
           "notes": "Prefers non no-reply addresses. Also copied to company.email when company.email is missing."
         },
         {
+          "field": "allowEmailApplications",
+          "required": false,
+          "source": "Derived from workEmail presence",
+          "notes": "Set true when workEmail exists, otherwise false."
+        },
+        {
           "field": "numberOfPositions",
           "required": false,
           "source": "AI extraction from posting text",
           "notes": "Positive integer"
         }
       ],
+      "description_html_rules": {
+        "goal": "Preserve meaningful rich-text structure while removing page chrome and oversized container markup",
+        "remove_completely": [
+          "script/style/noscript/svg/canvas/iframe/nav/header/footer",
+          "form controls and application widgets",
+          "media wrappers (img/picture/video/audio/figure/figcaption)",
+          "apply/application/cookie/share/breadcrumb wrappers"
+        ],
+        "allowed_tags_after_cleanup": [
+          "a",
+          "b",
+          "blockquote",
+          "br",
+          "code",
+          "em",
+          "h1",
+          "h2",
+          "h3",
+          "h4",
+          "h5",
+          "h6",
+          "hr",
+          "i",
+          "li",
+          "ol",
+          "p",
+          "pre",
+          "strong",
+          "u",
+          "ul"
+        ],
+        "wrapper_handling": "Unwrap/flatten article/div/main/section/span wrappers; convert simple div text groups to <p>; strip all attributes except safe anchor href",
+        "anchor_policy": "Keep links only for http(s)/mailto href. Remove javascript and empty links.",
+        "minimum_content_rule": "If cleaned rich HTML has too little plain text (< 80 chars), fallback to escaped plain text in a <p> block."
+      },
+      "csv_description_serialization": {
+        "rule": "description must remain a single CSV field; no delimiter breakage",
+        "formatting": "Normalize description to compact single-line HTML before CSV escaping",
+        "important": "Do not inject visual line breaks/newlines inside HTML solely for spreadsheet readability; rely on valid CSV quoting."
+      },
       "fetching_strategy": {
         "http_first": "Plain HTTP fetch with 2 retries for static pages",
         "js_shell_detection": "If HTTP returns >2KB HTML but <500 chars visible text, detected as JS shell -> Playwright retry",
@@ -206,6 +256,7 @@
         "hiringTeam",
         "workType",
         "workEmail",
+        "allowEmailApplications",
         "numberOfPositions",
         "company",
         "companyWebsite",

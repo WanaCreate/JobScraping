@@ -1,5 +1,11 @@
 /**
  * Hybrid job enrichment pipeline.
+ * Source of truth: this file (`pipeline/enrichFromCsv.ts`).
+ *
+ * Maintainer note:
+ * Before changing extraction, sanitization, merge, or CSV serialization logic,
+ * read and update `job-collection-instructions.json` in the repo root so
+ * implementation and documented collection rules stay aligned.
  *
  * Reads a CSV of (title, jobLink), fetches each page, extracts structured
  * data via JSON-LD first, then falls back to Claude Haiku for incomplete
