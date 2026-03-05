@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "outDir": "dist",
+    "rootDir": "."
+  },
+  "include": [
+    "types.ts",
+    "ats/**/*.ts",
+    "adapters/**/*.ts",
+    "filters/**/*.ts",
+    "pipeline/**/*.ts",
+    "utils/**/*.ts"
+  ]
+}

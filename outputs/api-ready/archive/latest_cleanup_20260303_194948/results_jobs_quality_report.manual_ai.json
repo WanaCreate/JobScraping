@@ -1,0 +1,67 @@
+{
+  "total_input": 856,
+  "total_output": 849,
+  "removed_noise_count": 2,
+  "removed_noncreative_count": 0,
+  "removed_duplicate_count": 0,
+  "placeholder_description_count": 17,
+  "mojibake_fixed_count": 0,
+  "title_normalized_count": 0,
+  "description_normalized_count": 103,
+  "required_field_failures": 0,
+  "reason_counts": {
+    "non_job_url": 2
+  },
+  "sample_removed_records": [
+    {
+      "title": "Sound is Power",
+      "jobLink": "https://www.bose.com/about/careers",
+      "reason": "non_job_url"
+    },
+    {
+      "title": "Senior Content Designer",
+      "jobLink": "https://www.squarespace.com/about/careers",
+      "reason": "non_job_url"
+    }
+  ],
+  "manual_ai_removed_count": 7,
+  "manual_ai_rewritten_count": 4,
+  "sample_manual_ai_removed": [
+    {
+      "title": "Visual DesignerDesignArgentina / RemoteApplyNow",
+      "jobLink": "https://x.com/i/jobs/1829567112609747175",
+      "reason": "manual_ai_remove_non_job_or_listing"
+    },
+    {
+      "title": "Sr. Brand DesignerDesignArgentina / RemoteApplyNow",
+      "jobLink": "https://x.com/i/jobs/1829581942519415002",
+      "reason": "manual_ai_remove_non_job_or_listing"
+    },
+    {
+      "title": "Design",
+      "jobLink": "https://careers.airbnb.com/positions/?_departments=design",
+      "reason": "manual_ai_remove_non_job_or_listing"
+    },
+    {
+      "title": "Wabi Powering Wabi’s AI vibe-coding revolution with 3D & motion design",
+      "jobLink": "https://x.com/ekuyda/status/1986135875479380479",
+      "reason": "manual_ai_remove_non_job_or_listing"
+    },
+    {
+      "title": "Design",
+      "jobLink": "https://jobs.theguardian.com/jobs/design",
+      "reason": "manual_ai_remove_non_job_or_listing"
+    },
+    {
+      "title": "Content & Community Specialist (12 Month Fixed Term Contract)",
+      "jobLink": "https://jobs.smartrecruiters.com/wildbrain/https://api.smartrecruiters.com/v1/companies/wildbrain/postings/3743990011903456",
+      "reason": "manual_ai_remove_non_job_or_listing"
+    },
+    {
+      "title": "Content & Community Specialist",
+      "jobLink": "https://jobs.smartrecruiters.com/wildbrain/https://api.smartrecruiters.com/v1/companies/wildbrain/postings/3743990011903336",
+      "reason": "manual_ai_remove_non_job_or_listing"
+    }
+  ],
+  "manual_ai_timestamp": "2026-03-03T14:02:39.469Z"
+}

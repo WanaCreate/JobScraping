@@ -1,0 +1,10 @@
+{
+  "source_csv": "C:\\Users\\vyash\\Desktop\\Business\\Wana\\_Code\\JobScraping\\outputs\\api-ready\\latest\\results_jobs_api.csv",
+  "total_input": 848,
+  "total_output": 848,
+  "apiReadyJobs": 848,
+  "required_field_failures": 0,
+  "placeholder_description_count": 70,
+  "synced_from_csv_at": "2026-03-03T19:49:33.9651771+05:30",
+  "notes": "Synchronized from canonical results_jobs_api.csv"
+}
