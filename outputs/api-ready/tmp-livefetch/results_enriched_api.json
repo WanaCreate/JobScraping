@@ -1,0 +1,91 @@
+[
+  {
+    "title": "Fancy yourself a production designer, eh?",
+    "description": "Overview We are looking to hire a production-oriented Designer that has experience in branding, digital design, and advertising. You will work with our creative",
+    "jobType": "FULLTIME",
+    "workType": null,
+    "location": null,
+    "salary": null,
+    "company": {
+      "name": "Foxfuelcreative",
+      "website": "https://foxfuelcreative.com",
+      "logo": null,
+      "email": "michael@foxfuelcreative.com"
+    },
+    "keywords": [
+      "design",
+      "creative",
+      "brand"
+    ],
+    "skills": [
+      "branding"
+    ],
+    "deadline": null,
+    "numberOfPositions": null,
+    "jobLink": "https://www.foxfuelcreative.com/careers/production-designer/",
+    "hiringTeam": [
+      "system-scraper"
+    ],
+    "workEmail": "michael@foxfuelcreative.com",
+    "screeningQuestions": [],
+    "screeningRequired": false,
+    "allowEmailApplications": true
+  },
+  {
+    "title": "Product & Design Teams",
+    "description": "Asana is growing fast to achieve a big mission that drives us every day. Passionate and curious people like you will help us achieve it.",
+    "jobType": "FULLTIME",
+    "workType": null,
+    "location": null,
+    "salary": null,
+    "company": {
+      "name": "Asana",
+      "website": "https://asana.com",
+      "logo": null,
+      "email": "u003eaccount@domain.com"
+    },
+    "keywords": [
+      "design"
+    ],
+    "skills": [],
+    "deadline": null,
+    "numberOfPositions": null,
+    "jobLink": "https://asana.com/jobs/product",
+    "hiringTeam": [
+      "system-scraper"
+    ],
+    "workEmail": "u003eaccount@domain.com",
+    "screeningQuestions": [],
+    "screeningRequired": false,
+    "allowEmailApplications": true
+  },
+  {
+    "title": "Design Engineer",
+    "description": "Build better websites with a team obsessed with technical perfection. Shape the future of web development while pursuing pixel-perfect, high-performance solutions.",
+    "jobType": "FULLTIME",
+    "workType": null,
+    "location": null,
+    "salary": null,
+    "company": {
+      "name": "Bejamas",
+      "website": "https://bejamas.com",
+      "logo": null,
+      "email": "hr@bejamas.com"
+    },
+    "keywords": [
+      "design",
+      "ui"
+    ],
+    "skills": [],
+    "deadline": null,
+    "numberOfPositions": null,
+    "jobLink": "https://bejamas.com/careers/design-engineer-x3mbzomt96",
+    "hiringTeam": [
+      "system-scraper"
+    ],
+    "workEmail": "hr@bejamas.com",
+    "screeningQuestions": [],
+    "screeningRequired": false,
+    "allowEmailApplications": true
+  }
+]

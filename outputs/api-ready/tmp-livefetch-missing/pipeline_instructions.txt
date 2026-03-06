@@ -1,0 +1,11 @@
+═══════════════════════════════════════════════════════════════
+  PIPELINE IMPROVEMENT INSTRUCTIONS
+  Update enrichFromCsv.ts to catch these issues at extraction time
+  (Based on 2 jobs reviewed: 1 dropped, 0 fixed, 1 ok)
+═══════════════════════════════════════════════════════════════
+
+── DROPPED (fix extraction to avoid scraping these) ──
+  [DESCRIPTION] ×1 occurrences
+  Description is too short — likely wrong selector or page requires JS rendering. Consider expanding selectors or ensuring pageFetcher.ts waits for content to load.
+
+═══════════════════════════════════════════════════════════════

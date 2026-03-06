@@ -1,0 +1,28 @@
+[
+  {
+    "title": "retry",
+    "description": "<p>Some of our features may not work properly on your device.</p><p>If you are using a mobile device, please use a desktop browser to access our website.</p><p>Or use our app:<!-- --> Download App</p>",
+    "jobType": "FULLTIME",
+    "workType": null,
+    "location": null,
+    "salary": null,
+    "company": {
+      "name": "Bossjob",
+      "website": "https://bossjob.us",
+      "logo": null,
+      "email": "agent@bossjob.jp"
+    },
+    "keywords": [],
+    "skills": [],
+    "deadline": null,
+    "numberOfPositions": null,
+    "jobLink": "https://bossjob.us/en-us/job/sound-designer-engineer-remote-245119",
+    "hiringTeam": [
+      "system-scraper"
+    ],
+    "workEmail": "agent@bossjob.jp",
+    "screeningQuestions": [],
+    "screeningRequired": false,
+    "allowEmailApplications": true
+  }
+]

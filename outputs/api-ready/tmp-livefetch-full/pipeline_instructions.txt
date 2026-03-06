@@ -1,0 +1,37 @@
+═══════════════════════════════════════════════════════════════
+  PIPELINE IMPROVEMENT INSTRUCTIONS
+  Update enrichFromCsv.ts to catch these issues at extraction time
+  (Based on 832 jobs reviewed: 1 dropped, 387 fixed, 444 ok)
+═══════════════════════════════════════════════════════════════
+
+── DROPPED (fix extraction to avoid scraping these) ──
+  [DESCRIPTION] ×1 occurrences
+  Description is too short — likely wrong selector or page requires JS rendering. Consider expanding selectors or ensuring pageFetcher.ts waits for content to load.
+
+── FIXED (extraction produced bad data that review had to patch) ──
+  [JOBTYPE] ×352 occurrences
+  jobType defaulted to FULLTIME but text signals otherwise. In inferJobTypeFromJsonLd() and the heuristic fallback, add keyword scan of title+description before defaulting. Examples: "FULLTIME", "FULLTIME"
+
+  [WORKTYPE] ×17 occurrences
+  workType was null but determinable from text. In inferWorkType() in enrichFromCsv.ts, expand keyword patterns to catch more signals — currently missing some phrases. Examples: "null", "null"
+
+  [JOBTYPE] ×17 occurrences
+  jobType defaulted to FULLTIME but text signals otherwise. In inferJobTypeFromJsonLd() and the heuristic fallback, add keyword scan of title+description before defaulting. Examples: "FULLTIME", "FULLTIME"
+
+  [LOCATION] ×6 occurrences
+  [location] location is just <value>, moving to worktype occurred 6 time(s). Review extraction logic in enrichFromCsv.ts for this field. Examples: "Remote", "Remote"
+
+  [JOBTYPE] ×2 occurrences
+  jobType defaulted to FULLTIME but text signals otherwise. In inferJobTypeFromJsonLd() and the heuristic fallback, add keyword scan of title+description before defaulting. Examples: "FULLTIME", "FULLTIME"
+
+── WARNINGS (monitor these, no action taken) ──
+  [DESCRIPTION] ×14 occurrences
+  [description] unformatted blob description (n chars, no formatting) — needs ai review occurred 14 time(s). Review extraction logic in enrichFromCsv.ts for this field.
+
+  [COMPANY] ×6 occurrences
+  Company name appears to be joined words with no spaces. Flag for AI review or attempt camelCase splitting in extractCompanyFromJsonLd(). Examples: "Masterclass", "Privateclubmarketing"
+
+  [DESCRIPTION] ×1 occurrences
+  Description is too short — likely wrong selector or page requires JS rendering. Consider expanding selectors or ensuring pageFetcher.ts waits for content to load.
+
+═══════════════════════════════════════════════════════════════

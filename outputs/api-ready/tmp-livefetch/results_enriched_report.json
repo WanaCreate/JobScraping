@@ -1,0 +1,27 @@
+{
+  "startedAt": "2026-03-06T06:42:11.031Z",
+  "completedAt": "2026-03-06T06:42:12.007Z",
+  "inputFile": "/Users/dharapatel/Wana/Development/JobScraping/tmp_joblinks.csv",
+  "totalCsvRows": 3,
+  "fetchedPages": 3,
+  "fetchFailed": 0,
+  "jsonLdFound": 0,
+  "aiEnriched": 0,
+  "aiFailed": 0,
+  "finalJobs": 3,
+  "qualityReview": {
+    "reviewed": 3,
+    "ok": 3,
+    "fixed": 0,
+    "dropped": 0,
+    "issues": [],
+    "pipelineInstructions": []
+  },
+  "quality": {
+    "withDescription": 3,
+    "withLocation": 0,
+    "withSalary": 0,
+    "withCompany": 3,
+    "withSkills": 1
+  }
+}

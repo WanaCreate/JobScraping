@@ -1,0 +1,2966 @@
+{
+  "startedAt": "2026-03-06T06:46:49.750Z",
+  "completedAt": "2026-03-06T06:53:34.565Z",
+  "inputFile": "/Users/dharapatel/Wana/Development/JobScraping/tmp_joblinks.csv",
+  "totalCsvRows": 834,
+  "fetchedPages": 832,
+  "fetchFailed": 2,
+  "jsonLdFound": 162,
+  "aiEnriched": 0,
+  "aiFailed": 0,
+  "finalJobs": 831,
+  "qualityReview": {
+    "reviewed": 832,
+    "ok": 444,
+    "fixed": 387,
+    "dropped": 1,
+    "issues": [
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "workType",
+        "problem": "workType was null, inferred from text",
+        "action": "fixed",
+        "before": "null",
+        "after": "ONSITE"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "workType",
+        "problem": "workType was null, inferred from text",
+        "action": "fixed",
+        "before": "null",
+        "after": "REMOTE"
+      },
+      {
+        "field": "company",
+        "problem": "Company name may be joined words: \"Masterclass\"",
+        "action": "ignored",
+        "before": "Masterclass"
+      },
+      {
+        "field": "workType",
+        "problem": "workType was null, inferred from text",
+        "action": "fixed",
+        "before": "null",
+        "after": "ONSITE"
+      },
+      {
+        "field": "workType",
+        "problem": "workType was null, inferred from text",
+        "action": "fixed",
+        "before": "null",
+        "after": "ONSITE"
+      },
+      {
+        "field": "workType",
+        "problem": "workType was null, inferred from text",
+        "action": "fixed",
+        "before": "null",
+        "after": "ONSITE"
+      },
+      {
+        "field": "workType",
+        "problem": "workType was null, inferred from text",
+        "action": "fixed",
+        "before": "null",
+        "after": "ONSITE"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "location",
+        "problem": "Location is just \"Remote\", moving to workType",
+        "action": "fixed",
+        "before": "Remote",
+        "after": "workType=REMOTE, location=null"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests FREELANCE",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "FREELANCE"
+      },
+      {
+        "field": "location",
+        "problem": "Location is just \"Remote\", moving to workType",
+        "action": "fixed",
+        "before": "Remote",
+        "after": "workType=REMOTE, location=null"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests PARTTIME",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "PARTTIME"
+      },
+      {
+        "field": "location",
+        "problem": "Location is just \"Remote\", moving to workType",
+        "action": "fixed",
+        "before": "Remote",
+        "after": "workType=REMOTE, location=null"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "location",
+        "problem": "Location is just \"Remote\", moving to workType",
+        "action": "fixed",
+        "before": "Remote",
+        "after": "workType=REMOTE, location=null"
+      },
+      {
+        "field": "location",
+        "problem": "Location is just \"Remote\", moving to workType",
+        "action": "fixed",
+        "before": "Remote",
+        "after": "workType=REMOTE, location=null"
+      },
+      {
+        "field": "location",
+        "problem": "Location is just \"Remote\", moving to workType",
+        "action": "fixed",
+        "before": "Remote",
+        "after": "workType=REMOTE, location=null"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests FREELANCE",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "FREELANCE"
+      },
+      {
+        "field": "workType",
+        "problem": "workType was null, inferred from text",
+        "action": "fixed",
+        "before": "null",
+        "after": "ONSITE"
+      },
+      {
+        "field": "workType",
+        "problem": "workType was null, inferred from text",
+        "action": "fixed",
+        "before": "null",
+        "after": "REMOTE"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "description",
+        "problem": "Unformatted blob description (24256 chars, no formatting) — needs AI review",
+        "action": "ignored"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "description",
+        "problem": "Unformatted blob description (24256 chars, no formatting) — needs AI review",
+        "action": "ignored"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "description",
+        "problem": "Unformatted blob description (23859 chars, no formatting) — needs AI review",
+        "action": "ignored"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "description",
+        "problem": "Unformatted blob description (24344 chars, no formatting) — needs AI review",
+        "action": "ignored"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "description",
+        "problem": "Unformatted blob description (23859 chars, no formatting) — needs AI review",
+        "action": "ignored"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "description",
+        "problem": "Unformatted blob description (24344 chars, no formatting) — needs AI review",
+        "action": "ignored"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "description",
+        "problem": "Unformatted blob description (23984 chars, no formatting) — needs AI review",
+        "action": "ignored"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "description",
+        "problem": "Unformatted blob description (23984 chars, no formatting) — needs AI review",
+        "action": "ignored"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "description",
+        "problem": "Unformatted blob description (24263 chars, no formatting) — needs AI review",
+        "action": "ignored"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "description",
+        "problem": "Unformatted blob description (23859 chars, no formatting) — needs AI review",
+        "action": "ignored"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "description",
+        "problem": "Unformatted blob description (23859 chars, no formatting) — needs AI review",
+        "action": "ignored"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "description",
+        "problem": "Unformatted blob description (24263 chars, no formatting) — needs AI review",
+        "action": "ignored"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "description",
+        "problem": "Unformatted blob description (24074 chars, no formatting) — needs AI review",
+        "action": "ignored"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "description",
+        "problem": "Unformatted blob description (24074 chars, no formatting) — needs AI review",
+        "action": "ignored"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests FREELANCE",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "FREELANCE"
+      },
+      {
+        "field": "description",
+        "problem": "Description is very short (74 chars)",
+        "action": "ignored"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests FREELANCE",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "FREELANCE"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests FREELANCE",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "FREELANCE"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests FREELANCE",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "FREELANCE"
+      },
+      {
+        "field": "company",
+        "problem": "Company name may be joined words: \"Privateclubmarketing\"",
+        "action": "ignored",
+        "before": "Privateclubmarketing"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "company",
+        "problem": "Company name may be joined words: \"Weareenigma\"",
+        "action": "ignored",
+        "before": "Weareenigma"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "workType",
+        "problem": "workType was null, inferred from text",
+        "action": "fixed",
+        "before": "null",
+        "after": "ONSITE"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "workType",
+        "problem": "workType was null, inferred from text",
+        "action": "fixed",
+        "before": "null",
+        "after": "ONSITE"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "workType",
+        "problem": "workType was null, inferred from text",
+        "action": "fixed",
+        "before": "null",
+        "after": "REMOTE"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "workType",
+        "problem": "workType was null, inferred from text",
+        "action": "fixed",
+        "before": "null",
+        "after": "REMOTE"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "workType",
+        "problem": "workType was null, inferred from text",
+        "action": "fixed",
+        "before": "null",
+        "after": "ONSITE"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests FREELANCE",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "FREELANCE"
+      },
+      {
+        "field": "workType",
+        "problem": "workType was null, inferred from text",
+        "action": "fixed",
+        "before": "null",
+        "after": "REMOTE"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests FREELANCE",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "FREELANCE"
+      },
+      {
+        "field": "company",
+        "problem": "Company name may be joined words: \"Brucemaudesign\"",
+        "action": "ignored",
+        "before": "Brucemaudesign"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests FREELANCE",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "FREELANCE"
+      },
+      {
+        "field": "company",
+        "problem": "Company name may be joined words: \"Brucemaudesign\"",
+        "action": "ignored",
+        "before": "Brucemaudesign"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests FREELANCE",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "FREELANCE"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests FREELANCE",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "FREELANCE"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests FREELANCE",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "FREELANCE"
+      },
+      {
+        "field": "workType",
+        "problem": "workType was null, inferred from text",
+        "action": "fixed",
+        "before": "null",
+        "after": "REMOTE"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests FREELANCE",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "FREELANCE"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests FREELANCE",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "FREELANCE"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests FREELANCE",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "FREELANCE"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests PARTTIME",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "PARTTIME"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "workType",
+        "problem": "workType was null, inferred from text",
+        "action": "fixed",
+        "before": "null",
+        "after": "ONSITE"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "workType",
+        "problem": "workType was null, inferred from text",
+        "action": "fixed",
+        "before": "null",
+        "after": "REMOTE"
+      },
+      {
+        "field": "description",
+        "problem": "Description too short or empty",
+        "action": "dropped"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "company",
+        "problem": "Company name may be joined words: \"Razorpaysoftwareprivatelimited\"",
+        "action": "ignored",
+        "before": "Razorpaysoftwareprivatelimited"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests FREELANCE",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "FREELANCE"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests FREELANCE",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "FREELANCE"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      },
+      {
+        "field": "jobType",
+        "problem": "jobType was FULLTIME but text strongly suggests GIG",
+        "action": "fixed",
+        "before": "FULLTIME",
+        "after": "GIG"
+      }
+    ],
+    "pipelineInstructions": [
+      {
+        "field": "jobType",
+        "frequency": 352,
+        "pattern": "jobtype was fulltime but text strongly suggests gig",
+        "action": "fixed",
+        "instruction": "jobType defaulted to FULLTIME but text signals otherwise. In inferJobTypeFromJsonLd() and the heuristic fallback, add keyword scan of title+description before defaulting. Examples: \"FULLTIME\", \"FULLTIME\""
+      },
+      {
+        "field": "workType",
+        "frequency": 17,
+        "pattern": "worktype was null, inferred from text",
+        "action": "fixed",
+        "instruction": "workType was null but determinable from text. In inferWorkType() in enrichFromCsv.ts, expand keyword patterns to catch more signals — currently missing some phrases. Examples: \"null\", \"null\""
+      },
+      {
+        "field": "jobType",
+        "frequency": 17,
+        "pattern": "jobtype was fulltime but text strongly suggests freelance",
+        "action": "fixed",
+        "instruction": "jobType defaulted to FULLTIME but text signals otherwise. In inferJobTypeFromJsonLd() and the heuristic fallback, add keyword scan of title+description before defaulting. Examples: \"FULLTIME\", \"FULLTIME\""
+      },
+      {
+        "field": "description",
+        "frequency": 14,
+        "pattern": "unformatted blob description (n chars, no formatting) — needs ai review",
+        "action": "ignored",
+        "instruction": "[description] unformatted blob description (n chars, no formatting) — needs ai review occurred 14 time(s). Review extraction logic in enrichFromCsv.ts for this field."
+      },
+      {
+        "field": "company",
+        "frequency": 6,
+        "pattern": "company name may be joined words: <value>",
+        "action": "ignored",
+        "instruction": "Company name appears to be joined words with no spaces. Flag for AI review or attempt camelCase splitting in extractCompanyFromJsonLd(). Examples: \"Masterclass\", \"Privateclubmarketing\""
+      },
+      {
+        "field": "location",
+        "frequency": 6,
+        "pattern": "location is just <value>, moving to worktype",
+        "action": "fixed",
+        "instruction": "[location] location is just <value>, moving to worktype occurred 6 time(s). Review extraction logic in enrichFromCsv.ts for this field. Examples: \"Remote\", \"Remote\""
+      },
+      {
+        "field": "jobType",
+        "frequency": 2,
+        "pattern": "jobtype was fulltime but text strongly suggests parttime",
+        "action": "fixed",
+        "instruction": "jobType defaulted to FULLTIME but text signals otherwise. In inferJobTypeFromJsonLd() and the heuristic fallback, add keyword scan of title+description before defaulting. Examples: \"FULLTIME\", \"FULLTIME\""
+      },
+      {
+        "field": "description",
+        "frequency": 1,
+        "pattern": "description is very short (n chars)",
+        "action": "ignored",
+        "instruction": "Description is too short — likely wrong selector or page requires JS rendering. Consider expanding selectors or ensuring pageFetcher.ts waits for content to load."
+      },
+      {
+        "field": "description",
+        "frequency": 1,
+        "pattern": "description too short or empty",
+        "action": "dropped",
+        "instruction": "Description is too short — likely wrong selector or page requires JS rendering. Consider expanding selectors or ensuring pageFetcher.ts waits for content to load."
+      }
+    ]
+  },
+  "quality": {
+    "withDescription": 819,
+    "withLocation": 146,
+    "withSalary": 188,
+    "withCompany": 831,
+    "withSkills": 715
+  }
+}

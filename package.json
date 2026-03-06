@@ -10,10 +10,10 @@
     "clean-jobs-llm": "tsx pipeline/cleanJobsLlm.ts",
     "enrich-csv": "tsx pipeline/enrichFromCsv.ts",
     "enrich-csv-v2": "tsx pipeline/enrichFromCsv.v2.ts",
+    "enrich-csv-ollama": "tsx pipeline/enrichFromCsvOllama.ts",
     "build": "tsc -p ."
   },
   "dependencies": {
-    "@esbuild/linux-x64": "^0.27.3",
     "axios": "^1.9.0",
     "cheerio": "^1.0.0",
     "playwright": "^1.52.0"

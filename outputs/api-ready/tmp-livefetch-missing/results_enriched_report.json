@@ -1,0 +1,41 @@
+{
+  "startedAt": "2026-03-06T06:54:20.545Z",
+  "completedAt": "2026-03-06T06:55:24.784Z",
+  "inputFile": "/Users/dharapatel/Wana/Development/JobScraping/tmp_missing.csv",
+  "totalCsvRows": 4,
+  "fetchedPages": 2,
+  "fetchFailed": 2,
+  "jsonLdFound": 0,
+  "aiEnriched": 0,
+  "aiFailed": 0,
+  "finalJobs": 1,
+  "qualityReview": {
+    "reviewed": 2,
+    "ok": 1,
+    "fixed": 0,
+    "dropped": 1,
+    "issues": [
+      {
+        "field": "description",
+        "problem": "Description too short or empty",
+        "action": "dropped"
+      }
+    ],
+    "pipelineInstructions": [
+      {
+        "field": "description",
+        "frequency": 1,
+        "pattern": "description too short or empty",
+        "action": "dropped",
+        "instruction": "Description is too short — likely wrong selector or page requires JS rendering. Consider expanding selectors or ensuring pageFetcher.ts waits for content to load."
+      }
+    ]
+  },
+  "quality": {
+    "withDescription": 1,
+    "withLocation": 0,
+    "withSalary": 0,
+    "withCompany": 1,
+    "withSkills": 0
+  }
+}
