@@ -1,6 +1,73 @@
 {
   "purpose": "Instructions for creative job detail collection and API-ready export via pipeline/enrichFromCsv.ts",
-  "version": "2.3",
+  "version": "2.4",
+  "ollama_enrichment_pipeline": {
+    "entry_point": "pipeline/enrichFromCsvOllama.ts",
+    "description": "A standalone post-processing pipeline that reads the already-enriched results_enriched_api.csv and uses a local Ollama LLM (qwen3.5) to validate and fix every job row. Unlike enrichFromCsv.ts which fetches live pages, this script works purely from the existing CSV data — no web fetching, no Playwright.",
+    "purpose": "Quality pass over all jobs to ensure field correctness, description cleanliness, and structured HTML formatting — for free and with unlimited calls via local Ollama.",
+    "model": {
+      "provider": "Ollama (local)",
+      "model_id": "qwen3.5",
+      "api_endpoint": "http://localhost:11434/api/chat",
+      "stream": false,
+      "timeout_ms": 180000
+    },
+    "usage": {
+      "command": "npx tsx pipeline/enrichFromCsvOllama.ts",
+      "options": {
+        "--input <path>": "CSV input path (default: outputs/api-ready/latest/results_enriched_api.csv)",
+        "--concurrency <n>": "Parallel Ollama calls (default: 2, keep low for local model)",
+        "--maxJobs <n>": "Process at most N jobs (useful for testing)",
+        "--ollamaUrl <url>": "Ollama API base URL (default: http://localhost:11434)",
+        "--model <name>": "Ollama model name (default: qwen3.5)"
+      },
+      "test_first": "Run with --maxJobs 5 to verify output quality before processing the full dataset"
+    },
+    "output": "outputs/api-ready/latest/results_enriched_api_ollama.csv",
+    "fields_reviewed_by_ai": {
+      "title": {
+        "action": "Fix generic/careers-page headings (e.g. 'Asana Careers'). Infer real title from description or URL if possible. Mark INVALID if truly unfixable.",
+        "drop_condition": "If title is INVALID AND job_url also does not point to a real job"
+      },
+      "description": {
+        "action": "Strip all noise (cookie banners, login prompts, EEO statements, salary sections, apply forms, generic company boilerplate). Keep only job-relevant content: responsibilities, qualifications, about-the-role, required skills. Format as clean structured HTML using <h2>, <h3>, <p>, <ul>, <ol>, <li>, <strong>, <em>, <br>. Break single-paragraph blobs into logical sections with headings.",
+        "output_format": "Compact single-line HTML (no newlines within the HTML string)"
+      },
+      "jobType": {
+        "action": "Validate against allowed values. Fix using mapping rules. Default to FULLTIME if unknown.",
+        "allowed_values": ["GIG", "FULLTIME", "PARTTIME", "FREELANCE"]
+      },
+      "workType": {
+        "action": "Validate against allowed values. Infer from description/title/location if missing or incorrect. Clear if truly unknown.",
+        "allowed_values": ["ONSITE", "HYBRID", "REMOTE", ""]
+      },
+      "location": {
+        "fields": ["locationName", "formattedAddress", "city", "state", "country"],
+        "action": "Validate location makes sense. If city is 'Remote', clear all location fields and ensure workType=REMOTE. Fix obvious errors. Clear if nonsensical."
+      },
+      "job_url": {
+        "action": "Read-only. Passed to AI as context only. Never modified."
+      }
+    },
+    "drop_logic": "Drop a row ONLY when BOTH title cannot be determined to be a real job title AND the jobLink URL does not point to a real job posting (e.g., it's a careers listing page, homepage, 404, or error page).",
+    "fallback_behavior": "If AI returns invalid JSON or times out, the row is kept with basic heuristic validation (jobType/workType normalization) rather than dropped.",
+    "ai_response_format": {
+      "type": "JSON object (no markdown fences)",
+      "fields": {
+        "shouldDrop": "boolean",
+        "title": "string",
+        "description": "single-line HTML string",
+        "jobType": "GIG | FULLTIME | PARTTIME | FREELANCE",
+        "workType": "ONSITE | HYBRID | REMOTE | empty string",
+        "locationName": "string",
+        "formattedAddress": "string",
+        "city": "string",
+        "state": "string",
+        "country": "string"
+      }
+    },
+    "passthrough_fields": "All other CSV columns (keywords, skills, deadline, salary, company, hiringTeam, workEmail, etc.) are passed through unchanged — this pipeline only touches the 6 reviewed fields."
+  },
   "instructions": {
     "pipeline_overview": {
       "entry_point": "pipeline/enrichFromCsv.ts",
