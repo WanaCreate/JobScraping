@@ -10,6 +10,7 @@
     "clean-jobs-llm": "tsx pipeline/cleanJobsLlm.ts",
     "enrich-csv": "tsx pipeline/enrichFromCsv.ts",
     "enrich-csv-v2": "tsx pipeline/enrichFromCsv.v2.ts",
+    "enrich-csv-gpt": "tsx pipeline/enrichFromCsvGpt.ts",
     "build": "tsc -p ."
   },
   "dependencies": {

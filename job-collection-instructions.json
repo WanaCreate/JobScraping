@@ -1,6 +1,36 @@
 {
   "purpose": "Instructions for creative job detail collection and API-ready export via pipeline/enrichFromCsv.ts",
   "version": "2.4",
+  "gpt_enrichment_pipeline": {
+    "entry_point": "pipeline/enrichFromCsvGpt.ts",
+    "description": "A standalone post-processing pipeline that reads the already-enriched results_enriched_api.csv and uses OpenAI GPT-4.1 nano to validate and fix every job row. Works purely from existing CSV data — no web fetching, no Playwright.",
+    "model": {
+      "provider": "OpenAI",
+      "model_id": "gpt-4.1-nano",
+      "api_endpoint": "https://api.openai.com/v1/chat/completions",
+      "response_format": "json_object",
+      "timeout_ms": 60000
+    },
+    "usage": {
+      "command": "OPENAI_API_KEY=sk-... npx tsx pipeline/enrichFromCsvGpt.ts",
+      "npm_script": "npm run enrich-csv-gpt",
+      "options": {
+        "--input <path>": "CSV input path (default: outputs/api-ready/latest/results_enriched_api.csv)",
+        "--output <path>": "CSV output path (default: outputs/api-ready/latest/results_enriched_api_gpt.csv)",
+        "--concurrency <n>": "Parallel GPT calls (default: 5)",
+        "--maxJobs <n>": "Process at most N jobs (useful for testing)",
+        "--model <name>": "OpenAI model name (default: gpt-4.1-nano)",
+        "--apiKey <key>": "OpenAI API key (or set OPENAI_API_KEY env var)"
+      },
+      "test_first": "Run with --maxJobs 5 to verify output quality before processing the full dataset"
+    },
+    "output": "outputs/api-ready/latest/results_enriched_api_gpt.csv",
+    "drop_safety_net": "Code-level override prevents dropping rows where the title looks like a real job title or the URL matches a specific job posting pattern. Overridden rows get a fallback description: 'For more details, click apply'.",
+    "csv_safety": "Description HTML is forced to single-line (no newlines) both via prompt instructions and post-processing to prevent Excel CSV cell overflow.",
+    "input_preprocessing": "Input description is HTML-entity-decoded before sending to GPT (e.g. &lt;p&gt; -> <p>) to prevent double-escaping when the source CSV already contains escaped HTML.",
+    "output_postprocessing": "Emojis are stripped from GPT output via regex (covers Unicode emoji blocks U+1F000-1FFFF, misc symbols U+2600-27BF, variation selectors). GPT is also instructed to remove emojis in the prompt.",
+    "bold_rule": "<strong> is used ONLY for section heading labels (About the Role, Responsibilities, Requirements, etc.). Regular body text, list items, and sub-labels must NOT be bolded."
+  },
   "ollama_enrichment_pipeline": {
     "entry_point": "pipeline/enrichFromCsvOllama.ts",
     "description": "A standalone post-processing pipeline that reads the already-enriched results_enriched_api.csv and uses a local Ollama LLM (qwen3.5) to validate and fix every job row. Unlike enrichFromCsv.ts which fetches live pages, this script works purely from the existing CSV data — no web fetching, no Playwright.",
@@ -30,8 +60,9 @@
         "drop_condition": "If title is INVALID AND job_url also does not point to a real job"
       },
       "description": {
-        "action": "Strip all noise (cookie banners, login prompts, EEO statements, salary sections, apply forms, generic company boilerplate). Keep only job-relevant content: responsibilities, qualifications, about-the-role, required skills. Format as clean structured HTML using <h2>, <h3>, <p>, <ul>, <ol>, <li>, <strong>, <em>, <br>. Break single-paragraph blobs into logical sections with headings.",
-        "output_format": "Compact single-line HTML (no newlines within the HTML string)"
+        "action": "Strip all noise (cookie banners, login prompts, EEO statements, salary sections, apply forms, generic company boilerplate). Keep only job-relevant content: responsibilities, qualifications, about-the-role, required skills. Format as clean structured HTML using <p><strong>Title</strong></p> for section headings (no heading tags), <p> for all body text, <ul>/<ol>/<li> for lists, <strong>/<em> for emphasis. Every text block must be wrapped in <p>. Break single-paragraph blobs into logical sections.",
+        "output_format": "Compact single-line HTML (no newlines within the HTML string)",
+        "heading_rule": "Do NOT use <h1>/<h2>/<h3> heading tags. Use <p><strong>Section Title</strong></p> for section headings instead — renders at the right size and weight in the web app."
       },
       "jobType": {
         "action": "Validate against allowed values. Fix using mapping rules. Default to FULLTIME if unknown.",
@@ -49,8 +80,8 @@
         "action": "Read-only. Passed to AI as context only. Never modified."
       }
     },
-    "drop_logic": "Drop a row ONLY when BOTH title cannot be determined to be a real job title AND the jobLink URL does not point to a real job posting (e.g., it's a careers listing page, homepage, 404, or error page).",
-    "fallback_behavior": "If AI returns invalid JSON or times out, the row is kept with basic heuristic validation (jobType/workType normalization) rather than dropped.",
+    "drop_logic": "Drop a row ONLY when BOTH title cannot be determined to be a real job title AND the jobLink URL does not point to a real job posting (e.g., it's a careers listing page, homepage, 404, or error page). If EITHER the title looks like a real job title OR the URL looks like a specific job posting URL (contains /job/, /careers/specific-role, /position/, job ID in path, etc.), the row MUST be kept. When keeping a row with a poor/empty description, set description to 'For more details, click apply'.",
+    "fallback_behavior": "If AI returns invalid JSON or times out, the row is kept with basic heuristic validation (jobType/workType normalization) rather than dropped. If description cannot be meaningfully cleaned, it defaults to 'For more details, click apply' rather than being dropped.",
     "ai_response_format": {
       "type": "JSON object (no markdown fences)",
       "fields": {
