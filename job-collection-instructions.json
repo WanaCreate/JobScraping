@@ -1,9 +1,9 @@
 {
   "purpose": "Instructions for creative job detail collection and API-ready export via pipeline/enrichFromCsv.ts",
-  "version": "2.4",
+  "version": "2.5",
   "gpt_enrichment_pipeline": {
     "entry_point": "pipeline/enrichFromCsvGpt.ts",
-    "description": "A standalone post-processing pipeline that reads the already-enriched results_enriched_api.csv and uses OpenAI GPT-4.1 nano to validate and fix every job row. Works purely from existing CSV data — no web fetching, no Playwright.",
+    "description": "A standalone post-processing pipeline that reads the already-enriched results_enriched_api.csv and uses OpenAI GPT-4.1 nano to validate and fix every job row. Works purely from existing CSV data — no web fetching, no Playwright. Includes pre-processing steps for URL deduplication, cross-domain deduplication, and invalid job removal before GPT enrichment.",
     "model": {
       "provider": "OpenAI",
       "model_id": "gpt-4.1-nano",
@@ -25,11 +25,32 @@
       "test_first": "Run with --maxJobs 5 to verify output quality before processing the full dataset"
     },
     "output": "outputs/api-ready/latest/results_enriched_api_gpt.csv",
-    "drop_safety_net": "Code-level override prevents dropping rows where the title looks like a real job title or the URL matches a specific job posting pattern. Overridden rows get a fallback description: 'For more details, click apply'.",
+    "pre_processing": {
+      "url_dedup": "Normalize URLs (strip query params, trailing slashes, fragments) and remove duplicate rows with identical normalized URLs. Keeps the first occurrence.",
+      "cross_domain_dedup": "Group rows by (title_lowercase, company_lowercase). When duplicates exist across different domains (e.g. careers.nike.com vs nike.wd1.myworkdayjobs.com), keep the canonical careers-page URL. ATS domains (myworkdayjobs, greenhouse, lever, smartrecruiters, icims, ashbyhq) get lower priority.",
+      "invalid_job_removal": "Drop rows with known-bad titles (person names like 'Neria Katz', 'Rui Xu'; unavailable jobs like 'Job not available') regardless of URL. Also drop rows matching invalid title patterns (cookie banners, generic page headings like 'Current openings at X', 'Open Roles', 'Figma Careers') when URL is not a specific job posting. If title is bad but URL points to a real job, attempt to recover the title from the URL slug."
+    },
+    "drop_safety_net": "Code-level override prevents dropping rows where the title looks like a real job title or the URL matches a specific job posting pattern. Overridden rows get a fallback description: 'For more details, click apply'. Known-bad titles (person names, 'job not available') and invalid title patterns (cookie, generic pages) are also checked against ALWAYS_DROP_TITLES and INVALID_TITLE_PATTERNS constants.",
     "csv_safety": "Description HTML is forced to single-line (no newlines) both via prompt instructions and post-processing to prevent Excel CSV cell overflow.",
     "input_preprocessing": "Input description is HTML-entity-decoded before sending to GPT (e.g. &lt;p&gt; -> <p>) to prevent double-escaping when the source CSV already contains escaped HTML.",
-    "output_postprocessing": "Emojis are stripped from GPT output via regex (covers Unicode emoji blocks U+1F000-1FFFF, misc symbols U+2600-27BF, variation selectors). GPT is also instructed to remove emojis in the prompt.",
+    "output_postprocessing": "Emojis are stripped from GPT output via regex (covers Unicode emoji blocks U+1F000-1FFFF, misc symbols U+2600-27BF, variation selectors). GPT is also instructed to remove emojis in the prompt. Keywords are deterministically cleaned (strip HTML, entries >50 chars, sentence fragment prefixes). Skills are cleaned via GPT and deterministic fallback (isPhraseLikeSkill filter).",
     "bold_rule": "<strong> is used ONLY for section heading labels (About the Role, Responsibilities, Requirements, etc.). Regular body text, list items, and sub-labels must NOT be bolded."
+  },
+  "cleanup_pipeline": {
+    "entry_point": "pipeline/cleanAndDedup.ts",
+    "description": "One-time cleanup and deduplication script for an already-enriched CSV. Runs URL dedup, cross-domain dedup, invalid job removal, deterministic keyword cleanup, and GPT-based skills/keywords cleanup on all rows.",
+    "usage": {
+      "command": "npx tsx pipeline/cleanAndDedup.ts",
+      "options": {
+        "--input <path>": "CSV input path (default: outputs/api-ready/latest/results_enriched_api_gpt.csv)",
+        "--output <path>": "CSV output path (default: outputs/api-ready/latest/results_cleaned.csv)",
+        "--concurrency <n>": "Parallel GPT calls (default: 5)",
+        "--model <name>": "OpenAI model name (default: gpt-4.1-nano)",
+        "--apiKey <key>": "OpenAI API key (or set OPENAI_API_KEY env var)",
+        "--dryRun": "Print what would be done without writing output"
+      }
+    },
+    "output": "outputs/api-ready/latest/results_cleaned.csv"
   },
   "ollama_enrichment_pipeline": {
     "entry_point": "pipeline/enrichFromCsvOllama.ts",
@@ -97,7 +118,7 @@
         "country": "string"
       }
     },
-    "passthrough_fields": "All other CSV columns (keywords, skills, deadline, salary, company, hiringTeam, workEmail, etc.) are passed through unchanged — this pipeline only touches the 6 reviewed fields."
+    "passthrough_fields": "All other CSV columns (deadline, salary, company, hiringTeam, workEmail, etc.) are passed through unchanged — this pipeline only touches the reviewed fields."
   },
   "instructions": {
     "pipeline_overview": {
@@ -285,7 +306,7 @@
           "Description missing typical job keywords"
         ]
       },
-      "deduplication": "title (lowercased) + canonicalized job URL as compound key",
+      "deduplication": "Two-phase: (1) URL normalization dedup — strip query params, trailing slashes, fragments; keep first occurrence. (2) Cross-domain dedup — group by (title_lowercase, company_lowercase); when same job exists on multiple domains (e.g. careers.company.com vs company.wd1.myworkdayjobs.com), keep the canonical careers-page URL. ATS domains (myworkdayjobs, greenhouse, lever, smartrecruiters, icims, ashbyhq) get lower priority.",
       "source_metadata": "hiringTeam field set to uploader UID (default: system-scraper); allowEmailApplications enabled when workEmail/company.email exists"
     },
     "api_endpoint_notes": {
