@@ -1,0 +1,22 @@
+{
+  "startedAt": "2026-03-02T13:36:06.736Z",
+  "inputFile": "C:\\Users\\vyash\\Desktop\\Business\\Wana\\_Code\\JobScraping\\results_150_optimized.json",
+  "discoveredJobs": 999,
+  "prefilteredCreativeJobs": 890,
+  "dedupedJobs": 400,
+  "attemptedEnrichment": 400,
+  "enrichedJobs": 222,
+  "apiReadyJobs": 222,
+  "missingFieldCounts": {
+    "location": 8,
+    "salary": 203,
+    "company": 0,
+    "workType": 191,
+    "deadline": 210,
+    "skills": 0,
+    "keywords": 1,
+    "workEmail": 199,
+    "jobLink": 0
+  },
+  "requiredFieldFailures": 0
+}

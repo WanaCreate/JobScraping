@@ -1,0 +1,17 @@
+{
+  "generatedAt": "2026-03-02T23:36:37.724Z",
+  "runTag": "2026-03-02_233303Z",
+  "inputFile": "C:\\Users\\vyash\\Desktop\\Business\\Wana\\_Code\\JobScraping\\outputs\\scrape\\latest\\results_scrape.json",
+  "apiJson": "results_jobs_api_min1.json",
+  "apiCsv": "results_jobs_api_min1.csv",
+  "enrichedJson": "results_jobs_enriched_min1.json",
+  "qualityReport": "results_jobs_quality_report_min1.json",
+  "apiRecordCount": 1256,
+  "summary": {
+    "discoveredJobs": 2338,
+    "prefilteredCreativeJobs": 2105,
+    "attemptedEnrichment": 1669,
+    "enrichedJobs": 1314,
+    "apiReadyJobs": 1256
+  }
+}
