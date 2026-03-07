@@ -1,0 +1,315 @@
+{
+  "generatedAt": "2026-03-03T05:08:49.025Z",
+  "inputSet": "results_jobs_api_boost1500.json",
+  "inputCount": 1505,
+  "removedCount": 167,
+  "outputCount": 1338,
+  "reasonCounts": {
+    "skip_title": 91,
+    "marketing_or_content_path": 53,
+    "wordpress_post_page": 7,
+    "generic_non_job_title": 16
+  },
+  "sampleRemoved": [
+    {
+      "title": "Skip to content",
+      "jobLink": "http://www.ghostnoteagency.com/careers",
+      "reason": "skip_title"
+    },
+    {
+      "title": "Skip to content",
+      "jobLink": "http://www.ghostnoteagency.com/jobs",
+      "reason": "skip_title"
+    },
+    {
+      "title": "Skip to content",
+      "jobLink": "https://au.keepcup.com/pages/careers",
+      "reason": "skip_title"
+    },
+    {
+      "title": "Skip to content",
+      "jobLink": "https://au.keepcup.com/pages/careers/search-results",
+      "reason": "skip_title"
+    },
+    {
+      "title": "Web3 website design that captures attention in the blockchain space",
+      "jobLink": "https://avark.agency/services/website-design",
+      "reason": "marketing_or_content_path"
+    },
+    {
+      "title": "Web3 product design experiences that are crafted for your audience",
+      "jobLink": "https://avark.agency/services/product-design",
+      "reason": "marketing_or_content_path"
+    },
+    {
+      "title": "Web3 branding from an agency that understands the blockchain space",
+      "jobLink": "https://avark.agency/services/branding",
+      "reason": "marketing_or_content_path"
+    },
+    {
+      "title": "Skip to content",
+      "jobLink": "https://brandon-consultants.com/careers",
+      "reason": "skip_title"
+    },
+    {
+      "title": "Website Design",
+      "jobLink": "https://buzzworthystudio.com/services/website-design",
+      "reason": "marketing_or_content_path"
+    },
+    {
+      "title": "MOTION DESIGN",
+      "jobLink": "https://buzzworthystudio.com/services/motion-design",
+      "reason": "marketing_or_content_path"
+    },
+    {
+      "title": "Skip to Content",
+      "jobLink": "https://jobs.google.com/about",
+      "reason": "skip_title"
+    },
+    {
+      "title": "Skip to Content",
+      "jobLink": "https://careers.odoo.com/web/login?redirect=%2Fodoo%3F",
+      "reason": "skip_title"
+    },
+    {
+      "title": "Skip to Content",
+      "jobLink": "https://careers.odoo.com/web/reset_password?redirect=%2Fodoo%3F",
+      "reason": "skip_title"
+    },
+    {
+      "title": "Skip to main content",
+      "jobLink": "https://cfj.org/careers",
+      "reason": "skip_title"
+    },
+    {
+      "title": "Skip to main content",
+      "jobLink": "https://copyright.gov/about/careers",
+      "reason": "skip_title"
+    },
+    {
+      "title": "Skip to content",
+      "jobLink": "https://corporate.abercrombie.com/careers/home-offices",
+      "reason": "skip_title"
+    },
+    {
+      "title": "Skip to content",
+      "jobLink": "https://corporate.abercrombie.com/careers",
+      "reason": "skip_title"
+    },
+    {
+      "title": "Web design",
+      "jobLink": "https://djc-designs.com/?page_id=2180",
+      "reason": "wordpress_post_page"
+    },
+    {
+      "title": "Custom WordPress Website Design",
+      "jobLink": "https://djc-designs.com/?page_id=3185",
+      "reason": "wordpress_post_page"
+    },
+    {
+      "title": "Graphic Design Services and Marketing Services",
+      "jobLink": "https://djc-designs.com/?page_id=3",
+      "reason": "wordpress_post_page"
+    },
+    {
+      "title": "Bakery Website Design",
+      "jobLink": "https://djc-designs.com/?p=3931",
+      "reason": "wordpress_post_page"
+    },
+    {
+      "title": "Restaurant Website Design",
+      "jobLink": "https://djc-designs.com/?p=2412",
+      "reason": "wordpress_post_page"
+    },
+    {
+      "title": "Distillery Website Design",
+      "jobLink": "https://djc-designs.com/?p=2127",
+      "reason": "wordpress_post_page"
+    },
+    {
+      "title": "Children’s Book Author Website Design",
+      "jobLink": "https://djc-designs.com/?p=2018",
+      "reason": "wordpress_post_page"
+    },
+    {
+      "title": "Skip to main content",
+      "jobLink": "https://droga5.com/careers",
+      "reason": "skip_title"
+    },
+    {
+      "title": "We design environments where growth feels natural.",
+      "jobLink": "https://dwpinterics.com/services",
+      "reason": "marketing_or_content_path"
+    },
+    {
+      "title": "Mobile app design services: UI and UX solutions for exceptional products",
+      "jobLink": "https://excited.agency/services/mobile-app-design-services",
+      "reason": "marketing_or_content_path"
+    },
+    {
+      "title": "B2B website design agency: high-impact B2B web designs",
+      "jobLink": "https://excited.agency/services/b2b-website-design-agency",
+      "reason": "marketing_or_content_path"
+    },
+    {
+      "title": "Professional SaaS design agency offering expert product design services",
+      "jobLink": "https://excited.agency/services/saas-design-agency",
+      "reason": "marketing_or_content_path"
+    },
+    {
+      "title": "Professional web app design services for your business",
+      "jobLink": "https://excited.agency/services/web-app-design-services",
+      "reason": "marketing_or_content_path"
+    },
+    {
+      "title": "Custom web design agency",
+      "jobLink": "https://excited.agency/services/custom-web-design-agency",
+      "reason": "marketing_or_content_path"
+    },
+    {
+      "title": "Exceptional e-commerce website design",
+      "jobLink": "https://excited.agency/services/ecommerce-web-design-services",
+      "reason": "marketing_or_content_path"
+    },
+    {
+      "title": "SaaS web design agency: website designs & services",
+      "jobLink": "https://excited.agency/services/saas-website-design-agency",
+      "reason": "marketing_or_content_path"
+    },
+    {
+      "title": "UX Design",
+      "jobLink": "https://imaga.ai/services/ux-design",
+      "reason": "marketing_or_content_path"
+    },
+    {
+      "title": "UI Design",
+      "jobLink": "https://imaga.ai/services/ui-design",
+      "reason": "marketing_or_content_path"
+    },
+    {
+      "title": "Skip to main content",
+      "jobLink": "https://jobs.ikea.com/en",
+      "reason": "skip_title"
+    },
+    {
+      "title": "Skip to main content",
+      "jobLink": "https://jobs.ikea.com/en/cookie-statement",
+      "reason": "skip_title"
+    },
+    {
+      "title": "Skip to main content",
+      "jobLink": "https://jobs.ikea.com/en/cookie-management",
+      "reason": "skip_title"
+    },
+    {
+      "title": "Creative Web Design and Development Services",
+      "jobLink": "https://kota.co.uk/service/web-design-development",
+      "reason": "marketing_or_content_path"
+    },
+    {
+      "title": "Skip to content",
+      "jobLink": "https://littlewebsite.co/careers",
+      "reason": "skip_title"
+    },
+    {
+      "title": "Skip to content",
+      "jobLink": "https://littlewebsite.co/jobs",
+      "reason": "skip_title"
+    },
+    {
+      "title": "Skip to content",
+      "jobLink": "https://littlewebsite.co/careers/jobs",
+      "reason": "skip_title"
+    },
+    {
+      "title": "Skip to content",
+      "jobLink": "https://littlewebsite.co/career/jobs",
+      "reason": "skip_title"
+    },
+    {
+      "title": "Skip to content",
+      "jobLink": "https://littlewebsite.co/job-search-results",
+      "reason": "skip_title"
+    },
+    {
+      "title": "Skip to content",
+      "jobLink": "https://loandbehold.studio/careers",
+      "reason": "skip_title"
+    },
+    {
+      "title": "Skip to main content",
+      "jobLink": "https://monday.com/careers",
+      "reason": "skip_title"
+    },
+    {
+      "title": "A Comprehensive Guide to UI/UX Design Careers & Salaries",
+      "jobLink": "https://musemind.agency/blog/ui-ux-designer-careers-salaries",
+      "reason": "marketing_or_content_path"
+    },
+    {
+      "title": "UX und UI Design: Was ist der Unterschied?",
+      "jobLink": "https://nextblick.com/blog/ux-ui-design-unterschied",
+      "reason": "marketing_or_content_path"
+    },
+    {
+      "title": "Design research",
+      "jobLink": "https://optimisticfutures.co.uk/services/design-research",
+      "reason": "marketing_or_content_path"
+    },
+    {
+      "title": "Service & experience design",
+      "jobLink": "https://optimisticfutures.co.uk/services/service-experience-design",
+      "reason": "marketing_or_content_path"
+    },
+    {
+      "title": "Skip to main content",
+      "jobLink": "https://pressable.com/careers",
+      "reason": "skip_title"
+    },
+    {
+      "title": "UI/UX Design Services",
+      "jobLink": "https://seclgroup.com/services/ui-ux-design",
+      "reason": "marketing_or_content_path"
+    },
+    {
+      "title": "Web Design Services",
+      "jobLink": "https://seclgroup.com/services/web-design",
+      "reason": "marketing_or_content_path"
+    },
+    {
+      "title": "Proven UI/UX design agency behind real results",
+      "jobLink": "https://shakuro.com/services/ui-ux",
+      "reason": "marketing_or_content_path"
+    },
+    {
+      "title": "Design that elevates your digital experience",
+      "jobLink": "https://trewknowledge.com/services/design",
+      "reason": "marketing_or_content_path"
+    },
+    {
+      "title": "We discuss with Design Rush what it takes to build an iconic brand...",
+      "jobLink": "https://turnerduckworth.com/drf/news-articles/what-does-it-take-to-build-an-iconic-brand-joanne",
+      "reason": "marketing_or_content_path"
+    },
+    {
+      "title": "Kleenex Type Design is Shortlisted for D&amp;AD",
+      "jobLink": "https://turnerduckworth.com/drf/news-articles/kleenex-type-design-is-shortlisted-for-dad",
+      "reason": "marketing_or_content_path"
+    },
+    {
+      "title": "For the love of design",
+      "jobLink": "https://turnerduckworth.com/drf/news-articles/for-the-love-of-design",
+      "reason": "marketing_or_content_path"
+    },
+    {
+      "title": "Instinct over Data - Design Week",
+      "jobLink": "https://turnerduckworth.com/drf/news-articles/instinct-over-data-in-design-design-week",
+      "reason": "marketing_or_content_path"
+    },
+    {
+      "title": "&#x27;My Life In Design&#x27; Podcast with Joanne Chan",
+      "jobLink": "https://turnerduckworth.com/drf/news-articles/my-life-in-design-podcast-with-joanne-chan",
+      "reason": "marketing_or_content_path"
+    }
+  ]
+}

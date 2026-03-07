@@ -1,0 +1,23 @@
+{
+  "startedAt": "2026-03-03T10:46:38.354Z",
+  "inputFile": "C:\\Users\\vyash\\Desktop\\Business\\Wana\\_Code\\JobScraping\\outputs\\scrape\\latest\\results_scrape.json",
+  "discoveredJobs": 2338,
+  "prefilteredCreativeJobs": 2105,
+  "dedupedJobs": 1669,
+  "attemptedEnrichment": 1669,
+  "enrichedJobs": 1307,
+  "apiReadyJobs": 1248,
+  "finalDedupedJobs": 1248,
+  "missingFieldCounts": {
+    "location": 709,
+    "salary": 1194,
+    "company": 0,
+    "workType": 1004,
+    "deadline": 1264,
+    "skills": 22,
+    "keywords": 22,
+    "workEmail": 924,
+    "jobLink": 0
+  },
+  "requiredFieldFailures": 0
+}
