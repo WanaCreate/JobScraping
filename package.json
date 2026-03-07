@@ -4,15 +4,14 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "scrape": "tsx pipeline/runScraper.ts",
-    "collect-jobs": "tsx pipeline/collectJobDetails.ts",
-    "clean-jobs": "tsx pipeline/cleanJobs.ts",
-    "clean-jobs-llm": "tsx pipeline/cleanJobsLlm.ts",
-    "enrich-csv": "tsx pipeline/enrichFromCsv.ts",
-    "enrich-csv-v2": "tsx pipeline/enrichFromCsv.v2.ts",
+    "pipeline": "tsx pipeline/run.ts",
+    "stage1": "tsx pipeline/stage1_scrapeCareers.ts",
+    "stage2": "tsx pipeline/stage2_collectJobDetails.ts",
+    "stage3": "tsx pipeline/stage3_enrichGpt.ts",
     "build": "tsc -p ."
   },
   "dependencies": {
+    "@esbuild/linux-x64": "^0.27.3",
     "axios": "^1.9.0",
     "cheerio": "^1.0.0",
     "playwright": "^1.52.0"
