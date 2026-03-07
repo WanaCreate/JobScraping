@@ -8,8 +8,11 @@
  *   c) jobType      – validate against allowed values, default FULLTIME
  *   d) workType     – validate against allowed values, fix or clear
  *   e) location     – validate, fix or clear
- *   f) job_url      – read-only context
+ *   f) keywords     – clean and regenerate proper tags
+ *   g) skills       – clean phrase-like entries, keep only real skills
+ *   h) job_url      – read-only context
  *
+ * Pre-processing: URL dedup + cross-domain dedup before GPT enrichment.
  * Drop a row ONLY when both the title AND job_url are irrelevant to a real job posting.
  *
  * IMPORTANT - CSV / Excel safety:
@@ -32,6 +35,25 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
+
+// ─── Load .env ────────────────────────────────────────────────────
+async function loadEnv(): Promise<void> {
+  try {
+    const envPath = path.resolve(process.cwd(), ".env");
+    const content = await readFile(envPath, "utf8");
+    for (const line of content.split("\n")) {
+      const trimmed = line.trim();
+      if (!trimmed || trimmed.startsWith("#")) continue;
+      const eqIdx = trimmed.indexOf("=");
+      if (eqIdx < 0) continue;
+      const key = trimmed.slice(0, eqIdx).trim();
+      const val = trimmed.slice(eqIdx + 1).trim();
+      if (!process.env[key]) process.env[key] = val;
+    }
+  } catch {
+    // .env not found, that's fine
+  }
+}
 
 // ─── Types ────────────────────────────────────────────────────────
 
@@ -199,6 +221,146 @@ function allRowsToCsv(rows: CsvJobRow[]): string {
   return [header, ...rows.map(r => rowToCsv(r))].join("\n");
 }
 
+// ─── Pre-processing: Deduplication ───────────────────────────────
+
+function normalizeUrl(url: string): string {
+  try {
+    const parsed = new URL(url);
+    return `${parsed.protocol}//${parsed.host}${parsed.pathname.replace(/\/+$/, "")}`.toLowerCase();
+  } catch {
+    return url.toLowerCase().replace(/\/+$/, "");
+  }
+}
+
+function urlPriority(url: string): number {
+  const lower = url.toLowerCase();
+  if (/myworkdayjobs\.com|greenhouse\.io|lever\.co|smartrecruiters\.com|icims\.com|ashbyhq\.com|job-boards\./i.test(lower)) return 0;
+  if (/careers?\./i.test(lower)) return 2;
+  return 1;
+}
+
+function deduplicateRows(rows: CsvJobRow[]): { kept: CsvJobRow[]; urlDupes: number; crossDomainDupes: number } {
+  // Step 1: URL dedup (strip query params)
+  const urlSeen = new Map<string, number>();
+  const urlDeduped: CsvJobRow[] = [];
+  let urlDupes = 0;
+
+  for (const row of rows) {
+    const normalized = normalizeUrl(row.jobLink);
+    if (urlSeen.has(normalized)) {
+      urlDupes++;
+    } else {
+      urlSeen.set(normalized, urlDeduped.length);
+      urlDeduped.push(row);
+    }
+  }
+
+  // Step 2: Cross-domain dedup (same title+company)
+  const groups = new Map<string, CsvJobRow[]>();
+  for (const row of urlDeduped) {
+    const key = `${row.title.toLowerCase().trim()}|||${row.company.toLowerCase().trim()}`;
+    const existing = groups.get(key);
+    if (existing) existing.push(row);
+    else groups.set(key, [row]);
+  }
+
+  const kept: CsvJobRow[] = [];
+  let crossDomainDupes = 0;
+
+  for (const group of groups.values()) {
+    if (group.length === 1) {
+      kept.push(group[0]);
+    } else {
+      group.sort((a, b) => urlPriority(b.jobLink) - urlPriority(a.jobLink));
+      kept.push(group[0]);
+      crossDomainDupes += group.length - 1;
+    }
+  }
+
+  return { kept, urlDupes, crossDomainDupes };
+}
+
+// ─── Pre-processing: Invalid job detection ───────────────────────
+
+/** Titles that are clearly not job titles — always drop regardless of URL */
+const ALWAYS_DROP_TITLES = new Set([
+  "neria katz", "rui xu", "job not available",
+]);
+
+const INVALID_TITLE_PATTERNS = [
+  /^page not found$/i,
+  /^404$/i,
+  /^error$/i,
+  /^select which cookies/i,
+  /^cookie/i,
+  /^current openings at/i,
+  /^careers at/i,
+  /^open roles$/i,
+  /^design team$/i,
+  /^jobs in /i,
+  /^opportunities by /i,
+  /^great website design/i,
+];
+
+function titleFromUrl(url: string): string | null {
+  try {
+    const parsed = new URL(url);
+    const segments = parsed.pathname.split("/").filter(Boolean);
+    for (let i = segments.length - 1; i >= 0; i--) {
+      const seg = segments[i];
+      if (/^\d+$/.test(seg) || seg.length < 5) continue;
+      const slug = seg.replace(/^\d+-/, "").replace(/[-_]/g, " ").trim();
+      if (slug.length >= 5 && /[a-z]/.test(slug)) {
+        return slug.replace(/\b\w/g, c => c.toUpperCase());
+      }
+    }
+  } catch {}
+  return null;
+}
+
+function isSpecificJobUrl(url: string): boolean {
+  return /\/(job|position|career|opening|role|vacancy)s?\//i.test(url) ||
+    /\/careers\/[a-z0-9]+-[a-z0-9]/i.test(url) ||
+    /\/jobs\/\d+/i.test(url) ||
+    /[?&]gh_jid=/i.test(url);
+}
+
+function preFilterInvalidJobs(rows: CsvJobRow[]): { kept: CsvJobRow[]; removed: number } {
+  const kept: CsvJobRow[] = [];
+  let removed = 0;
+
+  for (const row of rows) {
+    const titleLower = row.title.toLowerCase().trim();
+
+    if (ALWAYS_DROP_TITLES.has(titleLower)) {
+      removed++;
+      console.log(`[PRE-DROP] "${row.title}" | ${row.company}`);
+      continue;
+    }
+
+    const titleIsBad = INVALID_TITLE_PATTERNS.some(p => p.test(titleLower));
+    if (titleIsBad) {
+      if (isSpecificJobUrl(row.jobLink)) {
+        const fixedTitle = titleFromUrl(row.jobLink);
+        if (fixedTitle) {
+          row.title = fixedTitle;
+          kept.push(row);
+        } else {
+          removed++;
+          console.log(`[PRE-DROP] "${row.title}" | ${row.company}`);
+        }
+      } else {
+        removed++;
+        console.log(`[PRE-DROP] "${row.title}" | ${row.company}`);
+      }
+    } else {
+      kept.push(row);
+    }
+  }
+
+  return { kept, removed };
+}
+
 // ─── OpenAI API ───────────────────────────────────────────────────
 
 interface OpenAiMessage {
@@ -272,14 +434,57 @@ function normalizeWorkType(raw: string): WorkTypeValue | "" {
   return "";
 }
 
+// ─── Keywords & Skills post-processing ───────────────────────────
+
+/** Strip HTML, sentence fragments, and overly long entries from keywords */
+function cleanKeywords(keywords: string): string {
+  if (!keywords) return "";
+  return keywords.split("|").map(k => k.trim()).filter(k => {
+    if (!k) return false;
+    if (/<[^>]+>/.test(k)) return false;
+    if (k.length > 50) return false;
+    if (/^(or |and |such as |with |including |ideally |preferably )/.test(k.toLowerCase())) return false;
+    return true;
+  }).join("|");
+}
+
+/** Check if a skill entry is a sentence fragment rather than a real skill */
+function isPhraseLikeSkill(s: string): boolean {
+  if (s.length > 50) return true;
+  if (/^(the_|a_|of_|with_|and_|or_|in_|for_|is_|are_|as_|at_|to_|that_|this_|ability_|while_|along_|including_|ideally_|preferably_|contributing_|dealing_|bachelor_|experience_)/.test(s)) return true;
+  if (/(_the_|_a_|_is_|_are_|_that_|_this_)/.test(s)) return true;
+  if (/(_to_|_for_|_with_|_and_|_or_|_in_|_at_|_of_)/.test(s)) return true;
+  if (/^-_/.test(s)) return true;
+  if (/degr|_why_/.test(s)) return true;
+  return false;
+}
+
+/** Clean skills by removing phrase-like entries */
+function cleanSkills(skills: string): string {
+  if (!skills) return "";
+  return skills.split("|").map(s => s.trim()).filter(s => {
+    if (!s) return false;
+    return !isPhraseLikeSkill(s);
+  }).join("|");
+}
+
 // ─── Prompt ───────────────────────────────────────────────────────
+
+const VALID_TAG_VOCABULARY = [
+  "design", "creative", "brand", "content", "visual", "motion", "ui", "ux",
+  "video", "product design", "graphic design", "animation", "art direction",
+  "copywriting", "ux writing", "research", "illustration", "typography",
+  "branding & identity", "digital design", "digital marketing", "interaction design",
+  "industrial design", "accessibility", "2d animation", "ai animation",
+  "content design", "strategy", "technology", "html", "sketch", "prototypes",
+];
 
 function buildEnrichmentPrompt(row: CsvJobRow): OpenAiMessage[] {
   const systemPrompt = `You are a job listing data quality assistant. Review and fix the provided job listing fields.
 
 RULES:
 
-1. TITLE: Keep if it's a real job title. If it's a generic careers-page heading (e.g. "Asana Careers"), cookie notice, 404 page, or otherwise not a real job title, infer the correct title from the description or URL. If you cannot determine a real title, set it to "INVALID".
+1. TITLE: Keep if it's a real job title. If it's a generic careers-page heading (e.g. "Asana Careers"), cookie notice, 404 page, person name, or otherwise not a real job title, infer the correct title from the description or URL. If you cannot determine a real title, set it to "INVALID".
 
 2. DESCRIPTION: Clean and reformat the job description.
    REMOVE completely:
@@ -331,6 +536,23 @@ RULES:
 8. DESCRIPTION FALLBACK: If you cannot extract meaningful job description content (the source is mostly noise, a login wall, or a redirect page), set description to exactly: "For more details, click apply"
    Do NOT drop a row just because the description is poor — only drop based on rule 7 above.
 
+9. KEYWORDS (tags): Return cleaned keywords as pipe-delimited short category labels.
+   - Pick 3-7 relevant tags from this vocabulary: ${VALID_TAG_VOCABULARY.join(", ")}
+   - You may add 1-2 tags outside the vocabulary if highly relevant, but keep them short (1-3 words max)
+   - Remove any HTML, sentence fragments, or entries longer than 50 characters
+   - If the current keywords are already good, return them unchanged
+
+10. SKILLS: Return cleaned skills as pipe-delimited lowercase_underscore entries.
+   - A valid skill is a tool, technology, methodology, or concrete competency that could appear on a resume (e.g. "figma", "design_systems", "ux_research", "prototyping", "adobe_creative_suite", "motion_graphics", "html", "css", "javascript", "typography", "branding")
+   - REMOVE anything that is:
+     - A sentence fragment or phrase (e.g. "as_well_as_research", "align_with_our_needs", "the_future_of_creative", "execution_at_an_agency", "ability_to_track_metrics", "interaction_models_for_chatbots", "metrics_to_determine", "to_build_models")
+     - A degree or qualification (e.g. "bachelor_s_degree", "master_s_degree")
+     - A truncated/broken string (e.g. "-_speak", "-_j", "a_amp")
+     - A generic soft trait (e.g. "self-motivated", "attention_to_detail", "are_a_fit", "to_grow")
+     - A protected class or legal phrase (e.g. "without_regard_to_race", "disability")
+   - Keep 3-10 valid skills. If few valid skills remain after cleaning, that's fine — don't invent skills
+   - If the current skills are already clean, return them unchanged
+
 Respond with ONLY a valid JSON object (no markdown fences, no explanation):
 {
   "shouldDrop": false,
@@ -346,7 +568,9 @@ Respond with ONLY a valid JSON object (no markdown fences, no explanation):
   "salaryMin": "",
   "salaryMax": "",
   "salaryCurrency": "",
-  "salaryPeriod": ""
+  "salaryPeriod": "",
+  "keywords": "design|ux|product design",
+  "skills": "figma|prototyping|design_systems"
 }`;
 
   const userPrompt = `Review this job listing:
@@ -358,6 +582,8 @@ CURRENT WORK TYPE: ${row.workType}
 LOCATION: ${row.locationName} | ${row.formattedAddress} | ${row.city}, ${row.state}, ${row.country}
 COMPANY: ${row.company}
 SALARY: min=${row.salaryMin} max=${row.salaryMax} currency=${row.salaryCurrency} period=${row.salaryPeriod}
+CURRENT KEYWORDS: ${row.keywords}
+CURRENT SKILLS: ${row.skills}
 
 DESCRIPTION (may contain HTML):
 ${decodeHtmlEntities(row.description).slice(0, 8000)}`;
@@ -385,6 +611,8 @@ interface AiEnrichResult {
   salaryMax: string;
   salaryCurrency: string;
   salaryPeriod: string;
+  keywords: string;
+  skills: string;
 }
 
 function parseAiResponse(raw: string): AiEnrichResult | null {
@@ -414,6 +642,8 @@ function parseAiResponse(raw: string): AiEnrichResult | null {
       salaryMax: String(parsed.salaryMax ?? ""),
       salaryCurrency: String(parsed.salaryCurrency ?? ""),
       salaryPeriod: String(parsed.salaryPeriod ?? ""),
+      keywords: String(parsed.keywords ?? ""),
+      skills: String(parsed.skills ?? ""),
     };
   } catch {
     return null;
@@ -454,13 +684,7 @@ function toSingleLineHtml(html: string): string {
 }
 
 function ensureParagraphSpacing(html: string): string {
-  // Ensure bare text between closing and opening block tags gets wrapped
-  // Insert </p><p> between consecutive text blocks that lack wrapping
   let result = html;
-  // Ensure there's no bare text outside of tags — wrap orphan text segments in <p>
-  // Split on block-level tags and re-wrap if needed
-  // More importantly: ensure </p><p> boundaries exist between logical paragraphs
-  // If GPT merged multiple paragraphs into one <p>, split on <br><br> or double <br>
   result = result.replace(/<br\s*\/?>\s*<br\s*\/?>/gi, "</p><p>");
   return result;
 }
@@ -488,23 +712,19 @@ function applyEnrichment(row: CsvJobRow, ai: AiEnrichResult): CsvJobRow {
   const aiHasLocation = !!(ai.city || ai.state || ai.country || ai.locationName);
 
   if (aiHasLocation) {
-    // Check if AI location actually differs from original
     const locationChanged =
       (ai.city && ai.city.toLowerCase() !== (row.city || "").toLowerCase()) ||
       (ai.state && ai.state.toLowerCase() !== (row.state || "").toLowerCase()) ||
       (ai.country && ai.country.toLowerCase() !== (row.country || "").toLowerCase());
 
     if (locationChanged) {
-      // AI found a conflicting location in the description — use AI's version
       updated.locationName = ai.locationName || row.locationName;
       updated.formattedAddress = ai.formattedAddress || row.formattedAddress;
       updated.city = ai.city || row.city;
       updated.state = ai.state || row.state;
       updated.country = ai.country || row.country;
     }
-    // Otherwise keep original location as-is
   }
-  // If AI returned empty location but original had location, keep original (no change needed)
 
   // --- WorkType ---
   const aiWorkType = normalizeWorkType(ai.workType);
@@ -550,6 +770,20 @@ function applyEnrichment(row: CsvJobRow, ai: AiEnrichResult): CsvJobRow {
     updated.salaryPeriod = ai.salaryPeriod;
   }
 
+  // --- Keywords: use AI result, then deterministic cleanup as safety net ---
+  if (ai.keywords) {
+    updated.keywords = cleanKeywords(ai.keywords);
+  } else {
+    updated.keywords = cleanKeywords(row.keywords);
+  }
+
+  // --- Skills: use AI result, then deterministic cleanup as safety net ---
+  if (ai.skills) {
+    updated.skills = cleanSkills(ai.skills);
+  } else {
+    updated.skills = cleanSkills(row.skills);
+  }
+
   return updated;
 }
 
@@ -578,6 +812,7 @@ async function runConcurrent<T, R>(
 // ─── Main ─────────────────────────────────────────────────────────
 
 async function main(): Promise<void> {
+  await loadEnv();
   const options = parseCliOptions();
   const inputPath = path.resolve(process.cwd(), options.input);
   const outputPath = path.resolve(process.cwd(), options.output);
@@ -587,6 +822,21 @@ async function main(): Promise<void> {
   const csvContent = await readFile(inputPath, "utf8");
   let rows = parseCsvContent(csvContent);
   console.log(`[INFO] Parsed ${rows.length} jobs from CSV`);
+
+  // ── Pre-processing: Deduplication ──
+  console.log(`\n[INFO] === Pre-processing: Deduplication ===`);
+  const dedupResult = deduplicateRows(rows);
+  rows = dedupResult.kept;
+  console.log(`[INFO] URL dupes removed: ${dedupResult.urlDupes}`);
+  console.log(`[INFO] Cross-domain dupes removed: ${dedupResult.crossDomainDupes}`);
+  console.log(`[INFO] Rows after dedup: ${rows.length}`);
+
+  // ── Pre-processing: Invalid job removal ──
+  console.log(`\n[INFO] === Pre-processing: Invalid Job Removal ===`);
+  const filterResult = preFilterInvalidJobs(rows);
+  rows = filterResult.kept;
+  console.log(`[INFO] Invalid jobs removed: ${filterResult.removed}`);
+  console.log(`[INFO] Rows after filtering: ${rows.length}`);
 
   if (options.maxJobs) {
     rows = rows.slice(0, options.maxJobs);
@@ -609,6 +859,8 @@ async function main(): Promise<void> {
         aiFailed++;
         row.jobType = normalizeJobType(row.jobType);
         row.workType = normalizeWorkType(row.workType);
+        row.keywords = cleanKeywords(row.keywords);
+        row.skills = cleanSkills(row.skills);
         if (row.salaryMin === "0") row.salaryMin = "";
         if (row.salaryMax === "0") row.salaryMax = "";
         enrichedRows.push(row);
@@ -618,9 +870,10 @@ async function main(): Promise<void> {
       if (aiResult.shouldDrop) {
         // Safety net: if the title looks like a real job title or the URL looks
         // like a specific job posting, override the drop and keep with fallback desc
-        const titleLooksReal = row.title.length > 3 && !/^(careers|jobs|home|404|error|cookie|login)/i.test(row.title.trim());
-        const urlLooksReal = /\/(job|position|career|opening|role)s?\//i.test(row.jobLink) ||
-          /\/careers\/[a-z0-9]+-[a-z0-9]/i.test(row.jobLink);
+        const titleLooksReal = row.title.length > 3 &&
+          !/^(careers|jobs|home|404|error|cookie|login|select|current openings|open roles)/i.test(row.title.trim()) &&
+          !ALWAYS_DROP_TITLES.has(row.title.toLowerCase().trim());
+        const urlLooksReal = isSpecificJobUrl(row.jobLink);
 
         if (titleLooksReal || urlLooksReal) {
           console.log(`[KEEP] Row ${index + 1}: "${row.title.slice(0, 50)}" — AI wanted to drop but title/URL look legit, using fallback desc`);
@@ -648,6 +901,8 @@ async function main(): Promise<void> {
       aiFailed++;
       row.jobType = normalizeJobType(row.jobType);
       row.workType = normalizeWorkType(row.workType);
+      row.keywords = cleanKeywords(row.keywords);
+      row.skills = cleanSkills(row.skills);
       if (row.salaryMin === "0") row.salaryMin = "";
       if (row.salaryMax === "0") row.salaryMax = "";
       enrichedRows.push(row);
