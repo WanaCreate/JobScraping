@@ -1,3 +1,7 @@
+// DEPRECATED: This script's dedup and cleanup logic is now fully covered by
+// stage3_enrichGpt.ts (GPT enrichment). Delete once Stage 3 output quality
+// is confirmed stable in production.
+
 /**
  * One-time cleanup & deduplication script for the enriched CSV.
  *

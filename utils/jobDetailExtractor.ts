@@ -16,13 +16,24 @@ import { isCreativeTitleStrict, passesCreativeGate, scoreCreativeText } from "./
 import { fetchPageWithRetry } from "./http.js";
 
 const DESCRIPTION_SELECTORS = [
+  "[data-automation-id='jobPostingDescription']",
+  "[data-automation-id='job-posting-description']",
+  "[data-automation-id='jobDescription']",
+  ".css-kyg8or",
   "#job-detail-body",
   "[id*='job-detail-body']",
   "[id*='job-description']",
   "[data-qa='job-description']",
   "[data-testid*='description']",
   "[data-test*='description']",
+  "[class*='JobDescription']",
+  ".posting-description",
   ".job-description",
+  ".job-details",
+  ".iCIMS_InfoMsg_Job",
+  "#content .content",
+  "#content",
+  "[class*='description']",
   ".description",
   ".section",
   "article",
@@ -55,6 +66,13 @@ const KEYWORD_TERMS = [
   "music",
   "fashion"
 ];
+
+const KEYWORD_BLOCKLIST = new Set([
+  "other", "not specified", "other / not specified", "other/not specified",
+  "n/a", "na", "none", "unspecified", "unknown", "general",
+  "miscellaneous", "misc", "various", "all", "any", "tbd",
+  "see description", "see below", "not applicable", "other category",
+]);
 
 const SKILL_TAXONOMY: Record<string, string[]> = {
   figma: ["figma"],
@@ -392,9 +410,28 @@ async function fetchBestJobPage(rawUrl: string): Promise<{ html: string; finalUr
   return null;
 }
 
+function fixMojibake(text: string): string {
+  return text
+    .replace(/\u00E2\u20AC\u2122/g, "\u2019")
+    .replace(/\u00E2\u20AC\u02DC/g, "\u2018")
+    .replace(/\u00E2\u20AC\u0153/g, "\u201C")
+    .replace(/\u00E2\u20AC\u009D/g, "\u201D")
+    .replace(/\u00E2\u20AC\u201D/g, "\u2014")
+    .replace(/\u00E2\u20AC\u201C/g, "\u2013")
+    .replace(/\u00E2\u20AC\u00A6/g, "\u2026")
+    .replace(/\u00C2\u00A0/g, " ")
+    .replace(/\u00C2\u00B7/g, "\u00B7")
+    .replace(/\u00E2\u20AC\u200B/g, "")
+    .replace(/\u00E2\u0080[\u0090-\u009F]/g, "-")
+    .replace(/[\u2018\u2019]/g, "'")
+    .replace(/[\u201C\u201D]/g, '"')
+    .replace(/[\u2013\u2014]/g, "-")
+    .replace(/\u2026/g, "...");
+}
+
 function cleanText(value: string | null | undefined): string {
   if (!value) return "";
-  return value
+  return fixMojibake(value)
     .replace(/\u00A0/g, " ")
     .replace(/[\t\r\n]+/g, " ")
     .replace(/\s+/g, " ")
@@ -749,8 +786,13 @@ function inferJobType(
 function inferWorkType(
   location: ApiLocation | null,
   title: string,
-  description: string
+  description: string,
+  jsonLdJob: Record<string, unknown> | null
 ): WorkTypeValue | null {
+  // Check JSON-LD jobLocationType first (most reliable)
+  const locationType = cleanText(String(jsonLdJob?.jobLocationType ?? "")).toUpperCase();
+  if (locationType === "TELECOMMUTE") return "REMOTE";
+
   const combined = `${title} ${description} ${location?.formattedAddress ?? ""}`.toLowerCase();
   if (/\b(remote|work from home|distributed)\b/.test(combined)) return "REMOTE";
   if (/\b(hybrid|flexible office)\b/.test(combined)) return "HYBRID";
@@ -811,6 +853,14 @@ function extractSalary(
   const max = parseMoneyToken(rangeMatch[4]);
   const period = rangeMatch[5] ? normalizePeriod(rangeMatch[5]) : null;
 
+  let inferredPeriod = period;
+  if (!inferredPeriod && min !== null) {
+    if (min >= 10000) inferredPeriod = "ANNUAL";
+    else if (min >= 1000) inferredPeriod = "MONTHLY";
+    else if (min >= 100) inferredPeriod = "DAILY";
+    else inferredPeriod = "HOURLY";
+  }
+
   let currency = "USD";
   if (symbol === "€") currency = "EUR";
   if (symbol === "£") currency = "GBP";
@@ -819,19 +869,35 @@ function extractSalary(
     min,
     max,
     currency,
-    period
+    period: inferredPeriod
   };
 }
 
-function extractKeywords(title: string, description: string): string[] {
+function extractKeywordsFromJsonLd(jsonLdJob: Record<string, unknown>): string[] {
+  const keywords: string[] = [];
+  for (const field of ["occupationalCategory", "industry", "qualifications"]) {
+    const val = jsonLdJob[field];
+    if (typeof val === "string" && val.trim()) {
+      keywords.push(...val.split(/[,;|]/).map(s => s.trim().toLowerCase()).filter(Boolean));
+    }
+    if (Array.isArray(val)) {
+      keywords.push(...val.filter((s): s is string => typeof s === "string" && s.trim().length > 0).map(s => s.trim().toLowerCase()));
+    }
+  }
+  return [...new Set(keywords)].filter(k => k.length >= 2 && !KEYWORD_BLOCKLIST.has(k));
+}
+
+function extractKeywords(title: string, description: string, jsonLdJob: Record<string, unknown> | null): string[] {
+  const jsonLdKeywords = jsonLdJob ? extractKeywordsFromJsonLd(jsonLdJob) : [];
+
   const combined = `${title} ${description}`.toLowerCase();
-  const keywords = new Set<string>();
+  const keywords = new Set<string>(jsonLdKeywords);
 
   for (const term of KEYWORD_TERMS) {
     if (combined.includes(term)) keywords.add(term);
   }
 
-  return Array.from(keywords).slice(0, 15);
+  return Array.from(keywords).filter(k => !KEYWORD_BLOCKLIST.has(k)).slice(0, 20);
 }
 
 function normalizeSkillToken(raw: string): string | null {
@@ -862,9 +928,48 @@ function canonicalizeSkill(candidate: string): string {
   return normalized.replace(/\s+/g, "_");
 }
 
-function extractSkills(title: string, description: string): string[] {
+function isValidSkillToken(token: string): boolean {
+  if (!token || token.length < 2) return false;
+  const words = token.split(/_+/).filter(Boolean);
+  if (words.length > 4) return false;
+  const sentenceWords = new Set(["the", "to", "they", "that", "this", "their", "them", "need", "deliver", "enable", "companies", "tracks"]);
+  const sentenceWordCount = words.filter(w => sentenceWords.has(w)).length;
+  if (sentenceWordCount >= 2) return false;
+  if (token.length > 40) return false;
+  return true;
+}
+
+function extractSkillsFromJsonLd(jsonLdJob: Record<string, unknown>): string[] {
+  const raw = jsonLdJob.skills;
+  if (!raw) return [];
+
+  let tokens: string[] = [];
+  if (typeof raw === "string") {
+    tokens = raw.split(/[,;|]/).map(s => s.trim().toLowerCase().replace(/\s+/g, "_")).filter(Boolean);
+  } else if (Array.isArray(raw)) {
+    tokens = raw
+      .filter((s): s is string => typeof s === "string" && s.trim().length > 0)
+      .map(s => s.trim().toLowerCase().replace(/\s+/g, "_"));
+  }
+
+  const validated: string[] = [];
+  for (const token of tokens) {
+    const canonical = canonicalizeSkill(token.replace(/_/g, " "));
+    if (canonical && isValidSkillToken(canonical)) {
+      validated.push(canonical);
+    } else if (isValidSkillToken(token)) {
+      validated.push(token);
+    }
+  }
+
+  return [...new Set(validated)];
+}
+
+function extractSkills(title: string, description: string, jsonLdJob: Record<string, unknown> | null): string[] {
+  const jsonLdSkills = jsonLdJob ? extractSkillsFromJsonLd(jsonLdJob) : [];
+
   const lower = `${title} ${description}`.toLowerCase();
-  const extracted = new Set<string>();
+  const extracted = new Set<string>(jsonLdSkills);
 
   for (const [canonical, aliases] of Object.entries(SKILL_TAXONOMY)) {
     for (const alias of aliases) {
@@ -899,7 +1004,7 @@ function extractSkills(title: string, description: string): string[] {
     if (canonical) extracted.add(canonical);
   }
 
-  return Array.from(extracted).slice(0, 30);
+  return Array.from(extracted).filter(isValidSkillToken).slice(0, 30);
 }
 
 function extractDeadline(
@@ -927,21 +1032,89 @@ function extractNumberOfPositions(description: string): number | null {
   return Number.isFinite(value) && value > 0 ? value : null;
 }
 
-function extractEmail(html: string): string | null {
-  const match = html.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi);
-  if (!match || match.length === 0) return null;
-  const preferred = match.find((value) => !/no-?reply|donotreply/i.test(value));
-  return preferred ?? match[0] ?? null;
+function extractEmail(html: string, description: string): string | null {
+  const mailtoMatches = Array.from(html.matchAll(/mailto:([^"'?\s>]+)/gi))
+    .map(m => cleanText(m[1]))
+    .filter(Boolean);
+  const textMatches = Array.from((`${html}\n${description}`).matchAll(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi))
+    .map(m => cleanText(m[0]))
+    .filter(Boolean);
+
+  const candidates = [...new Set([...mailtoMatches, ...textMatches].map(e => e.toLowerCase()))];
+  if (candidates.length === 0) return null;
+
+  const preferred = candidates.find(value =>
+    !/no-?reply|donotreply|privacy|gdpr|legal|unsubscribe|support|info|hello|contact|admin|postmaster/i.test(value)
+  );
+  return preferred ?? null;
 }
 
-function deriveCompanyNameFromUrl(url: string): string {
+const ATS_HOSTS = new Set([
+  "greenhouse.io", "lever.co", "workday.com", "myworkdayjobs.com",
+  "smartrecruiters.com", "ashbyhq.com", "breezy.hr", "recruitee.com",
+  "jobs.lever.co", "boards.greenhouse.io", "jobvite.com", "icims.com",
+  "ultipro.com", "taleo.net", "successfactors.com", "applytojob.com",
+]);
+
+const GENERIC_SUBDOMAINS = new Set([
+  "careers", "career", "jobs", "job", "job-boards", "boards", "apply",
+  "hire", "hiring", "recruiting", "recruitment", "work", "www",
+]);
+
+function cleanCompanyName(name: string): string {
+  return name.replace(/^[A-Z]{2,6}-/, "").trim() || name;
+}
+
+function splitJoinedCompanyName(name: string): string {
+  if (name.includes(" ") || name.length <= 6) return name;
+  const camelSplit = name.replace(/([a-z])([A-Z])/g, "$1 $2");
+  if (camelSplit !== name) return camelSplit;
+  return name;
+}
+
+function deriveCompanyFromUrl(url: string): ApiCompany | null {
   try {
-    const hostname = new URL(url).hostname.replace(/^www\./i, "");
-    const [first] = hostname.split(".");
-    return first ? first.charAt(0).toUpperCase() + first.slice(1) : "Unknown";
-  } catch {
-    return "Unknown";
-  }
+    const parsed = new URL(url);
+    const host = parsed.hostname.replace(/^www\./i, "");
+    const parts = host.split(".");
+    const baseDomain = parts.slice(-2).join(".");
+
+    if (ATS_HOSTS.has(baseDomain) || ATS_HOSTS.has(parts.slice(-3).join("."))) {
+      const subdomain = parts.length > 2 ? parts[0] : null;
+      if (subdomain && !GENERIC_SUBDOMAINS.has(subdomain.toLowerCase())) {
+        const name = subdomain.charAt(0).toUpperCase() + subdomain.slice(1);
+        return { name, website: null, logo: null, email: null };
+      }
+      const pathParts = parsed.pathname.split("/").filter(Boolean);
+      if (pathParts.length > 0 && !GENERIC_SUBDOMAINS.has(pathParts[0].toLowerCase())) {
+        const name = pathParts[0].charAt(0).toUpperCase() + pathParts[0].slice(1);
+        return { name, website: null, logo: null, email: null };
+      }
+      return null;
+    }
+
+    let companyPart: string | null = null;
+    for (const part of parts) {
+      if (!GENERIC_SUBDOMAINS.has(part.toLowerCase()) && part !== parts[parts.length - 1]) {
+        if (part.length <= 3 && /^(com|org|net|io|co|eu|us|uk|de|fr|in|au|ca)$/i.test(part)) continue;
+        companyPart = part;
+        break;
+      }
+    }
+
+    if (!companyPart && parts.length >= 2) {
+      const sld = parts[parts.length - 2];
+      if (!GENERIC_SUBDOMAINS.has(sld.toLowerCase())) {
+        companyPart = sld;
+      }
+    }
+
+    if (companyPart) {
+      const name = companyPart.charAt(0).toUpperCase() + companyPart.slice(1);
+      return { name: splitJoinedCompanyName(name), website: `https://${host}`, logo: null, email: null };
+    }
+  } catch { /* no-op */ }
+  return null;
 }
 
 function extractCompany(
@@ -953,33 +1126,49 @@ function extractCompany(
   const org = jsonLdJob?.hiringOrganization;
   const orgRecord = org && typeof org === "object" ? (org as Record<string, unknown>) : null;
 
-  const derivedName =
-    nonEmpty(seed.company) ??
-    nonEmpty(orgRecord ? String(orgRecord.name ?? "") : "") ??
-    deriveCompanyNameFromUrl(finalUrl);
-  const website =
-    nonEmpty(orgRecord ? String(orgRecord.sameAs ?? orgRecord.url ?? "") : "") ??
-    normalizeRootWebsite(finalUrl);
+  let name: string | null = null;
+  let website: string | null = null;
 
-  if (!derivedName && !website && !email) return null;
+  if (orgRecord) {
+    const rawName = cleanText(String(orgRecord.name ?? ""));
+    name = cleanCompanyName(rawName) || null;
+    website = nonEmpty(String(orgRecord.sameAs ?? orgRecord.url ?? ""));
+  }
+
+  if (!name) name = nonEmpty(seed.company);
+
+  if (!name) {
+    const fromUrl = deriveCompanyFromUrl(finalUrl);
+    if (fromUrl) {
+      name = fromUrl.name ?? null;
+      website = website ?? fromUrl.website ?? null;
+    }
+  }
+
+  if (!name) name = "Unknown";
+
   return {
-    name: derivedName,
-    website,
+    name,
+    website: website ?? normalizeRootWebsite(finalUrl),
     logo: null,
     email
   };
 }
 
+function isCareersPageTitle(title: string): boolean {
+  return /^.{2,30}\s+(careers?|jobs?|openings?|opportunities)$/i.test(title.trim());
+}
+
 function extractTitle(html: string, seedTitle: string, jsonLdJob: Record<string, unknown> | null): string {
   const fromJson = nonEmpty(String(jsonLdJob?.title ?? ""));
-  if (fromJson) return fromJson;
+  if (fromJson && !isCareersPageTitle(fromJson)) return fromJson;
 
   const $ = load(html);
   const fromHeading = nonEmpty($("h1").first().text());
-  if (fromHeading) return fromHeading;
+  if (fromHeading && fromHeading.length > 3 && fromHeading.length < 200 && !isCareersPageTitle(fromHeading)) return fromHeading;
 
   const fromTitle = nonEmpty($("title").first().text());
-  if (fromTitle) return fromTitle;
+  if (fromTitle && !isCareersPageTitle(fromTitle)) return fromTitle;
 
   return seedTitle;
 }
@@ -1031,15 +1220,15 @@ export async function enrichJobFromUrl(params: {
 
   const creativeScore = scoreCreativeText(`${title} ${description} ${finalUrl}`);
   const location = extractLocation(seed.location, jsonLdJob, description);
-  const workType = inferWorkType(location, title, description);
+  const workType = inferWorkType(location, title, description, jsonLdJob);
   const jobType = inferJobType(title, description, jsonLdJob);
   const salary = extractSalary(description, jsonLdJob);
   const deadline = extractDeadline(description, jsonLdJob);
   const numberOfPositions = extractNumberOfPositions(description);
-  const workEmail = extractEmail(fetchedHtml);
+  const workEmail = extractEmail(fetchedHtml, description);
   const company = extractCompany(seed, finalUrl, jsonLdJob, workEmail);
-  const keywords = extractKeywords(title, description);
-  const skills = extractSkills(title, description);
+  const keywords = extractKeywords(title, description, jsonLdJob);
+  const skills = extractSkills(title, description, jsonLdJob);
 
   const apiJob: ApiCreateJobRequest = {
     title,
