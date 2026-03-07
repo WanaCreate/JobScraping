@@ -8,6 +8,7 @@
     "stage1": "tsx pipeline/stage1_scrapeCareers.ts",
     "stage2": "tsx pipeline/stage2_collectJobDetails.ts",
     "stage3": "tsx pipeline/stage3_enrichGpt.ts",
+    "stage4": "tsx pipeline/stage4_enrichLogos.ts",
     "build": "tsc -p ."
   },
   "dependencies": {

@@ -2,9 +2,10 @@
  * Unified pipeline runner.
  *
  * Usage:
- *   npx tsx pipeline/run.ts                    # Run all 3 stages
- *   npx tsx pipeline/run.ts --stage 2          # Run stages 2+3 only
- *   npx tsx pipeline/run.ts --stage 3          # Run stage 3 only
+ *   npx tsx pipeline/run.ts                    # Run all 4 stages
+ *   npx tsx pipeline/run.ts --stage 2          # Run stages 2-4 only
+ *   npx tsx pipeline/run.ts --stage 3          # Run stages 3+4 only
+ *   npx tsx pipeline/run.ts --stage 4          # Run stage 4 only (logo enrichment)
  *   npx tsx pipeline/run.ts --stage 1          # Run stage 1 only
  *
  * Options:
@@ -96,6 +97,14 @@ async function main(): Promise<void> {
     runStage("STAGE 3: GPT Enrichment", "pipeline/stage3_enrichGpt.ts", args);
   }
 
+  if (startStage <= 4) {
+    const args = [
+      "--input", enrichedCsv,
+      "--output", enrichedCsv,
+    ];
+    runStage("STAGE 4: Logo Enrichment & Shuffle", "pipeline/stage4_enrichLogos.ts", args);
+  }
+
   // Write manifest
   const manifest = {
     runTag,
@@ -105,6 +114,7 @@ async function main(): Promise<void> {
       stage1: startStage <= 1 ? scrapeOutput : "skipped",
       stage2: startStage <= 2 ? jobsCsv : "skipped",
       stage3: startStage <= 3 ? enrichedCsv : "skipped",
+      stage4: startStage <= 4 ? enrichedCsv : "skipped",
     },
   };
   await writeFile(path.join(outputDir, "manifest.json"), JSON.stringify(manifest, null, 2), "utf8");

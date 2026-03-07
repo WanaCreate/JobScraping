@@ -1,7 +1,7 @@
 # JobScraping Pipeline
 
-Three-stage pipeline that discovers creative job postings from company career pages,
-extracts structured data, and enriches via GPT.
+Four-stage pipeline that discovers creative job postings from company career pages,
+extracts structured data, enriches via GPT, and attaches high-res company logos.
 
 ## Quick Start
 
@@ -10,12 +10,13 @@ extracts structured data, and enriches via GPT.
 npm install
 npx playwright install chromium
 
-# Run full pipeline (all 3 stages)
+# Run full pipeline (all 4 stages)
 npx tsx pipeline/run.ts
 
 # Run from a specific stage
-npx tsx pipeline/run.ts --stage 2    # stages 2+3
-npx tsx pipeline/run.ts --stage 3    # stage 3 only
+npx tsx pipeline/run.ts --stage 2    # stages 2-4
+npx tsx pipeline/run.ts --stage 3    # stages 3+4
+npx tsx pipeline/run.ts --stage 4    # stage 4 only (logo enrichment)
 ```
 
 ## Stages
@@ -51,6 +52,17 @@ Deduplicates and drops invalid rows.
 **Input:** Stage 2 CSV
 **Output:** `outputs/history/[timestamp]/results_enriched_api_gpt.csv`
 
+### Stage 4: Logo Enrichment & Shuffle
+`npx tsx pipeline/stage4_enrichLogos.ts --input <stage3_csv>`
+
+Resolves company logos using Google Favicon API (256px). Strips job-board/ATS
+domains, handles career subdomains, and guesses domains from company names.
+Shuffles rows so same-company jobs aren't adjacent. Results are cached in
+`logo_cache.json`.
+
+**Input:** Stage 3 CSV
+**Output:** Overwrites input (or `--output <path>`)
+
 ## Environment Variables
 
 | Variable | Description |
@@ -69,7 +81,7 @@ outputs/history/
   2026-03-07_143022Z/
     results_scrape.json           # Stage 1
     results_jobs_api.csv          # Stage 2
-    results_enriched_api_gpt.csv  # Stage 3
+    results_enriched_api_gpt.csv  # Stage 3 + Stage 4 (logos added in-place)
     manifest.json                 # Run summary
 ```
 
