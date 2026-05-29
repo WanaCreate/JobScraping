@@ -1,5 +1,7 @@
 ﻿# JobScraping Agent Runbook
 
+> For repo overview, pipeline stages, and commands, read `README.md` first.
+
 ## Default Output Contract
 The `collectJobDetails` pipeline writes by default to:
 
@@ -40,3 +42,38 @@ npx tsx pipeline/collectJobDetails.ts --input results_150_optimized.json --concu
 2. Keep `latest` as the source for API ingestion.
 3. Use history snapshots for audits and rollback.
 4. For test runs, prefer `--maxJobs` and set a descriptive `--runTag`.
+
+## Output Format Contract (READ BEFORE CHANGING ANY STAGE)
+
+The scraper's CSV is consumed by other systems — it is NOT free-form. Before
+changing the output format of ANY pipeline stage (column names, column order,
+field values, enum values, or the `description` HTML structure), you MUST review
+both downstream consumers and match them. The scraper does not define the schema;
+these consumers do.
+
+1. **api-server bulk-upload parser (authoritative schema).**
+   - Endpoint: `POST /api/v1/jobs/upload` → `bulkUploadJobs` → `JobService.uploadJobsFromCSV`.
+   - File: `api-server/src/services/impl/JobService.ts` (`uploadJobsFromCSV`).
+   - This parser defines the EXACT column names and accepted enum values. Notable points
+     that have bitten us before:
+     - Location is read as SEPARATE columns (`city`, `state`, `country`, `locationName`,
+       `formattedAddress`, `placeId`, `latitude`, `longitude`) — NOT a composite `location` column.
+     - Salary columns are NON-dotted: `salaryMin`, `salaryMax`, `salaryCurrency`, `salaryPeriod`.
+     - The apply URL is read from `externalApplicationLink` — NOT `jobLink`.
+     - `jobType` enum includes `OPEN_CALL` (GIG/FULLTIME/PARTTIME/FREELANCE/OPEN_CALL).
+     - `salaryPeriod` accepts `YEARLY` (mapped to `ANNUAL` server-side).
+   - Whenever this parser changes, the scraper output must be updated to match it.
+
+2. **web frontend (rendering + hardcoded enums).** Yes — review the web app too.
+   - `description` is rendered as sanitized HTML via `RichTextRenderer` /
+     `sanitizeRichTextHtml()` (`web-app-new/src/lib/rich-text.ts`). Stage 3's
+     description HTML must stay within that tag whitelist or tags get stripped on render.
+   - `jobType` / `workType` enum values are hardcoded in several places (type defs,
+     label maps, form dropdowns, Zod validation) — e.g. `web-app-new/src/di/jobs.ts`,
+     `src/lib/jobFormatters.ts`, `src/hooks/jobs/forms/useJobForm.ts`. A new enum value
+     emitted by the scraper will not display (no label) and may fail form validation
+     until the frontend is updated.
+
+The web app does NOT parse the CSV directly (it only reads already-parsed Job objects
+from the api-server), so the CSV column-name contract is owned solely by the api-server
+parser. The web app constrains only field VALUES (description HTML, enum values).
