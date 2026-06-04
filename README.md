@@ -3,8 +3,9 @@
 **Agent guides (workflow order):**
 
 1. [Job scraper — find latest remote roles](docs/JOB-SCRAPER-AGENT-GUIDE.md)
-2. [Reviewer — PASS/REVIEW/REJECT before posting](WeeklyJobs/ReviewerAgent.md)
-3. [Wana posting — CSV, descriptions, DEV/PROD upload](docs/WANA-JOB-POSTING-AGENT-GUIDE.md)
+2. [Scraper agent — extract fields from a URL (job + Instagram modes)](WeeklyJobs/ScraperAgent.md)
+3. [Reviewer — PASS/REVIEW/REJECT + CSV field audit before posting](WeeklyJobs/ReviewerAgent.md)
+4. [Wana posting — CSV, descriptions, DEV/PROD upload](docs/WANA-JOB-POSTING-AGENT-GUIDE.md)
 
 **Weekly posting CSVs:** `WeeklyJobs/<date-folder>/` (latest: `WeeklyJobs/June4-2026/creative_jobs_june4_2026.csv`)
 
