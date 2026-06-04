@@ -2,6 +2,12 @@
 
 > For repo overview, pipeline stages, and commands, read `README.md` first.
 
+## Weekly creative jobs (Instagram / manual batches)
+
+1. **Scrape / collect** — [docs/JOB-SCRAPER-AGENT-GUIDE.md](docs/JOB-SCRAPER-AGENT-GUIDE.md)
+2. **Review** — [WeeklyJobs/ReviewerAgent.md](WeeklyJobs/ReviewerAgent.md) → write `WeeklyJobs/reviews/review-YYYY-MM-DD.md`
+3. **Post** — [docs/WANA-JOB-POSTING-AGENT-GUIDE.md](docs/WANA-JOB-POSTING-AGENT-GUIDE.md); save CSV under `WeeklyJobs/<date-folder>/`
+
 ## Default Output Contract
 The `collectJobDetails` pipeline writes by default to:
 

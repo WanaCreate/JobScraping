@@ -2,9 +2,17 @@
 
 A review checklist + operating spec for vetting scraped creative job listings **before** they are posted to the Wana platform.
 
+**Upstream (discovery / scrape):** [Job Scraper Agent](../docs/JOB-SCRAPER-AGENT-GUIDE.md) — find remote creative roles and apply scrape-time exclusions.
+
+**Downstream (CSV + upload):** [Wana Job Posting Agent](../docs/WANA-JOB-POSTING-AGENT-GUIDE.md) — build description HTML and upload to DEV/PROD.
+
+**Weekly batches:** Approved posting CSVs live under `WeeklyJobs/<date-folder>/` (e.g. `WeeklyJobs/June4-2026/`).
+
 ## Purpose
 
-We scrape creative job listings and post them on our platform. Every listing must be scrutinized against the rules below first. The agent takes a set of listings (pasted in chat, or a CSV of links) and returns a **markdown review table** with a verdict and notes per listing.
+We scrape creative job listings and post them on our platform. Every listing must be scrutinized against the rules below first — **after** the [Job Scraper Agent](../docs/JOB-SCRAPER-AGENT-GUIDE.md) finds candidates and **before** the [Wana Job Posting Agent](../docs/WANA-JOB-POSTING-AGENT-GUIDE.md) builds the upload CSV.
+
+The reviewer agent takes a set of listings (pasted in chat, or a CSV of links) and returns a **markdown review table** with a verdict and notes per listing. Only **PASS** rows (and human-approved **REVIEW** rows) proceed to the posting CSV.
 
 ---
 
