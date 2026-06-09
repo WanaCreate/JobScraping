@@ -95,9 +95,27 @@ LinkedIn is a primary source. **We read public job pages only — no login.**
 
 ---
 
+## Open Calls
+
+Open calls (submissions for artist consideration, portfolio reviews, residencies, etc.) follow the same rules with one exception:
+
+**Rule 4 (Remote only) does not apply.** Artists submit work digitally regardless of location, so there is no remote requirement.
+
+Instead, rank by geographic openness and reflect it in the verdict + notes:
+
+| Location scope | Verdict | Notes |
+|----------------|---------|-------|
+| Open to global artists | PASS | — |
+| USA only | PASS | Note: "US-only open call" |
+| More restrictive (single country other than USA, single city, etc.) | REVIEW | Note the restriction; human decides if it's worth posting |
+
+All other rules (1, 2, 3, 5, 6, 7, 8) apply the same as job postings.
+
+---
+
 ## Review Checklist
 
-Each listing is scored against all seven rules. A single failed hard rule is enough to **REJECT**.
+Each listing is scored against all eight rules. A single failed hard rule is enough to **REJECT**.
 
 | # | Rule | Verdict on failure | Notes |
 |---|------|--------------------|-------|
@@ -108,6 +126,7 @@ Each listing is scored against all seven rules. A single failed hard rule is eno
 | 5 | **Quality check** | REVIEW / REJECT | Reject obvious spam, scam, MLM, vague/no real description, broken or dead links, or reposted aggregator junk. Borderline-quality → REVIEW. |
 | 6 | **Niche check** | REJECT if off-niche | In-niche roles only (see list below). Off-niche → REJECT. Genuinely ambiguous → REVIEW. |
 | 7 | **No duplicates** | — (see note) | Cross-check against listings already posted in the **last 1 month**. ⚠️ **Not yet automated — see Pending Tasks.** For now, flag obvious in-batch duplicates only. |
+| 8 | **Recent posting (≤10 days)** | REJECT / REVIEW | Posted date must be within the last 10 days (cutoff = run date minus 10 days). If posted more than 10 days ago → REJECT. If posting date is not found or unspecified → REVIEW ("posting date not found — manual check"). The date must come from the fetched listing itself — do not infer from URL or ATS metadata unless the JD confirms it. |
 
 ### Niche (rule 6)
 
