@@ -111,6 +111,7 @@ Instead, rank by geographic openness and reflect it in the verdict + notes:
 
 All other rules (1, 2, 3, 5, 6, 7, 8) apply the same as job postings.
 
+[] Need to add due dates check
 ---
 
 ## Review Checklist
