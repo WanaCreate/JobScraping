@@ -8,6 +8,9 @@ type AshbyJobPosting = {
 };
 
 type AshbyJobBoardResponse = {
+  // The public posting-api returns postings under `jobs`. (`jobPostings` is kept
+  // as a fallback in case an older board shape is ever returned.)
+  jobs?: AshbyJobPosting[];
   jobPostings?: AshbyJobPosting[];
 };
 
@@ -23,7 +26,7 @@ export async function scrapeAshby(tenant: string): Promise<RawJob[]> {
   });
 
   const jobs: RawJob[] = [];
-  const postings = response.data?.jobPostings ?? [];
+  const postings = response.data?.jobs ?? response.data?.jobPostings ?? [];
 
   for (const posting of postings) {
     const title = posting.title?.trim();
