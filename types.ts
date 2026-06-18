@@ -7,6 +7,7 @@ export type ATS =
   | "ashby"
   | "phenom"
   | "amazon"
+  | "workable"
   | "generic";
 
 export interface RawJob {

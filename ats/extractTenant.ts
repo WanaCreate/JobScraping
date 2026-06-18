@@ -120,6 +120,17 @@ export function extractTenant(html: string, finalUrl: string, ats: ATS): TenantI
     return { tenant, metadata, endpoints };
   }
 
+  if (ats === "workable") {
+    const tenant =
+      parseFirstMatch(joined, [
+        /apply\.workable\.com\/([a-z0-9_-]+)/i,
+        /workable\.com\/api\/accounts\/([a-z0-9_-]+)/i,
+        /jobs\.workable\.com\/([a-z0-9_-]+)/i,
+        /([a-z0-9_-]+)\.workable\.com/i
+      ]) ?? null;
+    return { tenant, metadata, endpoints };
+  }
+
   if (ats === "amazon") {
     let tenant: string | null = null;
     try {
