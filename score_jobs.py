@@ -1,10 +1,20 @@
 import csv
+import json
+import os
 import re
+import sys
 
 INPUT = r"C:\Users\vyash\Desktop\Business\Wana\_Code\JobScraping\outputs\api-ready\results_with_logos.csv"
 OUTPUT = r"C:\Users\vyash\Desktop\Business\Wana\_Code\JobScraping\outputs\api-ready\results_with_logos_sorted.csv"
 
-# Score by title keywords (primary) + first 200 chars of desc (secondary)
+# Path to the weekly-generated weights file (same directory as this script → pipeline/)
+_SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+_SCORE_JSON = os.path.join(_SCRIPT_DIR, "pipeline", "creativeScore.json")
+
+# ---------------------------------------------------------------------------
+# Hardcoded fallback tiers (kept intact — used when creativeScore.json is
+# missing or unparseable).
+# ---------------------------------------------------------------------------
 SCORE_10 = [
     r'\billustrat', r'\banimator\b', r'\banimation\b', r'\bart director\b',
     r'\bgraphic design', r'\bvisual design', r'\bux design', r'\bui design',
@@ -82,30 +92,111 @@ SCORE_2 = [
     r'\badmin\b', r'\bcoordinat', r'\bassistant\b',
 ]
 
-def score_title_desc(title, desc_snippet):
-    text = (title + " " + desc_snippet).lower()
 
+def _score_fallback(text):
+    """Hardcoded tier-based scoring. Returns int 2–10 (or 3 as default)."""
     for pattern in SCORE_10:
         if re.search(pattern, text):
             return 10
-
     for pattern in SCORE_8:
         if re.search(pattern, text):
             return 8
-
     for pattern in SCORE_6:
         if re.search(pattern, text):
             return 6
-
     for pattern in SCORE_4:
         if re.search(pattern, text):
             return 4
-
     for pattern in SCORE_2:
         if re.search(pattern, text):
             return 2
-
     return 3  # default mid-low
+
+
+# ---------------------------------------------------------------------------
+# Try to load weights from creativeScore.json.
+# _JSON_WEIGHTS is a list of (compiled_regex, weight_float) sorted by
+# descending weight so the first match wins the highest available score.
+# Patterns are compiled ONCE here at module load — not per row — for
+# performance across 261+ keywords × every CSV row.
+# Falls back to None if the file is missing or malformed.
+# ---------------------------------------------------------------------------
+_JSON_WEIGHTS = None  # type: list[tuple[re.Pattern, float]] | None
+
+try:
+    with open(_SCORE_JSON, encoding="utf-8") as _f:
+        _data = json.load(_f)
+    _raw = _data.get("weights", {})
+    if not isinstance(_raw, dict) or not _raw:
+        raise ValueError("'weights' key missing or empty")
+    # Sort descending by weight so higher-scored keywords match first
+    # (not strictly required when we take MAX, but keeps intent clear).
+    # Compile each keyword into a word-boundary regex so single-word keys
+    # like "art" don't false-match inside "start", "heart", "designation",
+    # while multi-word phrases like "3d artist" still work correctly.
+    _JSON_WEIGHTS = sorted(
+        (
+            (re.compile(r"\b" + re.escape(k.lower()) + r"\b"), float(v))
+            for k, v in _raw.items()
+        ),
+        key=lambda x: x[1],
+        reverse=True,
+    )
+    print(f"[score_jobs] Loaded {len(_JSON_WEIGHTS)} keyword weights from creativeScore.json")
+except FileNotFoundError:
+    print(
+        f"[score_jobs] WARNING: {_SCORE_JSON} not found — falling back to hardcoded tiers.",
+        file=sys.stderr,
+    )
+except Exception as _e:
+    print(
+        f"[score_jobs] WARNING: Could not parse creativeScore.json ({_e}) — falling back to hardcoded tiers.",
+        file=sys.stderr,
+    )
+
+
+def _score_from_json(text):
+    """
+    Score using creativeScore.json weights.
+
+    Scans the combined title+desc snippet for every compiled regex pattern
+    (word-boundary anchored, case-insensitive — the text is already
+    lowercased by the caller).  Takes the MAX weight across all matching
+    keywords, rounds to the nearest integer, and clamps to [2, 10] so the
+    column stays compatible with existing downstream consumers.
+
+    Single-word keys like "art" only match as whole words and will NOT
+    false-match inside "start", "heart", or "designation".  Multi-word
+    phrases like "3d artist" continue to work because \b anchors apply at
+    the phrase boundaries, not between words inside the phrase.
+
+    Returns None if no keyword matches (caller should fall back to
+    _score_fallback or return the default 3).
+    """
+    best = None
+    for pattern, weight in _JSON_WEIGHTS:
+        if pattern.search(text):
+            if best is None or weight > best:
+                best = weight
+    if best is None:
+        return None
+    return max(2, min(10, round(best)))
+
+
+def score_title_desc(title, desc_snippet):
+    text = (title + " " + desc_snippet).lower()
+
+    if _JSON_WEIGHTS is not None:
+        result = _score_from_json(text)
+        if result is not None:
+            return result
+        # No keyword matched at all — use a neutral default (3, same as
+        # the original fallback default).
+        return 3
+
+    # JSON weights unavailable: use hardcoded tier logic.
+    return _score_fallback(text)
+
 
 with open(INPUT, encoding='utf-8', newline='') as f:
     reader = csv.DictReader(f)
