@@ -5,6 +5,9 @@ interface GreenhouseJob {
   title?: string;
   absolute_url?: string;
   location?: { name?: string };
+  content?: string;
+  first_published?: string;
+  updated_at?: string;
 }
 
 interface GreenhouseJobsResponse {
@@ -39,8 +42,21 @@ async function fetchBoardName(tenant: string): Promise<string> {
  * job-boards.greenhouse.io slugs, and (unlike the HTML embed endpoint) does not
  * 403 under bulk load. Descriptions are fetched later in Stage 2.
  */
+function decodeHtmlEntities(html: string): string {
+  return html
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&")
+    .replace(/&#39;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'")
+    .replace(/&#x27;/g, "'")
+    .replace(/&#x2F;/g, "/")
+    .replace(/&nbsp;/g, " ");
+}
+
 export async function scrapeGreenhouse(tenant: string): Promise<RawJob[]> {
-  const url = `https://boards-api.greenhouse.io/v1/boards/${encodeURIComponent(tenant)}/jobs`;
+  const url = `https://boards-api.greenhouse.io/v1/boards/${encodeURIComponent(tenant)}/jobs?content=true`;
   const response = await http.get<GreenhouseJobsResponse>(url);
   const ghJobs = response.data?.jobs ?? [];
   if (ghJobs.length === 0) return [];
@@ -53,12 +69,19 @@ export async function scrapeGreenhouse(tenant: string): Promise<RawJob[]> {
     const jobUrl = job.absolute_url?.trim();
     if (!title || !jobUrl) continue;
 
+    const rawContent = job.content?.trim() || null;
+    const description = rawContent ? decodeHtmlEntities(rawContent) : null;
+
+    const datePosted = job.first_published?.trim() || job.updated_at?.trim() || null;
+
     jobs.push({
       title,
       url: jobUrl,
       location: job.location?.name?.trim() || null,
       company,
-      ats: "greenhouse"
+      ats: "greenhouse",
+      description,
+      datePosted
     });
   }
 

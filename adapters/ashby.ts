@@ -5,6 +5,9 @@ type AshbyJobPosting = {
   title?: string;
   jobUrl?: string;
   location?: string;
+  descriptionHtml?: string;
+  descriptionPlain?: string;
+  publishedAt?: string;
 };
 
 type AshbyJobBoardResponse = {
@@ -46,12 +49,17 @@ export async function scrapeAshby(tenant: string): Promise<RawJob[]> {
     const jobUrl = posting.jobUrl?.trim();
     if (!title || !jobUrl) continue;
 
+    const description = posting.descriptionHtml?.trim() || posting.descriptionPlain?.trim() || null;
+    const datePosted = posting.publishedAt?.trim() || null;
+
     jobs.push({
       title,
       url: jobUrl,
       location: posting.location?.trim() ?? null,
       company,
-      ats: "ashby"
+      ats: "ashby",
+      description: description || null,
+      datePosted: datePosted || null
     });
   }
 

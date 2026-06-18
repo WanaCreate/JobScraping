@@ -378,7 +378,9 @@ function asNormalizedJob(item: unknown): NormalizedJob | null {
     location: typeof record.location === "string" ? record.location : "Not specified",
     ats: typeof record.ats === "string" ? (record.ats as NormalizedJob["ats"]) : "generic",
     company: typeof record.company === "string" ? record.company : "unknown",
-    source: typeof record.source === "string" ? record.source : url
+    source: typeof record.source === "string" ? record.source : url,
+    description: typeof record.description === "string" ? record.description : null,
+    datePosted: typeof record.datePosted === "string" ? record.datePosted : null
   };
 }
 

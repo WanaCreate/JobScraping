@@ -19,6 +19,9 @@ interface WorkableJob {
   state?: string;
   telecommuting?: boolean;
   locations?: WorkableLocation[];
+  description?: string;
+  published_on?: string;
+  created_at?: string;
 }
 
 interface WorkableResponse {
@@ -59,6 +62,8 @@ export async function scrapeWorkable(tenant: string): Promise<RawJob[]> {
     url: job.url ?? job.shortlink ?? null,
     location: formatLocation(job),
     company,
-    ats: "workable"
+    ats: "workable",
+    description: job.description?.trim() || null,
+    datePosted: job.published_on?.trim() || job.created_at?.trim() || null
   }));
 }
