@@ -53,12 +53,30 @@ Task 0 (dynamic preference-driven scoring) is **done and verified**. Tasks 1–4
 
 ---
 
+## Session log — 2026-06-18 (Tasks 2, 3, 4 shipped; 11K promotion run; Task 1 deferred)
+
+Branch: `claude/dreamy-sagan-rr5fig`. Build clean (`npm run build`). No GPT/OpenAI enrichment touched (stops before Stage 3), no Google CSE (skipped per request — CDX only).
+
+**Shipped (code, committed + pushed):**
+- **Task 2 — CDX slug discovery.** `scripts/discoverSlugs.ts` (`npm run discover-slugs`). Common Crawl CDX only. Ran it → `pipeline/pending_review.json` with **11,080 new ATS career-page URLs** (greenhouse 5,586, ashby 2,416, workable 3,078; lever had near-zero CDX coverage in CC-MAIN-2026-21 — known gap, revisit with an older crawl or the deferred CSE supplement).
+- **Task 3 — Workable adapter.** `adapters/workable.ts` wired through `types.ts`, `detectATS`, `extractTenant`, `stage1`. Smoke-tested (`blueground` → 35 jobs).
+- **Task 4 — Self-expanding loop.** `utils/discoverCompanies.ts` parses JSON-LD `hiringOrganization.sameAs` from already-fetched HTML (no extra fetches), flushes new domains to `new_companies_discovered.json` once per run.
+
+**In progress this session — 11K ATS-API promotion (Task 2 follow-through):**
+- Scraping all 11,080 `pending_review.json` URLs via their JSON APIs (no Chromium needed). Scoring each with the same `creativeScore.json` rubric as `score_jobs.py`; companies with ≥1 creative job at score ≥ 6 get promoted into the live list, the rest stay parked / rejected. Promotion tooling: `scripts/promotePending.ts`.
+
+**Why we did NOT process the original 900 this session:** see the note under Task 1 below — they're 894 custom career pages needing a Chromium-enabled Playwright run (not installed here) and are low-yield, so the high-leverage 11K ATS promotion was prioritized. The prune harness is built and ready; the 900 scrape just needs a browser-provisioned run.
+
+---
+
 ## Remaining tasks
 
-### Task 1 — Prune non-creative companies (Small)
+### Task 1 — Prune non-creative companies (Small) — DEFERRED (see 2026-06-18 note)
 - `pipeline/company_career_urls.json` has ~900 entries, many non-creative (Asana, Puma, Zalando, Zomato).
 - Run the now-preference-driven scoring against recent scrape output per company; remove/deprioritize companies returning 0 jobs at score ≥ 6. Move borderline → `low_yield_companies.json`.
-- **Do first** to establish a clean yield-per-URL baseline before adding URLs. Needs a recent scrape to measure against.
+- Harness is built and ready: `scripts/pruneCompanies.ts` (`npm run prune-companies`). It only needs a fresh Stage 1 scrape of the 900 to run against.
+
+> **Why deferred (2026-06-18):** A composition check showed **894 of the 900 are custom company career pages** on their own websites (e.g. `adoratorio.studio/careers`, `1999.agency/careers`) — NOT standard ATS board URLs. Only ~6 sit on a real ATS. That means scraping the 900 relies almost entirely on the generic HTML crawler + **Playwright/Chromium fallback** (Chromium is not installed in the web/CI container by default and must be added), and yield-per-URL is low (mostly tiny studios with 0–1 openings). We chose to spend the session on the higher-leverage **11K ATS-API promotion** instead (clean JSON APIs, no browser, high yield — see session log). The 900 prune is unchanged in priority intent; it's just gated on a Chromium-enabled scrape run, which is best done locally or in a Playwright-provisioned environment.
 
 ### Task 2 — Slug discovery → grow the list 900 → 5,000+ (Small, biggest lever)
 - New `scripts/` dir (doesn't exist yet).
