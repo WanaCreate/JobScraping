@@ -303,11 +303,19 @@ When user says: **“Find [ROLE], remote only, last 5 days, N jobs”**:
 
 ## Related files in this repo
 
+> **Stage naming (see [README](../README.md) for full descriptions):** Stage 1
+> *Collect Jobs* (`stage1_scrapeCareers.ts`) — find boards + list jobs + capture
+> API fields incl. description & posted date · Stage 2 *Detail & Normalize*
+> (`stage2_collectJobDetails.ts`) — fill gaps (salary/skills/etc.) + clean →
+> API-ready · Stage 3 *GPT Polish* (`stage3_enrichGpt.ts`, optional) · Stage 4
+> *Logos & Shuffle* (`stage4_enrichLogos.ts`). File names unchanged.
+
 | Path | Purpose |
 |------|---------|
 | `pipeline/run.ts` | Full scrape pipeline |
-| `pipeline/stage2_collectJobDetails.ts` | Extract fields from job URLs |
-| `pipeline/stage3_enrichGpt.ts` | GPT clean/enrich |
+| `pipeline/stage1_scrapeCareers.ts` | Stage 1 *Collect Jobs* — list jobs + capture API fields (description, posted date) |
+| `pipeline/stage2_collectJobDetails.ts` | Stage 2 *Detail & Normalize* — fill gaps + clean → API-ready |
+| `pipeline/stage3_enrichGpt.ts` | Stage 3 *GPT Polish* (optional) |
 | `utils/jobHeuristics.ts` | Valid job URL detection |
 | `utils/creativeClassifier.ts` | Creative vs non-creative |
 | `utils/jobDetailExtractor.ts` | Location/salary parsing |
