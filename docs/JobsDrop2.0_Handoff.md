@@ -62,10 +62,32 @@ Branch: `claude/dreamy-sagan-rr5fig`. Build clean (`npm run build`). No GPT/Open
 - **Task 3 — Workable adapter.** `adapters/workable.ts` wired through `types.ts`, `detectATS`, `extractTenant`, `stage1`. Smoke-tested (`blueground` → 35 jobs).
 - **Task 4 — Self-expanding loop.** `utils/discoverCompanies.ts` parses JSON-LD `hiringOrganization.sameAs` from already-fetched HTML (no extra fetches), flushes new domains to `new_companies_discovered.json` once per run.
 
-**In progress this session — 11K ATS-API promotion (Task 2 follow-through):**
-- Scraping all 11,080 `pending_review.json` URLs via their JSON APIs (no Chromium needed). Scoring each with the same `creativeScore.json` rubric as `score_jobs.py`; companies with ≥1 creative job at score ≥ 6 get promoted into the live list, the rest stay parked / rejected. Promotion tooling: `scripts/promotePending.ts`.
+**Pipeline reliability fixes (required to make bulk ATS ingestion work):**
+The first 11K bulk run yielded almost nothing (79/11,080) — diagnosed and fixed:
+- **URL-first ATS detection** (`stage1_scrapeCareers.ts`): known-ATS URLs hit the JSON API directly, no HTML fetch, no browser. Clean-API results are authoritative, so dead/empty boards skip the HTML+Playwright fallback (which re-hit the throttled host).
+- **Greenhouse via `boards-api` JSON** (`adapters/greenhouse.ts`): was scraping the HTML embed page (403s under load); now uses `boards-api.greenhouse.io/v1/boards/{slug}/jobs`.
+- **Ashby `jobs`-key bug** (`adapters/ashby.ts`): adapter read `jobPostings`; the API returns `jobs`, so every Ashby board had silently returned 0. Fixed → `ramp`=115 jobs.
+- **Per-host rate limiter** (`utils/hostLimiter.ts`): 4 concurrent + 120ms spacing per host (env-tunable) to stop 429/403 storms.
 
-**Why we did NOT process the original 900 this session:** see the note under Task 1 below — they're 894 custom career pages needing a Chromium-enabled Playwright run (not installed here) and are low-yield, so the high-leverage 11K ATS promotion was prioritized. The prune harness is built and ready; the 900 scrape just needs a browser-provisioned run.
+**11K ATS-API promotion — DONE.** Re-run after fixes: 7,366 companies yielded jobs (was 79), 268,081 jobs total, 12,792 creative-gate jobs. `scripts/promotePending.ts` (propose mode) → **1,686 companies carry ≥1 creative job at score ≥6 (4,717 quality jobs)**. 403s/browser-fails dropped to 0; ~1,141 companies still hit a 429 (residual — see reminders).
+
+**Live-list restructure (per product decision 2026-06-18):**
+- `pipeline/company_career_urls.json` is now the **1,686 promoted ATS companies** (clean APIs, no browser, ~4,700 creative jobs/run).
+- The original 900 custom career pages were **parked** to `pipeline/parked_custom_career_pages.json` (not deleted — niche creative studios that may carry roles the big ATSs don't; revisit when a Chromium-provisioned prune run is worthwhile).
+- The 9,394 scraped-but-no-creative companies saved to `pipeline/companies_to_recheck.json` (see reminders).
+- `pipeline/pending_review.json` reset to `[]` (all 11,080 decided).
+
+---
+
+## ⏰ Reminders / open follow-ups (check these next session)
+
+1. **Re-check `pipeline/companies_to_recheck.json` (9,394 companies).** These are real ATS boards that scraped fine but had **no creative job at score ≥6 on 2026-06-18**. A company with zero creative openings today may post one next month. Periodically re-scrape this file and run `promotePending` against it to surface new creative roles; promote any that now pass. (Suggested cadence: monthly, or whenever the drop needs more volume.) Command:
+   `SCRAPER_URLS_FILE=pipeline/companies_to_recheck.json SCRAPER_OUTPUT_FILE=outputs/recheck.json npm run stage1` then `npm run promote-pending -- --input outputs/recheck.json` (point `PENDING_PATH` logic at this file or just read the promote list).
+2. **~1,141 companies hit HTTP 429 during the 11K run** — they may actually have jobs we missed. A gentler retry pass (lower `PER_HOST_CONCURRENCY`, higher `PER_HOST_SPACING_MS`, or a 429-backoff retry in the adapters) would recover them. They're currently in `companies_to_recheck.json`.
+3. **Parked 900 (`parked_custom_career_pages.json`)** — only worth a prune run once a Chromium/Playwright environment is available (`npx playwright install chromium`). Use `scripts/pruneCompanies.ts`.
+4. **Lever** had near-zero Common Crawl coverage in CC-MAIN-2026-21 — re-run `discoverSlugs` against an older crawl (or add the deferred Google CSE supplement) to pick up Lever companies.
+
+---
 
 ---
 

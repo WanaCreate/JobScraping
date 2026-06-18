@@ -2,6 +2,13 @@
 
 > For repo overview, pipeline stages, and commands, read `README.md` first.
 
+> **Open follow-up (set 2026-06-18):** `pipeline/companies_to_recheck.json` holds
+> 9,394 ATS companies that scraped clean but had no creative job at score ≥6 at the
+> time. Re-scrape + re-score them periodically (monthly, or when the drop needs
+> volume) and promote any that now pass — see "Reminders / open follow-ups" in
+> [docs/JobsDrop2.0_Handoff.md](docs/JobsDrop2.0_Handoff.md) for the full list of
+> follow-ups (429 recovery, parked 900 prune, Lever coverage).
+
 ## Weekly creative jobs (Instagram / manual batches)
 
 1. **Discover** — [docs/JOB-SCRAPER-AGENT-GUIDE.md](docs/JOB-SCRAPER-AGENT-GUIDE.md) (which URLs to scrape)
