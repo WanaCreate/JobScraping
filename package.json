@@ -9,7 +9,9 @@
     "stage2": "tsx pipeline/stage2_collectJobDetails.ts",
     "stage3": "tsx pipeline/stage3_enrichGpt.ts",
     "stage4": "tsx pipeline/stage4_enrichLogos.ts",
-    "build": "tsc -p ."
+    "build": "tsc -p .",
+    "discover-slugs": "tsx scripts/discoverSlugs.ts",
+    "prune-companies": "tsx scripts/pruneCompanies.ts"
   },
   "dependencies": {
     "@esbuild/linux-x64": "^0.27.3",

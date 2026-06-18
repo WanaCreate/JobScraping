@@ -17,6 +17,7 @@
     "filters/**/*.ts",
     "pipeline/**/*.ts",
     "utils/**/*.ts",
-    "WeeklyJobs/**/*.ts"
+    "WeeklyJobs/**/*.ts",
+    "scripts/**/*.ts"
   ]
 }
