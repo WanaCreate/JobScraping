@@ -9,11 +9,13 @@ import { scrapeGreenhouse } from "../adapters/greenhouse.js";
 import { scrapeIcims } from "../adapters/icims.js";
 import { scrapeLever } from "../adapters/lever.js";
 import { scrapeSmartRecruiters } from "../adapters/smartrecruiters.js";
+import { scrapeWorkable } from "../adapters/workable.js";
 import { scrapeWorkday } from "../adapters/workday.js";
 import { detectATS } from "../ats/detectATS.js";
 import { extractTenant } from "../ats/extractTenant.js";
 import { filterCreativeJobs } from "../filters/creativeFilter.js";
 import type { RawJob, ScrapeResult, TenantInfo } from "../types.js";
+import { extractDiscoveredDomains, flushDiscoveredCompanies, recordDiscoveredDomains } from "../utils/discoverCompanies.js";
 import { fetchPage } from "../utils/http.js";
 import { isLikelyJobEntryLoose, isLikelyJobPosting } from "../utils/jobHeuristics.js";
 import { logError, logInfo, logWarn } from "../utils/logger.js";
@@ -53,6 +55,14 @@ function inferTenantFromJobUrls(ats: ScrapeResult["ats"], jobs: RawJob[]): strin
       const match = url.match(/jobs\.ashbyhq\.com\/([a-z0-9_-]+)/i);
       if (match?.[1]) return match[1];
     }
+
+    if (ats === "workable") {
+      const match =
+        url.match(/apply\.workable\.com\/([a-z0-9_-]+)/i) ??
+        url.match(/workable\.com\/api\/accounts\/([a-z0-9_-]+)/i) ??
+        url.match(/jobs\.workable\.com\/([a-z0-9_-]+)/i);
+      if (match?.[1]) return match[1];
+    }
   }
 
   return null;
@@ -81,6 +91,8 @@ async function extractViaAdapter(params: {
       return tenant ? scrapeAshby(tenant) : [];
     case "amazon":
       return scrapeAmazon(sourceUrl);
+    case "workable":
+      return tenant ? scrapeWorkable(tenant) : [];
     default:
       return [];
   }
@@ -102,6 +114,14 @@ export async function scrapeCareers(sourceUrl: string): Promise<ScrapeResult> {
       ats = detectATS(html, finalUrl);
       tenantInfo = extractTenant(html, finalUrl, ats);
       tenant = tenantInfo.tenant;
+
+      if (html) {
+        try {
+          recordDiscoveredDomains(extractDiscoveredDomains(html));
+        } catch {
+          // discovery never breaks a scrape
+        }
+      }
     } catch (error) {
       logWarn("Initial HTTP fetch failed; continuing with generic fallbacks", {
         source: sourceUrl,
@@ -306,6 +326,12 @@ async function main(): Promise<void> {
   const concurrency = Number(process.env.SCRAPER_CONCURRENCY ?? "8");
   const safeConcurrency = Number.isFinite(concurrency) && concurrency > 0 ? concurrency : 8;
   const results = await runScraper(urls, safeConcurrency);
+
+  const newCompaniesCount = await flushDiscoveredCompanies();
+  if (newCompaniesCount > 0) {
+    logInfo("Discovered new companies", { count: newCompaniesCount, file: "pipeline/new_companies_discovered.json" });
+  }
+
   const outputJson = JSON.stringify(results, null, 2);
   const outputPath = parseOutputPath();
 
