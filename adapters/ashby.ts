@@ -14,6 +14,18 @@ type AshbyJobBoardResponse = {
   jobPostings?: AshbyJobPosting[];
 };
 
+// Ashby's posting-api exposes no org-name field, so derive a readable company
+// from the tenant slug (e.g. "acme-design" -> "Acme Design").
+function slugToCompany(slug: string): string {
+  return slug
+    .replace(/[-_]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .split(" ")
+    .map((w) => (w ? w.charAt(0).toUpperCase() + w.slice(1) : w))
+    .join(" ");
+}
+
 export async function scrapeAshby(tenant: string): Promise<RawJob[]> {
   const url = `https://api.ashbyhq.com/posting-api/job-board/${encodeURIComponent(tenant)}`;
   const response = await axios.get<AshbyJobBoardResponse>(url, {
@@ -27,6 +39,7 @@ export async function scrapeAshby(tenant: string): Promise<RawJob[]> {
 
   const jobs: RawJob[] = [];
   const postings = response.data?.jobs ?? response.data?.jobPostings ?? [];
+  const company = slugToCompany(tenant);
 
   for (const posting of postings) {
     const title = posting.title?.trim();
@@ -37,6 +50,7 @@ export async function scrapeAshby(tenant: string): Promise<RawJob[]> {
       title,
       url: jobUrl,
       location: posting.location?.trim() ?? null,
+      company,
       ats: "ashby"
     });
   }

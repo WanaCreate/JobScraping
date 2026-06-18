@@ -51,10 +51,14 @@ export async function scrapeWorkable(tenant: string): Promise<RawJob[]> {
 
   if (workableJobs.length === 0) return [];
 
+  // The account payload carries the company name; fall back to the tenant slug.
+  const company = response.data?.name?.trim() || tenant;
+
   return workableJobs.map((job): RawJob => ({
     title: job.title ?? null,
     url: job.url ?? job.shortlink ?? null,
     location: formatLocation(job),
+    company,
     ats: "workable"
   }));
 }
