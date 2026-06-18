@@ -11,7 +11,8 @@
     "stage4": "tsx pipeline/stage4_enrichLogos.ts",
     "build": "tsc -p .",
     "discover-slugs": "tsx scripts/discoverSlugs.ts",
-    "prune-companies": "tsx scripts/pruneCompanies.ts"
+    "prune-companies": "tsx scripts/pruneCompanies.ts",
+    "promote-pending": "tsx scripts/promotePending.ts"
   },
   "dependencies": {
     "@esbuild/linux-x64": "^0.27.3",
