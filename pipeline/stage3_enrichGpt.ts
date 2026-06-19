@@ -71,7 +71,7 @@ interface CsvJobRow {
   hiringTeam: string;
   workType: string;
   workEmail: string;
-  allowEmailApplications: string;
+  datePosted: string;
   numberOfPositions: string;
   company: string;
   companyWebsite: string;
@@ -128,7 +128,7 @@ function parseCliOptions(): CliOptions {
 
 const CSV_HEADERS: (keyof CsvJobRow)[] = [
   "title", "description", "jobType", "deadline", "keywords", "skills",
-  "jobLink", "hiringTeam", "workType", "workEmail", "allowEmailApplications",
+  "jobLink", "hiringTeam", "workType", "workEmail", "datePosted",
   "numberOfPositions", "company", "companyWebsite", "companyLogo", "companyEmail",
   "locationName", "formattedAddress", "city", "state", "country",
   "latitude", "longitude", "salaryMin", "salaryMax", "salaryCurrency", "salaryPeriod",
