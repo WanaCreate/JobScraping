@@ -1,0 +1,3312 @@
+{
+  "california state university, san bernardino": {
+    "domain": "csusb.edu",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=csusb.edu&sz=256",
+    "source": "website"
+  },
+  "northwest missouri state university": {
+    "domain": "nwmissouri.edu",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=nwmissouri.edu&sz=256",
+    "source": "guessed"
+  },
+  "etsy": {
+    "domain": "etsy.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=etsy.com&sz=256",
+    "source": "guessed"
+  },
+  "coursera": {
+    "domain": "coursera.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=coursera.com&sz=256",
+    "source": "guessed"
+  },
+  "nike": {
+    "domain": "nike.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=nike.com&sz=256",
+    "source": "website"
+  },
+  "greenly": {
+    "domain": "greenly.earth",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=greenly.earth&sz=256",
+    "source": "website"
+  },
+  "nike retail services": {
+    "domain": "nike.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=nike.com&sz=256",
+    "source": "guessed"
+  },
+  "worldwidepartners": {
+    "domain": "worldwidepartners.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=worldwidepartners.com&sz=256",
+    "source": "website"
+  },
+  "shutterstock (uk) ltd": {
+    "domain": "shutterstock.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=shutterstock.com&sz=256",
+    "source": "guessed"
+  },
+  "roblox": {
+    "domain": "roblox.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=roblox.com&sz=256",
+    "source": "website"
+  },
+  "shutterstock, inc.": {
+    "domain": "shutterstock.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=shutterstock.com&sz=256",
+    "source": "guessed"
+  },
+  "taketwo": {
+    "domain": "take2games.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=take2games.com&sz=256",
+    "source": "guessed"
+  },
+  "corporate": {
+    "domain": "corporate.target.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=corporate.target.com&sz=256",
+    "source": "website"
+  },
+  "djc-designs": {
+    "domain": "djc-designs.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=djc-designs.com&sz=256",
+    "source": "website"
+  },
+  "market connect": {
+    "domain": "marketconnect.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=marketconnect.com&sz=256",
+    "source": "website"
+  },
+  "lotum": {
+    "domain": "lotum.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=lotum.com&sz=256",
+    "source": "website"
+  },
+  "archer": {
+    "domain": "archermoney.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=archermoney.com&sz=256",
+    "source": "website"
+  },
+  "contrast ux": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "metro light & power, llc": {
+    "domain": "metrolightandpower.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=metrolightandpower.com&sz=256",
+    "source": "website"
+  },
+  "manhattan strategies": {
+    "domain": "manhattanstrategies.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=manhattanstrategies.com&sz=256",
+    "source": "website"
+  },
+  "above": {
+    "domain": "above.se",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=above.se&sz=256",
+    "source": "website"
+  },
+  "fort robotics": {
+    "domain": "fortrobotics.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=fortrobotics.com&sz=256",
+    "source": "website"
+  },
+  "vituity": {
+    "domain": "vituity.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=vituity.com&sz=256",
+    "source": "website"
+  },
+  "factory360": {
+    "domain": "factory360.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=factory360.com&sz=256",
+    "source": "website"
+  },
+  "rising tide interactive": {
+    "domain": "risingtideinteractive.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=risingtideinteractive.com&sz=256",
+    "source": "website"
+  },
+  "karv": {
+    "domain": "karvagency.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=karvagency.com&sz=256",
+    "source": "website"
+  },
+  "matolux gmbh": {
+    "domain": "mato-lighting.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=mato-lighting.com&sz=256",
+    "source": "website"
+  },
+  "invision communications": {
+    "domain": "iv.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=iv.com&sz=256",
+    "source": "website"
+  },
+  "freshworks": {
+    "domain": "freshworks.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=freshworks.com&sz=256",
+    "source": "guessed"
+  },
+  "architecture": {
+    "domain": "architecture.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=architecture.com&sz=256",
+    "source": "website"
+  },
+  "golin": {
+    "domain": "golin.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=golin.com&sz=256",
+    "source": "website"
+  },
+  "mid sussex district council": {
+    "domain": "midsussex.gov.uk",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=midsussex.gov.uk&sz=256",
+    "source": "guessed"
+  },
+  "financialtimes33": {
+    "domain": "ft.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=ft.com&sz=256",
+    "source": "guessed"
+  },
+  "netflix": {
+    "domain": "netflix.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=netflix.com&sz=256",
+    "source": "website"
+  },
+  "new balance athletics, inc.": {
+    "domain": "newbalance.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=newbalance.com&sz=256",
+    "source": "guessed"
+  },
+  "koto": {
+    "domain": "koto.studio",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=koto.studio&sz=256",
+    "source": "website"
+  },
+  "new balance athletic shoes (uk) limited": {
+    "domain": "newbalance.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=newbalance.com&sz=256",
+    "source": "guessed"
+  },
+  "maze": {
+    "domain": "mazehq.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=mazehq.com&sz=256",
+    "source": "website"
+  },
+  "madebyshape": {
+    "domain": "madebyshape.co.uk",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=madebyshape.co.uk&sz=256",
+    "source": "website"
+  },
+  "haus": {
+    "domain": "madeinhaus.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=madeinhaus.com&sz=256",
+    "source": "website"
+  },
+  "m+c saatchi group": {
+    "domain": "mcsaatchi.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=mcsaatchi.com&sz=256",
+    "source": "website"
+  },
+  "miro": {
+    "domain": "miro.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=miro.com&sz=256",
+    "source": "website"
+  },
+  "pony": {
+    "domain": "pony.studio",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=pony.studio&sz=256",
+    "source": "website"
+  },
+  "privateclubmarketing": {
+    "domain": "privateclubmarketing.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=privateclubmarketing.com&sz=256",
+    "source": "website"
+  },
+  "pininfarina spa": {
+    "domain": "pininfarina.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=pininfarina.com&sz=256",
+    "source": "guessed"
+  },
+  "rga": {
+    "domain": "rga.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=rga.com&sz=256",
+    "source": "website"
+  },
+  "new engen": {
+    "domain": "newengen.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=newengen.com&sz=256",
+    "source": "website"
+  },
+  "bossjob": {
+    "domain": "bossjob.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=bossjob.com&sz=256",
+    "source": "website"
+  },
+  "pressable": {
+    "domain": "pressable.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=pressable.com&sz=256",
+    "source": "website"
+  },
+  "thedieline": {
+    "domain": "thedieline.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=thedieline.com&sz=256",
+    "source": "website"
+  },
+  "weareenigma": {
+    "domain": "weareenigma.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=weareenigma.com&sz=256",
+    "source": "website"
+  },
+  "akqa": {
+    "domain": "akqa.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=akqa.com&sz=256",
+    "source": "website"
+  },
+  "webflow": {
+    "domain": "webflow.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=webflow.com&sz=256",
+    "source": "guessed"
+  },
+  "vercel": {
+    "domain": "vercel.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=vercel.com&sz=256",
+    "source": "guessed"
+  },
+  "amazon": {
+    "domain": "amazon.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=amazon.com&sz=256",
+    "source": "guessed"
+  },
+  "anthropic": {
+    "domain": "anthropic.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=anthropic.com&sz=256",
+    "source": "guessed"
+  },
+  "atlassian": {
+    "domain": "atlassian.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=atlassian.com&sz=256",
+    "source": "website"
+  },
+  "dept": {
+    "domain": "deptagency.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=deptagency.com&sz=256",
+    "source": "guessed"
+  },
+  "baunfire": {
+    "domain": "baunfire.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=baunfire.com&sz=256",
+    "source": "website"
+  },
+  "brucemaudesign": {
+    "domain": "brucemaudesign.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=brucemaudesign.com&sz=256",
+    "source": "website"
+  },
+  "crain": {
+    "domain": "crain.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=crain.com&sz=256",
+    "source": "website"
+  },
+  "buzzfeed": {
+    "domain": "buzzfeed.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=buzzfeed.com&sz=256",
+    "source": "guessed"
+  },
+  "digitas": {
+    "domain": "digitas.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=digitas.com&sz=256",
+    "source": "website"
+  },
+  "domestika": {
+    "domain": "domestika.org",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=domestika.org&sz=256",
+    "source": "website"
+  },
+  "fundestic": {
+    "domain": "fundestic.es",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=fundestic.es&sz=256",
+    "source": "website"
+  },
+  "lucia gonzález": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "bonhomía consulting": {
+    "domain": "bonhomiaconsulting.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=bonhomiaconsulting.com&sz=256",
+    "source": "website"
+  },
+  "firma": {
+    "domain": "wearefirma.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=wearefirma.com&sz=256",
+    "source": "website"
+  },
+  "flop work sl": {
+    "domain": "flopwork.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=flopwork.com&sz=256",
+    "source": "website"
+  },
+  "camping": {
+    "domain": "gocamping.tv",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=gocamping.tv&sz=256",
+    "source": "website"
+  },
+  "all music works": {
+    "domain": "allmusicworks.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=allmusicworks.com&sz=256",
+    "source": "website"
+  },
+  "apple tree": {
+    "domain": "appletree.agency",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=appletree.agency&sz=256",
+    "source": "website"
+  },
+  "the beauty makers": {
+    "domain": "thebeautymakers.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=thebeautymakers.com&sz=256",
+    "source": "website"
+  },
+  "figma": {
+    "domain": "figma.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=figma.com&sz=256",
+    "source": "guessed"
+  },
+  "forbes": {
+    "domain": "forbes.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=forbes.com&sz=256",
+    "source": "guessed"
+  },
+  "foursets": {
+    "domain": "foursets.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=foursets.com&sz=256",
+    "source": "website"
+  },
+  "framer": {
+    "domain": "framer.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=framer.com&sz=256",
+    "source": "website"
+  },
+  "gameloft": {
+    "domain": "gameloft.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=gameloft.com&sz=256",
+    "source": "website"
+  },
+  "eevd": {
+    "domain": "eevd.fa.us6.oraclecloud.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=eevd.fa.us6.oraclecloud.com&sz=256",
+    "source": "website"
+  },
+  "hubspot": {
+    "domain": "hubspot.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=hubspot.com&sz=256",
+    "source": "website"
+  },
+  "glossier": {
+    "domain": "glossier.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=glossier.com&sz=256",
+    "source": "guessed"
+  },
+  "ideo": {
+    "domain": "ideo.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=ideo.com&sz=256",
+    "source": "guessed"
+  },
+  "instrument": {
+    "domain": "instrument.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=instrument.com&sz=256",
+    "source": "website"
+  },
+  "insomniac": {
+    "domain": "insomniac.games",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=insomniac.games&sz=256",
+    "source": "guessed"
+  },
+  "lifeatspotify": {
+    "domain": "lifeatspotify.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=lifeatspotify.com&sz=256",
+    "source": "website"
+  },
+  "us063 oliver wyman, llc": {
+    "domain": "oliverwyman.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=oliverwyman.com&sz=256",
+    "source": "guessed"
+  },
+  "lyft": {
+    "domain": "lyft.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=lyft.com&sz=256",
+    "source": "website"
+  },
+  "metalab": {
+    "domain": "metalab.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=metalab.com&sz=256",
+    "source": "guessed"
+  },
+  "mindshareworld": {
+    "domain": "mindshareworld.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=mindshareworld.com&sz=256",
+    "source": "website"
+  },
+  "myntra": {
+    "domain": "myntra.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=myntra.com&sz=256",
+    "source": "website"
+  },
+  "nytco": {
+    "domain": "nytco.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=nytco.com&sz=256",
+    "source": "website"
+  },
+  "phonepe": {
+    "domain": "phonepe.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=phonepe.com&sz=256",
+    "source": "website"
+  },
+  "primary": {
+    "domain": "primary.studio",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=primary.studio&sz=256",
+    "source": "website"
+  },
+  "mrm": {
+    "domain": "mrm.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=mrm.com&sz=256",
+    "source": "website"
+  },
+  "razorpaysoftwareprivatelimited": {
+    "domain": "razorpay.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=razorpay.com&sz=256",
+    "source": "guessed"
+  },
+  "riotgames": {
+    "domain": "riotgames.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=riotgames.com&sz=256",
+    "source": "website"
+  },
+  "spe": {
+    "domain": "sonypictures.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=sonypictures.com&sz=256",
+    "source": "guessed"
+  },
+  "supercell": {
+    "domain": "supercell.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=supercell.com&sz=256",
+    "source": "website"
+  },
+  "linkedin": {
+    "domain": "linkedin.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=linkedin.com&sz=256",
+    "source": "website"
+  },
+  "tandpgroup": {
+    "domain": "tandpgroup.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=tandpgroup.com&sz=256",
+    "source": "website"
+  },
+  "typeform": {
+    "domain": "typeform.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=typeform.com&sz=256",
+    "source": "guessed"
+  },
+  "valvesoftware": {
+    "domain": "valvesoftware.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=valvesoftware.com&sz=256",
+    "source": "website"
+  },
+  "voxmedia": {
+    "domain": "voxmedia.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=voxmedia.com&sz=256",
+    "source": "website"
+  },
+  "msx international": {
+    "domain": "msxi.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=msxi.com&sz=256",
+    "source": "website"
+  },
+  "zyngacareers": {
+    "domain": "zynga.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=zynga.com&sz=256",
+    "source": "guessed"
+  },
+  "weareinertia": {
+    "domain": "weareinertia.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=weareinertia.com&sz=256",
+    "source": "website"
+  },
+  "2k games": {
+    "domain": "2kgames.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=2kgames.com&sz=256",
+    "source": "guessed"
+  },
+  "2k": {
+    "domain": "2k.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=2k.com&sz=256",
+    "source": "guessed"
+  },
+  "firaxis games": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "hangar 13 / 2k": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "cloud chamber / 2k": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "gearbox entertainment company": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "31st union": {
+    "domain": "31stunion.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=31stunion.com&sz=256",
+    "source": "guessed"
+  },
+  "accenture federal services": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "american college of obstetricians and gynecologists": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "adyen": {
+    "domain": "adyen.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=adyen.com&sz=256",
+    "source": "guessed"
+  },
+  "agility robotics": {
+    "domain": "agilityrobotics.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=agilityrobotics.com&sz=256",
+    "source": "website"
+  },
+  "airbnb": {
+    "domain": "airbnb.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=airbnb.com&sz=256",
+    "source": "website"
+  },
+  "benesch": {
+    "domain": "benesch.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=benesch.com&sz=256",
+    "source": "website"
+  },
+  "alo": {
+    "domain": "alo.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=alo.com&sz=256",
+    "source": "guessed"
+  },
+  "alpaca": {
+    "domain": "alpaca.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=alpaca.com&sz=256",
+    "source": "guessed"
+  },
+  "anaplan": {
+    "domain": "anaplan.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=anaplan.com&sz=256",
+    "source": "guessed"
+  },
+  "alphasense": {
+    "domain": "alphasense.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=alphasense.com&sz=256",
+    "source": "guessed"
+  },
+  "anduril industries": {
+    "domain": "andurilindustries.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=andurilindustries.com&sz=256",
+    "source": "guessed"
+  },
+  "armada": {
+    "domain": "armada.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=armada.com&sz=256",
+    "source": "guessed"
+  },
+  "asana": {
+    "domain": "asana.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=asana.com&sz=256",
+    "source": "website"
+  },
+  "wordpress vip": {
+    "domain": "wordpressvip.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=wordpressvip.com&sz=256",
+    "source": "guessed"
+  },
+  "awin": {
+    "domain": "awin.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=awin.com&sz=256",
+    "source": "guessed"
+  },
+  "betterment": {
+    "domain": "betterment.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=betterment.com&sz=256",
+    "source": "website"
+  },
+  "bill": {
+    "domain": "bill.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=bill.com&sz=256",
+    "source": "website"
+  },
+  "blank street": {
+    "domain": "blankstreet.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=blankstreet.com&sz=256",
+    "source": "guessed"
+  },
+  "blockchain.com": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "brightai corporation": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "brunt workwear": {
+    "domain": "bruntworkwear.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=bruntworkwear.com&sz=256",
+    "source": "guessed"
+  },
+  "bluehole inc.": {
+    "domain": "bluehole.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=bluehole.com&sz=256",
+    "source": "guessed"
+  },
+  "cabify": {
+    "domain": "cabify.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=cabify.com&sz=256",
+    "source": "guessed"
+  },
+  "cannondesign": {
+    "domain": "cannondesign.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=cannondesign.com&sz=256",
+    "source": "website"
+  },
+  "capco": {
+    "domain": "capco.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=capco.com&sz=256",
+    "source": "guessed"
+  },
+  "carrot": {
+    "domain": "carrot.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=carrot.com&sz=256",
+    "source": "guessed"
+  },
+  "cargurus": {
+    "domain": "cargurus.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=cargurus.com&sz=256",
+    "source": "website"
+  },
+  "chaos industries": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "checkr": {
+    "domain": "checkr.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=checkr.com&sz=256",
+    "source": "guessed"
+  },
+  "chime financial, inc": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "circleci": {
+    "domain": "circleci.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=circleci.com&sz=256",
+    "source": "website"
+  },
+  "cloud chamber": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "commerceiq": {
+    "domain": "commerceiq.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=commerceiq.com&sz=256",
+    "source": "guessed"
+  },
+  "coreweave": {
+    "domain": "coreweave.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=coreweave.com&sz=256",
+    "source": "website"
+  },
+  "databricks": {
+    "domain": "databricks.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=databricks.com&sz=256",
+    "source": "website"
+  },
+  "datadog": {
+    "domain": "datadoghq.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=datadoghq.com&sz=256",
+    "source": "website"
+  },
+  "customer.io": {
+    "domain": "customerio.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=customerio.com&sz=256",
+    "source": "guessed"
+  },
+  "dbt labs": {
+    "domain": "dbtlabs.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=dbtlabs.com&sz=256",
+    "source": "guessed"
+  },
+  "dept®": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "devrev": {
+    "domain": "devrev.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=devrev.com&sz=256",
+    "source": "guessed"
+  },
+  "dialpad": {
+    "domain": "dialpad.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=dialpad.com&sz=256",
+    "source": "guessed"
+  },
+  "discord": {
+    "domain": "discord.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=discord.com&sz=256",
+    "source": "guessed"
+  },
+  "digicert": {
+    "domain": "digicert.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=digicert.com&sz=256",
+    "source": "website"
+  },
+  "disco": {
+    "domain": "csdisco.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=csdisco.com&sz=256",
+    "source": "website"
+  },
+  "dmg events": {
+    "domain": "dmgevents.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=dmgevents.com&sz=256",
+    "source": "guessed"
+  },
+  "echodyne corp": {
+    "domain": "echodyne.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=echodyne.com&sz=256",
+    "source": "guessed"
+  },
+  "electra": {
+    "domain": "electra.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=electra.com&sz=256",
+    "source": "guessed"
+  },
+  "equipmentshare": {
+    "domain": "equipmentshare.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=equipmentshare.com&sz=256",
+    "source": "website"
+  },
+  "esri": {
+    "domain": "esri.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=esri.com&sz=256",
+    "source": "website"
+  },
+  "ethos life": {
+    "domain": "ethoslife.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=ethoslife.com&sz=256",
+    "source": "guessed"
+  },
+  "eucalyptus": {
+    "domain": "eucalyptus.io",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=eucalyptus.io&sz=256",
+    "source": "guessed"
+  },
+  "everlane": {
+    "domain": "everlane.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=everlane.com&sz=256",
+    "source": "guessed"
+  },
+  "ezcater, inc": {
+    "domain": "ezcater.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=ezcater.com&sz=256",
+    "source": "guessed"
+  },
+  "expel": {
+    "domain": "expel.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=expel.com&sz=256",
+    "source": "website"
+  },
+  "fever": {
+    "domain": "fever.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=fever.com&sz=256",
+    "source": "guessed"
+  },
+  "zipline": {
+    "domain": "zipline.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=zipline.com&sz=256",
+    "source": "website"
+  },
+  "formlabs": {
+    "domain": "formlabs.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=formlabs.com&sz=256",
+    "source": "website"
+  },
+  "geotab": {
+    "domain": "geotab.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=geotab.com&sz=256",
+    "source": "guessed"
+  },
+  "gwi": {
+    "domain": "gwi.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=gwi.com&sz=256",
+    "source": "guessed"
+  },
+  "gong.io": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "hellofresh": {
+    "domain": "hellofresh.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=hellofresh.com&sz=256",
+    "source": "website"
+  },
+  "gusto, inc.": {
+    "domain": "gusto.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=gusto.com&sz=256",
+    "source": "guessed"
+  },
+  "wellhub": {
+    "domain": "wellhub.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=wellhub.com&sz=256",
+    "source": "guessed"
+  },
+  "headspace": {
+    "domain": "headspace.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=headspace.com&sz=256",
+    "source": "guessed"
+  },
+  "insomniac games": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "icon": {
+    "domain": "icon.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=icon.com&sz=256",
+    "source": "guessed"
+  },
+  "instacart": {
+    "domain": "instacart.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=instacart.com&sz=256",
+    "source": "website"
+  },
+  "fin": {
+    "domain": "fin.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=fin.com&sz=256",
+    "source": "guessed"
+  },
+  "ionq": {
+    "domain": "ionq.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=ionq.com&sz=256",
+    "source": "guessed"
+  },
+  "ixl learning": {
+    "domain": "ixl.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=ixl.com&sz=256",
+    "source": "website"
+  },
+  "ionq (capella)": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "jukebox health": {
+    "domain": "jukeboxhealth.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=jukeboxhealth.com&sz=256",
+    "source": "guessed"
+  },
+  "kaseya": {
+    "domain": "kaseya.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=kaseya.com&sz=256",
+    "source": "website"
+  },
+  "landor": {
+    "domain": "landor.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=landor.com&sz=256",
+    "source": "guessed"
+  },
+  "klaviyo": {
+    "domain": "klaviyo.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=klaviyo.com&sz=256",
+    "source": "website"
+  },
+  "life360": {
+    "domain": "life360.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=life360.com&sz=256",
+    "source": "guessed"
+  },
+  "lattice": {
+    "domain": "lattice.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=lattice.com&sz=256",
+    "source": "website"
+  },
+  "lumimeds": {
+    "domain": "lumimeds.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=lumimeds.com&sz=256",
+    "source": "guessed"
+  },
+  "ipg mediabrands": {
+    "domain": "ipgmediabrands.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=ipgmediabrands.com&sz=256",
+    "source": "guessed"
+  },
+  "monks": {
+    "domain": "monks.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=monks.com&sz=256",
+    "source": "website"
+  },
+  "morgan & morgan, p.a.": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "newsela": {
+    "domain": "newsela.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=newsela.com&sz=256",
+    "source": "guessed"
+  },
+  "nice": {
+    "domain": "nice.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=nice.com&sz=256",
+    "source": "guessed"
+  },
+  "ocrolus inc.": {
+    "domain": "ocrolus.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=ocrolus.com&sz=256",
+    "source": "guessed"
+  },
+  "oliver": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "oliver agency": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "oliver agency - brasil": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "oliver agency - apac": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "oliver agency - north america": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "olsson": {
+    "domain": "olsson.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=olsson.com&sz=256",
+    "source": "guessed"
+  },
+  "one acre fund": {
+    "domain": "oneacrefund.org",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=oneacrefund.org&sz=256",
+    "source": "website"
+  },
+  "oscar health": {
+    "domain": "hioscar.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=hioscar.com&sz=256",
+    "source": "website"
+  },
+  "omada health": {
+    "domain": "omadahealth.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=omadahealth.com&sz=256",
+    "source": "guessed"
+  },
+  "onetrust": {
+    "domain": "onetrust.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=onetrust.com&sz=256",
+    "source": "guessed"
+  },
+  "pantheon systems, inc": {
+    "domain": "pantheon.io",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=pantheon.io&sz=256",
+    "source": "website"
+  },
+  "oura": {
+    "domain": "oura.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=oura.com&sz=256",
+    "source": "guessed"
+  },
+  "parloa": {
+    "domain": "parloa.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=parloa.com&sz=256",
+    "source": "guessed"
+  },
+  "the pokémon company international": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "pubg madison": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "quince": {
+    "domain": "quince.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=quince.com&sz=256",
+    "source": "guessed"
+  },
+  "realtor.com": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "real chemistry": {
+    "domain": "realchemistry.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=realchemistry.com&sz=256",
+    "source": "guessed"
+  },
+  "red ventures": {
+    "domain": "redventures.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=redventures.com&sz=256",
+    "source": "website"
+  },
+  "rent the runway": {
+    "domain": "renttherunway.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=renttherunway.com&sz=256",
+    "source": "guessed"
+  },
+  "robinhood": {
+    "domain": "robinhood.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=robinhood.com&sz=256",
+    "source": "guessed"
+  },
+  "ripple": {
+    "domain": "ripple.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=ripple.com&sz=256",
+    "source": "website"
+  },
+  "ruggable": {
+    "domain": "ruggable.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=ruggable.com&sz=256",
+    "source": "guessed"
+  },
+  "ashley digital": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "samsara": {
+    "domain": "samsara.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=samsara.com&sz=256",
+    "source": "website"
+  },
+  "sanmar": {
+    "domain": "sanmar.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=sanmar.com&sz=256",
+    "source": "guessed"
+  },
+  "scopely": {
+    "domain": "scopely.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=scopely.com&sz=256",
+    "source": "guessed"
+  },
+  "skild ai": {
+    "domain": "skildai.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=skildai.com&sz=256",
+    "source": "guessed"
+  },
+  "sofi": {
+    "domain": "sofi.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=sofi.com&sz=256",
+    "source": "website"
+  },
+  "sony interactive entertainment": {
+    "domain": "sonyinteractiveentertainment.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=sonyinteractiveentertainment.com&sz=256",
+    "source": "guessed"
+  },
+  "playstation global": {
+    "domain": "playstationglobal.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=playstationglobal.com&sz=256",
+    "source": "guessed"
+  },
+  "sony pictures imageworks": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "sony pictures animation": {
+    "domain": "sonypicturesanimation.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=sonypicturesanimation.com&sz=256",
+    "source": "guessed"
+  },
+  "spacex": {
+    "domain": "spacex.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=spacex.com&sz=256",
+    "source": "guessed"
+  },
+  "study.com": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "taxbit": {
+    "domain": "taxbit.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=taxbit.com&sz=256",
+    "source": "guessed"
+  },
+  "teads": {
+    "domain": "teads.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=teads.com&sz=256",
+    "source": "guessed"
+  },
+  "the new york times": {
+    "domain": "thenewyorktimes.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=thenewyorktimes.com&sz=256",
+    "source": "guessed"
+  },
+  "tipalti": {
+    "domain": "tipalti.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=tipalti.com&sz=256",
+    "source": "website"
+  },
+  "toast": {
+    "domain": "toasttab.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=toasttab.com&sz=256",
+    "source": "website"
+  },
+  "too good to go": {
+    "domain": "toogoodtogo.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=toogoodtogo.com&sz=256",
+    "source": "guessed"
+  },
+  "torq": {
+    "domain": "torq.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=torq.com&sz=256",
+    "source": "guessed"
+  },
+  "navan": {
+    "domain": "navan.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=navan.com&sz=256",
+    "source": "website"
+  },
+  "unity technologies": {
+    "domain": "unity.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=unity.com&sz=256",
+    "source": "website"
+  },
+  "twin health": {
+    "domain": "twinhealth.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=twinhealth.com&sz=256",
+    "source": "guessed"
+  },
+  "twilio": {
+    "domain": "twilio.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=twilio.com&sz=256",
+    "source": "guessed"
+  },
+  "vast": {
+    "domain": "vast.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=vast.com&sz=256",
+    "source": "guessed"
+  },
+  "vestwell": {
+    "domain": "vestwell.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=vestwell.com&sz=256",
+    "source": "guessed"
+  },
+  "vaynermedia": {
+    "domain": "vaynermedia.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=vaynermedia.com&sz=256",
+    "source": "website"
+  },
+  "vsa partners": {
+    "domain": "vsapartners.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=vsapartners.com&sz=256",
+    "source": "guessed"
+  },
+  "vox media, llc": {
+    "domain": "voxmedia.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=voxmedia.com&sz=256",
+    "source": "guessed"
+  },
+  "vsco": {
+    "domain": "vsco.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=vsco.com&sz=256",
+    "source": "guessed"
+  },
+  "woolpert": {
+    "domain": "woolpert.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=woolpert.com&sz=256",
+    "source": "guessed"
+  },
+  "wikimedia foundation": {
+    "domain": "wikimediafoundation.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=wikimediafoundation.com&sz=256",
+    "source": "guessed"
+  },
+  "workstream": {
+    "domain": "workstream.co",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=workstream.co&sz=256",
+    "source": "guessed"
+  },
+  "2u": {
+    "domain": "2u.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=2u.com&sz=256",
+    "source": "guessed"
+  },
+  "143 studios llc": {
+    "domain": "143studios.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=143studios.com&sz=256",
+    "source": "guessed"
+  },
+  "alarm.com": {
+    "domain": "alarmcom.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=alarmcom.com&sz=256",
+    "source": "guessed"
+  },
+  "within": {
+    "domain": "within.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=within.com&sz=256",
+    "source": "guessed"
+  },
+  "alten technology usa": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "alx africa": {
+    "domain": "alxafrica.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=alxafrica.com&sz=256",
+    "source": "guessed"
+  },
+  "aperia solutions": {
+    "domain": "aperiasolutions.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=aperiasolutions.com&sz=256",
+    "source": "guessed"
+  },
+  "apex companies": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "arco educação": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "astera labs": {
+    "domain": "asteralabs.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=asteralabs.com&sz=256",
+    "source": "guessed"
+  },
+  "atwell, llc": {
+    "domain": "atwell.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=atwell.com&sz=256",
+    "source": "guessed"
+  },
+  "autoscout24": {
+    "domain": "autoscout24.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=autoscout24.com&sz=256",
+    "source": "guessed"
+  },
+  "axle": {
+    "domain": "axle.co",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=axle.co&sz=256",
+    "source": "guessed"
+  },
+  "axon": {
+    "domain": "axon.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=axon.com&sz=256",
+    "source": "guessed"
+  },
+  "b12": {
+    "domain": "b12.io",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=b12.io&sz=256",
+    "source": "guessed"
+  },
+  "beacon biosignals": {
+    "domain": "beaconbiosignals.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=beaconbiosignals.com&sz=256",
+    "source": "guessed"
+  },
+  "beyondtrust": {
+    "domain": "beyondtrust.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=beyondtrust.com&sz=256",
+    "source": "guessed"
+  },
+  "bda": {
+    "domain": "bda.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=bda.com&sz=256",
+    "source": "guessed"
+  },
+  "bge, inc": {
+    "domain": "bge.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=bge.com&sz=256",
+    "source": "guessed"
+  },
+  "billiontoone": {
+    "domain": "billiontoone.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=billiontoone.com&sz=256",
+    "source": "guessed"
+  },
+  "bold business": {
+    "domain": "boldbusiness.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=boldbusiness.com&sz=256",
+    "source": "guessed"
+  },
+  "boldin": {
+    "domain": "boldin.co",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=boldin.co&sz=256",
+    "source": "guessed"
+  },
+  "brandtech+": {
+    "domain": "brandtech.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=brandtech.com&sz=256",
+    "source": "guessed"
+  },
+  "bvnk": {
+    "domain": "bvnk.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=bvnk.com&sz=256",
+    "source": "guessed"
+  },
+  "civil science": {
+    "domain": "civilscience.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=civilscience.com&sz=256",
+    "source": "guessed"
+  },
+  "cleo": {
+    "domain": "cleo.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=cleo.com&sz=256",
+    "source": "guessed"
+  },
+  "codepath": {
+    "domain": "codepath.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=codepath.com&sz=256",
+    "source": "guessed"
+  },
+  "construction resources": {
+    "domain": "constructionresources.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=constructionresources.com&sz=256",
+    "source": "guessed"
+  },
+  "constant contact": {
+    "domain": "constantcontact.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=constantcontact.com&sz=256",
+    "source": "guessed"
+  },
+  "cloudbeds": {
+    "domain": "cloudbeds.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=cloudbeds.com&sz=256",
+    "source": "guessed"
+  },
+  "cortex": {
+    "domain": "cortex.io",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=cortex.io&sz=256",
+    "source": "guessed"
+  },
+  "constellation software, inc.": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "critical mass": {
+    "domain": "criticalmass.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=criticalmass.com&sz=256",
+    "source": "guessed"
+  },
+  "ctec (cybermedia technologies)": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "dlh": {
+    "domain": "dlh.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=dlh.com&sz=256",
+    "source": "guessed"
+  },
+  "dkb code factory": {
+    "domain": "dkbcodefactory.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=dkbcodefactory.com&sz=256",
+    "source": "guessed"
+  },
+  "dlr group": {
+    "domain": "dlrgroup.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=dlrgroup.com&sz=256",
+    "source": "guessed"
+  },
+  "easygo": {
+    "domain": "easygo.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=easygo.com&sz=256",
+    "source": "guessed"
+  },
+  "momentum worldwide": {
+    "domain": "momentumworldwide.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=momentumworldwide.com&sz=256",
+    "source": "guessed"
+  },
+  "eleventh hour games": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "emergent labs": {
+    "domain": "emergentlabs.co",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=emergentlabs.co&sz=256",
+    "source": "guessed"
+  },
+  "exadel": {
+    "domain": "exadel.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=exadel.com&sz=256",
+    "source": "guessed"
+  },
+  "exadel inc": {
+    "domain": "exadel.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=exadel.com&sz=256",
+    "source": "guessed"
+  },
+  "fam brands": {
+    "domain": "fambrands.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=fambrands.com&sz=256",
+    "source": "guessed"
+  },
+  "fanatics collectibles": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "fashion nova": {
+    "domain": "fashionnova.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=fashionnova.com&sz=256",
+    "source": "guessed"
+  },
+  "financial times": {
+    "domain": "financialtimes.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=financialtimes.com&sz=256",
+    "source": "guessed"
+  },
+  "glance": {
+    "domain": "glance.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=glance.com&sz=256",
+    "source": "guessed"
+  },
+  "growe talents": {
+    "domain": "growetalents.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=growetalents.com&sz=256",
+    "source": "guessed"
+  },
+  "goodr": {
+    "domain": "goodr.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=goodr.com&sz=256",
+    "source": "guessed"
+  },
+  "jensen hughes": {
+    "domain": "jensenhughes.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=jensenhughes.com&sz=256",
+    "source": "guessed"
+  },
+  "keeley construction": {
+    "domain": "keeleyconstruction.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=keeleyconstruction.com&sz=256",
+    "source": "guessed"
+  },
+  "launch potato": {
+    "domain": "launchpotato.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=launchpotato.com&sz=256",
+    "source": "guessed"
+  },
+  "pearl": {
+    "domain": "pearl.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=pearl.com&sz=256",
+    "source": "guessed"
+  },
+  "link": {
+    "domain": "link.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=link.com&sz=256",
+    "source": "guessed"
+  },
+  "maintainx": {
+    "domain": "maintainx.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=maintainx.com&sz=256",
+    "source": "guessed"
+  },
+  "litify": {
+    "domain": "litify.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=litify.com&sz=256",
+    "source": "guessed"
+  },
+  "vml map": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "matte projects": {
+    "domain": "matteprojects.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=matteprojects.com&sz=256",
+    "source": "guessed"
+  },
+  "m booth health": {
+    "domain": "mboothhealth.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=mboothhealth.com&sz=256",
+    "source": "guessed"
+  },
+  "mcadams": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "marqeta": {
+    "domain": "marqeta.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=marqeta.com&sz=256",
+    "source": "guessed"
+  },
+  "naughty dog": {
+    "domain": "naughtydog.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=naughtydog.com&sz=256",
+    "source": "guessed"
+  },
+  "medsien": {
+    "domain": "medsien.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=medsien.com&sz=256",
+    "source": "guessed"
+  },
+  "new era technology": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "netease games": {
+    "domain": "neteasegames.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=neteasegames.com&sz=256",
+    "source": "guessed"
+  },
+  "nex": {
+    "domain": "nex.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=nex.com&sz=256",
+    "source": "guessed"
+  },
+  "blueprint": {
+    "domain": "blueprint.io",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=blueprint.io&sz=256",
+    "source": "guessed"
+  },
+  "omnicom media uk": {
+    "domain": "omnicommedia.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=omnicommedia.com&sz=256",
+    "source": "guessed"
+  },
+  "overdare": {
+    "domain": "overdare.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=overdare.com&sz=256",
+    "source": "guessed"
+  },
+  "mg omd": {
+    "domain": "mgomd.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=mgomd.com&sz=256",
+    "source": "guessed"
+  },
+  "omnicom health": {
+    "domain": "omnicomhealth.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=omnicomhealth.com&sz=256",
+    "source": "guessed"
+  },
+  "pandadoc": {
+    "domain": "pandadoc.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=pandadoc.com&sz=256",
+    "source": "guessed"
+  },
+  "panthalassa": {
+    "domain": "panthalassa.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=panthalassa.com&sz=256",
+    "source": "guessed"
+  },
+  "penn interactive": {
+    "domain": "penninteractive.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=penninteractive.com&sz=256",
+    "source": "guessed"
+  },
+  "paypay": {
+    "domain": "paypay.io",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=paypay.io&sz=256",
+    "source": "guessed"
+  },
+  "polyai": {
+    "domain": "polyai.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=polyai.com&sz=256",
+    "source": "guessed"
+  },
+  "pendo": {
+    "domain": "pendo.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=pendo.com&sz=256",
+    "source": "guessed"
+  },
+  "portable": {
+    "domain": "portable.io",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=portable.io&sz=256",
+    "source": "guessed"
+  },
+  "krafton": {
+    "domain": "krafton.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=krafton.com&sz=256",
+    "source": "guessed"
+  },
+  "rd station": {
+    "domain": "rdstation.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=rdstation.com&sz=256",
+    "source": "guessed"
+  },
+  "pubg studios": {
+    "domain": "pubgstudios.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=pubgstudios.com&sz=256",
+    "source": "guessed"
+  },
+  "rapp": {
+    "domain": "rapp.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=rapp.com&sz=256",
+    "source": "guessed"
+  },
+  "elastic": {
+    "domain": "elastic.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=elastic.com&sz=256",
+    "source": "guessed"
+  },
+  "redwood software": {
+    "domain": "redwood.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=redwood.com&sz=256",
+    "source": "guessed"
+  },
+  "rtb house": {
+    "domain": "rtbhouse.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=rtbhouse.com&sz=256",
+    "source": "guessed"
+  },
+  "reformation": {
+    "domain": "reformation.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=reformation.com&sz=256",
+    "source": "guessed"
+  },
+  "sharkninja": {
+    "domain": "sharkninja.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=sharkninja.com&sz=256",
+    "source": "guessed"
+  },
+  "ogilvy social.lab south africa": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "soho house & co.": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "the orchard": {
+    "domain": "theorchard.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=theorchard.com&sz=256",
+    "source": "guessed"
+  },
+  "sony music": {
+    "domain": "sonymusic.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=sonymusic.com&sz=256",
+    "source": "guessed"
+  },
+  "splash financial": {
+    "domain": "splashfinancial.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=splashfinancial.com&sz=256",
+    "source": "guessed"
+  },
+  "cresco labs": {
+    "domain": "crescolabs.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=crescolabs.com&sz=256",
+    "source": "guessed"
+  },
+  "takealot.com": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "teamlfg": {
+    "domain": "teamlfg.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=teamlfg.com&sz=256",
+    "source": "guessed"
+  },
+  "tegna inc.": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "thoughtworks": {
+    "domain": "thoughtworks.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=thoughtworks.com&sz=256",
+    "source": "guessed"
+  },
+  "the allen institute for artificial intelligence": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "turbineone": {
+    "domain": "turbineone.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=turbineone.com&sz=256",
+    "source": "guessed"
+  },
+  "valtech": {
+    "domain": "valtech.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=valtech.com&sz=256",
+    "source": "guessed"
+  },
+  "the trade desk": {
+    "domain": "thetradedesk.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=thetradedesk.com&sz=256",
+    "source": "guessed"
+  },
+  "abacum": {
+    "domain": "abacum.ai",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=abacum.ai&sz=256",
+    "source": "website"
+  },
+  "absorb": {
+    "domain": "absorblms.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=absorblms.com&sz=256",
+    "source": "website"
+  },
+  "acquisition.com": {
+    "domain": "acquisition.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=acquisition.com&sz=256",
+    "source": "website"
+  },
+  "adaption": {
+    "domain": "adaptionlabs.ai",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=adaptionlabs.ai&sz=256",
+    "source": "website"
+  },
+  "aerovect": {
+    "domain": "aerovect.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=aerovect.com&sz=256",
+    "source": "website"
+  },
+  "airtasker": {
+    "domain": "airtasker.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=airtasker.com&sz=256",
+    "source": "website"
+  },
+  "airwallex": {
+    "domain": "airwallex.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=airwallex.com&sz=256",
+    "source": "website"
+  },
+  "alan": {
+    "domain": "alan.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=alan.com&sz=256",
+    "source": "website"
+  },
+  "allara": {
+    "domain": "allarahealth.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=allarahealth.com&sz=256",
+    "source": "website"
+  },
+  "almedia": {
+    "domain": "almedia.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=almedia.com&sz=256",
+    "source": "guessed"
+  },
+  "ambrook": {
+    "domain": "ambrook.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=ambrook.com&sz=256",
+    "source": "website"
+  },
+  "apex technology, inc.": {
+    "domain": "apexspace.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=apexspace.com&sz=256",
+    "source": "website"
+  },
+  "applied intuition": {
+    "domain": "appliedintuition.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=appliedintuition.com&sz=256",
+    "source": "website"
+  },
+  "apify technologies s.r.o.": {
+    "domain": "apify.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=apify.com&sz=256",
+    "source": "website"
+  },
+  "apron": {
+    "domain": "getapron.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=getapron.com&sz=256",
+    "source": "website"
+  },
+  "arb interactive": {
+    "domain": "arbinteractive.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=arbinteractive.com&sz=256",
+    "source": "website"
+  },
+  "arcade": {
+    "domain": "arcade.dev",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=arcade.dev&sz=256",
+    "source": "website"
+  },
+  "ashby": {
+    "domain": "ashby.io",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=ashby.io&sz=256",
+    "source": "guessed"
+  },
+  "aspora": {
+    "domain": "aspora.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=aspora.com&sz=256",
+    "source": "website"
+  },
+  "assembled": {
+    "domain": "assembled.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=assembled.com&sz=256",
+    "source": "website"
+  },
+  "bjak": {
+    "domain": "bjak.my",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=bjak.my&sz=256",
+    "source": "website"
+  },
+  "betterup": {
+    "domain": "betterup.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=betterup.com&sz=256",
+    "source": "website"
+  },
+  "bitstack": {
+    "domain": "bitstack-app.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=bitstack-app.com&sz=256",
+    "source": "website"
+  },
+  "bobyard": {
+    "domain": "bobyard.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=bobyard.com&sz=256",
+    "source": "website"
+  },
+  "bounce": {
+    "domain": "bounce.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=bounce.com&sz=256",
+    "source": "website"
+  },
+  "branchlab": {
+    "domain": "branchlab.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=branchlab.com&sz=256",
+    "source": "website"
+  },
+  "bunch": {
+    "domain": "bunch.capital",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=bunch.capital&sz=256",
+    "source": "website"
+  },
+  "branch financial, llc": {
+    "domain": "ourbranch.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=ourbranch.com&sz=256",
+    "source": "website"
+  },
+  "bureau": {
+    "domain": "bureau.id",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=bureau.id&sz=256",
+    "source": "website"
+  },
+  "canals": {
+    "domain": "canals.ai",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=canals.ai&sz=256",
+    "source": "website"
+  },
+  "clickup": {
+    "domain": "clickup.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=clickup.com&sz=256",
+    "source": "website"
+  },
+  "conduct": {
+    "domain": "conduct.ai",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=conduct.ai&sz=256",
+    "source": "website"
+  },
+  "coderabbit": {
+    "domain": "coderabbit.ai",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=coderabbit.ai&sz=256",
+    "source": "website"
+  },
+  "conveo": {
+    "domain": "conveo.ai",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=conveo.ai&sz=256",
+    "source": "website"
+  },
+  "crusoe": {
+    "domain": "crusoe.ai",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=crusoe.ai&sz=256",
+    "source": "website"
+  },
+  "cyvl": {
+    "domain": "cyvl.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=cyvl.com&sz=256",
+    "source": "website"
+  },
+  "decagon": {
+    "domain": "decagon.ai",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=decagon.ai&sz=256",
+    "source": "website"
+  },
+  "directive": {
+    "domain": "directiveconsulting.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=directiveconsulting.com&sz=256",
+    "source": "website"
+  },
+  "docker": {
+    "domain": "docker.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=docker.com&sz=256",
+    "source": "website"
+  },
+  "double the donation": {
+    "domain": "doublethedonation.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=doublethedonation.com&sz=256",
+    "source": "website"
+  },
+  "dualentry": {
+    "domain": "dualentry.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=dualentry.com&sz=256",
+    "source": "website"
+  },
+  "eight sleep": {
+    "domain": "eightsleep.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=eightsleep.com&sz=256",
+    "source": "website"
+  },
+  "elevenlabs": {
+    "domain": "elevenlabs.io",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=elevenlabs.io&sz=256",
+    "source": "website"
+  },
+  "elliptic": {
+    "domain": "elliptic.co",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=elliptic.co&sz=256",
+    "source": "website"
+  },
+  "ello": {
+    "domain": "ello.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=ello.com&sz=256",
+    "source": "website"
+  },
+  "flipper": {
+    "domain": "flipper.net",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=flipper.net&sz=256",
+    "source": "website"
+  },
+  "focused energy": {
+    "domain": "focused-energy.co",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=focused-energy.co&sz=256",
+    "source": "website"
+  },
+  "foundry for good": {
+    "domain": "foundryforgood.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=foundryforgood.com&sz=256",
+    "source": "website"
+  },
+  "galvany": {
+    "domain": "galvany.de",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=galvany.de&sz=256",
+    "source": "website"
+  },
+  "gamma": {
+    "domain": "gamma.app",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=gamma.app&sz=256",
+    "source": "website"
+  },
+  "gen digital inc.": {
+    "domain": "gendigital.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=gendigital.com&sz=256",
+    "source": "website"
+  },
+  "the general intelligence company of new york": {
+    "domain": "generalintelligencecompany.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=generalintelligencecompany.com&sz=256",
+    "source": "website"
+  },
+  "gravity sketch": {
+    "domain": "gravitysketch.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=gravitysketch.com&sz=256",
+    "source": "website"
+  },
+  "glomopay": {
+    "domain": "glomopay.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=glomopay.com&sz=256",
+    "source": "website"
+  },
+  "granola": {
+    "domain": "granola.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=granola.com&sz=256",
+    "source": "guessed"
+  },
+  "handshake": {
+    "domain": "joinhandshake.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=joinhandshake.com&sz=256",
+    "source": "website"
+  },
+  "hackerone": {
+    "domain": "hackerone.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=hackerone.com&sz=256",
+    "source": "website"
+  },
+  "harmattan ai": {
+    "domain": "harmattan.ai",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=harmattan.ai&sz=256",
+    "source": "website"
+  },
+  "harvey": {
+    "domain": "harvey.ai",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=harvey.ai&sz=256",
+    "source": "website"
+  },
+  "hello patient": {
+    "domain": "hellopatient.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=hellopatient.com&sz=256",
+    "source": "website"
+  },
+  "hims & hers": {
+    "domain": "hims.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=hims.com&sz=256",
+    "source": "website"
+  },
+  "hinge health": {
+    "domain": "hingehealth.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=hingehealth.com&sz=256",
+    "source": "website"
+  },
+  "holywater tech": {
+    "domain": "holywater.tech",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=holywater.tech&sz=256",
+    "source": "website"
+  },
+  "homebound": {
+    "domain": "homebound.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=homebound.com&sz=256",
+    "source": "website"
+  },
+  "immersive labs": {
+    "domain": "immersivelabs.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=immersivelabs.com&sz=256",
+    "source": "website"
+  },
+  "inbeat agency": {
+    "domain": "inbeat.agency",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=inbeat.agency&sz=256",
+    "source": "website"
+  },
+  "creative milkshake": {
+    "domain": "inbeat.agency",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=inbeat.agency&sz=256",
+    "source": "website"
+  },
+  "infisical": {
+    "domain": "infisical.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=infisical.com&sz=256",
+    "source": "website"
+  },
+  "jane": {
+    "domain": "jane.app",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=jane.app&sz=256",
+    "source": "website"
+  },
+  "jellyfish": {
+    "domain": "jellyfish.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=jellyfish.com&sz=256",
+    "source": "website"
+  },
+  "sherpa": {
+    "domain": "joinsherpa.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=joinsherpa.com&sz=256",
+    "source": "website"
+  },
+  "kalshi": {
+    "domain": "kalshi.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=kalshi.com&sz=256",
+    "source": "website"
+  },
+  "kittl": {
+    "domain": "kittl.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=kittl.com&sz=256",
+    "source": "website"
+  },
+  "klue": {
+    "domain": "klue.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=klue.com&sz=256",
+    "source": "website"
+  },
+  "lassie": {
+    "domain": "lassie.ai",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=lassie.ai&sz=256",
+    "source": "website"
+  },
+  "lawhive": {
+    "domain": "lawhive.co.uk",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=lawhive.co.uk&sz=256",
+    "source": "website"
+  },
+  "latamcent": {
+    "domain": "latamcent.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=latamcent.com&sz=256",
+    "source": "website"
+  },
+  "leap": {
+    "domain": "leaphealth.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=leaphealth.com&sz=256",
+    "source": "website"
+  },
+  "legora": {
+    "domain": "legora.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=legora.com&sz=256",
+    "source": "website"
+  },
+  "lemfi": {
+    "domain": "lemfi.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=lemfi.com&sz=256",
+    "source": "website"
+  },
+  "lightspeed commerce, inc.": {
+    "domain": "lightspeedhq.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=lightspeedhq.com&sz=256",
+    "source": "website"
+  },
+  "loveholidays": {
+    "domain": "loveholidays.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=loveholidays.com&sz=256",
+    "source": "website"
+  },
+  "lpa, inc.": {
+    "domain": "lpadesignstudios.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=lpadesignstudios.com&sz=256",
+    "source": "website"
+  },
+  "magical": {
+    "domain": "getmagical.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=getmagical.com&sz=256",
+    "source": "website"
+  },
+  "mariana minerals": {
+    "domain": "marianaminerals.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=marianaminerals.com&sz=256",
+    "source": "website"
+  },
+  "lucis": {
+    "domain": "lucis.life",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=lucis.life&sz=256",
+    "source": "website"
+  },
+  "matic": {
+    "domain": "maticrobots.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=maticrobots.com&sz=256",
+    "source": "website"
+  },
+  "medal": {
+    "domain": "medal.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=medal.com&sz=256",
+    "source": "website"
+  },
+  "meadow": {
+    "domain": "meadowfi.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=meadowfi.com&sz=256",
+    "source": "website"
+  },
+  "meridianlink": {
+    "domain": "meridianlink.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=meridianlink.com&sz=256",
+    "source": "website"
+  },
+  "mirage": {
+    "domain": "mirage.app",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=mirage.app&sz=256",
+    "source": "website"
+  },
+  "mondoo": {
+    "domain": "mondoo.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=mondoo.com&sz=256",
+    "source": "website"
+  },
+  "motorway": {
+    "domain": "motorway.co.uk",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=motorway.co.uk&sz=256",
+    "source": "website"
+  },
+  "moxie": {
+    "domain": "joinmoxie.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=joinmoxie.com&sz=256",
+    "source": "website"
+  },
+  "myedspace": {
+    "domain": "myedspace.co.uk",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=myedspace.co.uk&sz=256",
+    "source": "website"
+  },
+  "neara": {
+    "domain": "neara.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=neara.com&sz=256",
+    "source": "website"
+  },
+  "n8n": {
+    "domain": "n8n.io",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=n8n.io&sz=256",
+    "source": "website"
+  },
+  "nelo": {
+    "domain": "nelo.mx",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=nelo.mx&sz=256",
+    "source": "website"
+  },
+  "neo financial": {
+    "domain": "neofinancial.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=neofinancial.com&sz=256",
+    "source": "website"
+  },
+  "nen creative": {
+    "domain": "nencreative.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=nencreative.com&sz=256",
+    "source": "website"
+  },
+  "nightfall ai": {
+    "domain": "nightfall.ai",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=nightfall.ai&sz=256",
+    "source": "website"
+  },
+  "nivoda": {
+    "domain": "nivoda.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=nivoda.com&sz=256",
+    "source": "website"
+  },
+  "northwood": {
+    "domain": "northwoodspace.io",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=northwoodspace.io&sz=256",
+    "source": "website"
+  },
+  "notable": {
+    "domain": "notablehealth.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=notablehealth.com&sz=256",
+    "source": "website"
+  },
+  "ntegrity": {
+    "domain": "ntegrity.com.au",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=ntegrity.com.au&sz=256",
+    "source": "website"
+  },
+  "novo": {
+    "domain": "novo.co",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=novo.co&sz=256",
+    "source": "website"
+  },
+  "notion": {
+    "domain": "notion.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=notion.com&sz=256",
+    "source": "website"
+  },
+  "onhires": {
+    "domain": "onhires.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=onhires.com&sz=256",
+    "source": "website"
+  },
+  "numeric": {
+    "domain": "numeric.io",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=numeric.io&sz=256",
+    "source": "website"
+  },
+  "omaze": {
+    "domain": "omaze.company",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=omaze.company&sz=256",
+    "source": "website"
+  },
+  "omnea": {
+    "domain": "omnea.co",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=omnea.co&sz=256",
+    "source": "website"
+  },
+  "openloop health": {
+    "domain": "openloophealth.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=openloophealth.com&sz=256",
+    "source": "website"
+  },
+  "paddle": {
+    "domain": "paddle.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=paddle.com&sz=256",
+    "source": "website"
+  },
+  "patrianna": {
+    "domain": "patrianna.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=patrianna.com&sz=256",
+    "source": "website"
+  },
+  "parafin": {
+    "domain": "parafin.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=parafin.com&sz=256",
+    "source": "website"
+  },
+  "peec ai": {
+    "domain": "peec.ai",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=peec.ai&sz=256",
+    "source": "website"
+  },
+  "payscale": {
+    "domain": "payscale.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=payscale.com&sz=256",
+    "source": "website"
+  },
+  "perk": {
+    "domain": "perk.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=perk.com&sz=256",
+    "source": "website"
+  },
+  "perplexity": {
+    "domain": "perplexity.ai",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=perplexity.ai&sz=256",
+    "source": "website"
+  },
+  "photoroom": {
+    "domain": "photoroom.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=photoroom.com&sz=256",
+    "source": "website"
+  },
+  "phia": {
+    "domain": "phia.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=phia.com&sz=256",
+    "source": "website"
+  },
+  "plasmidsaurus": {
+    "domain": "plasmidsaurus.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=plasmidsaurus.com&sz=256",
+    "source": "website"
+  },
+  "polymarket": {
+    "domain": "polymarket.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=polymarket.com&sz=256",
+    "source": "website"
+  },
+  "plaud": {
+    "domain": "plaud.ai",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=plaud.ai&sz=256",
+    "source": "website"
+  },
+  "posh": {
+    "domain": "posh.vip",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=posh.vip&sz=256",
+    "source": "website"
+  },
+  "preply": {
+    "domain": "preply.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=preply.com&sz=256",
+    "source": "website"
+  },
+  "profound": {
+    "domain": "tryprofound.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=tryprofound.com&sz=256",
+    "source": "website"
+  },
+  "primer": {
+    "domain": "primer.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=primer.com&sz=256",
+    "source": "website"
+  },
+  "promise": {
+    "domain": "promise-pay.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=promise-pay.com&sz=256",
+    "source": "website"
+  },
+  "prorata": {
+    "domain": "prorata.ai",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=prorata.ai&sz=256",
+    "source": "website"
+  },
+  "quarks": {
+    "domain": "quarks.tech",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=quarks.tech&sz=256",
+    "source": "website"
+  },
+  "qualified health pbc": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "radiant industries": {
+    "domain": "radiantnuclear.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=radiantnuclear.com&sz=256",
+    "source": "website"
+  },
+  "rain technologies inc.": {
+    "domain": "rainapp.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=rainapp.com&sz=256",
+    "source": "website"
+  },
+  "ramp": {
+    "domain": "ramp.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=ramp.com&sz=256",
+    "source": "website"
+  },
+  "range": {
+    "domain": "range.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=range.com&sz=256",
+    "source": "website"
+  },
+  "read ai, inc.": {
+    "domain": "read.ai",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=read.ai&sz=256",
+    "source": "website"
+  },
+  "reteam": {
+    "domain": "reteam.co",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=reteam.co&sz=256",
+    "source": "guessed"
+  },
+  "rho": {
+    "domain": "rho.co",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=rho.co&sz=256",
+    "source": "website"
+  },
+  "ruby labs": {
+    "domain": "rubylabs.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=rubylabs.com&sz=256",
+    "source": "website"
+  },
+  "rillet": {
+    "domain": "rillet.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=rillet.com&sz=256",
+    "source": "website"
+  },
+  "rilla": {
+    "domain": "rilla.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=rilla.com&sz=256",
+    "source": "website"
+  },
+  "sandstone": {
+    "domain": "sandstone.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=sandstone.com&sz=256",
+    "source": "website"
+  },
+  "savvy wealth": {
+    "domain": "savvywealth.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=savvywealth.com&sz=256",
+    "source": "website"
+  },
+  "scarlet": {
+    "domain": "scarlet.cc",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=scarlet.cc&sz=256",
+    "source": "website"
+  },
+  "saronic technologies": {
+    "domain": "saronic.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=saronic.com&sz=256",
+    "source": "website"
+  },
+  "sequence": {
+    "domain": "sequencehq.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=sequencehq.com&sz=256",
+    "source": "website"
+  },
+  "semgrep": {
+    "domain": "semgrep.dev",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=semgrep.dev&sz=256",
+    "source": "website"
+  },
+  "short story": {
+    "domain": "shortstorybox.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=shortstorybox.com&sz=256",
+    "source": "website"
+  },
+  "serval": {
+    "domain": "serval.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=serval.com&sz=256",
+    "source": "website"
+  },
+  "skelar": {
+    "domain": "skelar.tech",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=skelar.tech&sz=256",
+    "source": "website"
+  },
+  "storyby": {
+    "domain": "skelar.tech",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=skelar.tech&sz=256",
+    "source": "website"
+  },
+  "slash financial": {
+    "domain": "slash.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=slash.com&sz=256",
+    "source": "website"
+  },
+  "sleeper": {
+    "domain": "sleeper.app",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=sleeper.app&sz=256",
+    "source": "website"
+  },
+  "socure": {
+    "domain": "socure.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=socure.com&sz=256",
+    "source": "website"
+  },
+  "south geeks": {
+    "domain": "southgeeks.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=southgeeks.com&sz=256",
+    "source": "website"
+  },
+  "snowflake": {
+    "domain": "snowflake.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=snowflake.com&sz=256",
+    "source": "website"
+  },
+  "spoton": {
+    "domain": "spoton.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=spoton.com&sz=256",
+    "source": "website"
+  },
+  "stedi": {
+    "domain": "stedi.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=stedi.com&sz=256",
+    "source": "website"
+  },
+  "sunday robotics": {
+    "domain": "sunday.ai",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=sunday.ai&sz=256",
+    "source": "website"
+  },
+  "stuut": {
+    "domain": "stuut.ai",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=stuut.ai&sz=256",
+    "source": "website"
+  },
+  "suno": {
+    "domain": "suno.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=suno.com&sz=256",
+    "source": "website"
+  },
+  "sunrise robotics": {
+    "domain": "sunriserobotics.co",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=sunriserobotics.co&sz=256",
+    "source": "website"
+  },
+  "synthesia": {
+    "domain": "synthesia.io",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=synthesia.io&sz=256",
+    "source": "website"
+  },
+  "teleskope": {
+    "domain": "teleskope.ai",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=teleskope.ai&sz=256",
+    "source": "website"
+  },
+  "tem": {
+    "domain": "tem.energy",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=tem.energy&sz=256",
+    "source": "website"
+  },
+  "tempo": {
+    "domain": "tempo.io",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=tempo.io&sz=256",
+    "source": "website"
+  },
+  "tensorwave": {
+    "domain": "tensorwave.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=tensorwave.com&sz=256",
+    "source": "website"
+  },
+  "terrafirma robotics": {
+    "domain": "buildgiantrobots.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=buildgiantrobots.com&sz=256",
+    "source": "website"
+  },
+  "tern travel": {
+    "domain": "tern.travel",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=tern.travel&sz=256",
+    "source": "website"
+  },
+  "trainline": {
+    "domain": "trainlinegroup.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=trainlinegroup.com&sz=256",
+    "source": "website"
+  },
+  "truelogic": {
+    "domain": "truelogic.io",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=truelogic.io&sz=256",
+    "source": "website"
+  },
+  "thndr": {
+    "domain": "thndr.app",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=thndr.app&sz=256",
+    "source": "website"
+  },
+  "thatgamecompany": {
+    "domain": "thatgamecompany.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=thatgamecompany.com&sz=256",
+    "source": "website"
+  },
+  "unlearn": {
+    "domain": "unlearn.ai",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=unlearn.ai&sz=256",
+    "source": "website"
+  },
+  "uipath": {
+    "domain": "uipath.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=uipath.com&sz=256",
+    "source": "website"
+  },
+  "united talent agency": {
+    "domain": "unitedtalent.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=unitedtalent.com&sz=256",
+    "source": "website"
+  },
+  "universe": {
+    "domain": "uni.tech",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=uni.tech&sz=256",
+    "source": "website"
+  },
+  "venn": {
+    "domain": "venn.ca",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=venn.ca&sz=256",
+    "source": "website"
+  },
+  "viktor": {
+    "domain": "viktor.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=viktor.com&sz=256",
+    "source": "website"
+  },
+  "voodoo": {
+    "domain": "voodoo.io",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=voodoo.io&sz=256",
+    "source": "website"
+  },
+  "welltech": {
+    "domain": "welltech.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=welltech.com&sz=256",
+    "source": "website"
+  },
+  "wispr flow": {
+    "domain": "wisprflow.ai",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=wisprflow.ai&sz=256",
+    "source": "website"
+  },
+  "wordsmith": {
+    "domain": "wordsmith.ai",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=wordsmith.ai&sz=256",
+    "source": "website"
+  },
+  "workos": {
+    "domain": "workos.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=workos.com&sz=256",
+    "source": "website"
+  },
+  "wormhole labs": {
+    "domain": "wormholelabs.xyz",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=wormholelabs.xyz&sz=256",
+    "source": "website"
+  },
+  "xero": {
+    "domain": "xero.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=xero.com&sz=256",
+    "source": "website"
+  },
+  "yazio": {
+    "domain": "yazio.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=yazio.com&sz=256",
+    "source": "website"
+  },
+  "xnrgy climate systems": {
+    "domain": "xnrgy.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=xnrgy.com&sz=256",
+    "source": "website"
+  },
+  "a. hatzopoulos sa": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "zoe": {
+    "domain": "zoe.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=zoe.com&sz=256",
+    "source": "website"
+  },
+  "zauber": {
+    "domain": "gozauber.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=gozauber.com&sz=256",
+    "source": "website"
+  },
+  "yubo": {
+    "domain": "yubo.live",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=yubo.live&sz=256",
+    "source": "website"
+  },
+  "everhope oncology": {
+    "domain": "everhopeoncology.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=everhopeoncology.com&sz=256",
+    "source": "guessed"
+  },
+  "activate interactive": {
+    "domain": "activateinteractive.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=activateinteractive.com&sz=256",
+    "source": "guessed"
+  },
+  "activate interactive pte ltd": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "accepted": {
+    "domain": "accepted.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=accepted.com&sz=256",
+    "source": "guessed"
+  },
+  "ai acquisition": {
+    "domain": "aiacquisition.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=aiacquisition.com&sz=256",
+    "source": "guessed"
+  },
+  "algaecal": {
+    "domain": "algaecal.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=algaecal.com&sz=256",
+    "source": "guessed"
+  },
+  "allen + shariff corporation": {
+    "domain": "allenshariff.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=allenshariff.com&sz=256",
+    "source": "guessed"
+  },
+  "alaro city": {
+    "domain": "alarocity.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=alarocity.com&sz=256",
+    "source": "guessed"
+  },
+  "alphahire": {
+    "domain": "alphahire.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=alphahire.com&sz=256",
+    "source": "guessed"
+  },
+  "allwyn lottery solutions": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "alten mexico": {
+    "domain": "altenmexico.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=altenmexico.com&sz=256",
+    "source": "guessed"
+  },
+  "alten méxico": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "amartha": {
+    "domain": "amartha.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=amartha.com&sz=256",
+    "source": "guessed"
+  },
+  "antenna group": {
+    "domain": "antennagroup.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=antennagroup.com&sz=256",
+    "source": "guessed"
+  },
+  "amer sports": {
+    "domain": "amersports.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=amersports.com&sz=256",
+    "source": "guessed"
+  },
+  "anatomage, inc.": {
+    "domain": "anatomage.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=anatomage.com&sz=256",
+    "source": "guessed"
+  },
+  "arc'teryx": {
+    "domain": "arcteryx.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=arcteryx.com&sz=256",
+    "source": "guessed"
+  },
+  "asso.subsea": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "apna": {
+    "domain": "apna.co",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=apna.co&sz=256",
+    "source": "website"
+  },
+  "avk": {
+    "domain": "avk.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=avk.com&sz=256",
+    "source": "guessed"
+  },
+  "apex network": {
+    "domain": "apexnetwork.io",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=apexnetwork.io&sz=256",
+    "source": "guessed"
+  },
+  "biota smart home": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "bardel entertainment": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "bos innovations": {
+    "domain": "bosinnovations.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=bosinnovations.com&sz=256",
+    "source": "guessed"
+  },
+  "bully pulpit international": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "blue nile": {
+    "domain": "bluenile.io",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=bluenile.io&sz=256",
+    "source": "guessed"
+  },
+  "borrowell": {
+    "domain": "borrowell.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=borrowell.com&sz=256",
+    "source": "guessed"
+  },
+  "bwise media ag": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "canopy": {
+    "domain": "canopy.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=canopy.com&sz=256",
+    "source": "guessed"
+  },
+  "stadium": {
+    "domain": "stadium.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=stadium.com&sz=256",
+    "source": "guessed"
+  },
+  "cadillac formula 1 team": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "kiewit mexico": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "charlotte tilbury beauty": {
+    "domain": "charlottetilburybeauty.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=charlottetilburybeauty.com&sz=256",
+    "source": "guessed"
+  },
+  "coconut": {
+    "domain": "coconut.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=coconut.com&sz=256",
+    "source": "guessed"
+  },
+  "charlotte tilbury": {
+    "domain": "charlottetilbury.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=charlottetilbury.com&sz=256",
+    "source": "guessed"
+  },
+  "cloud9 esports": {
+    "domain": "cloud9esports.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=cloud9esports.com&sz=256",
+    "source": "guessed"
+  },
+  "cocreativ": {
+    "domain": "cocreativ.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=cocreativ.com&sz=256",
+    "source": "guessed"
+  },
+  "costello medical": {
+    "domain": "costellomedical.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=costellomedical.com&sz=256",
+    "source": "guessed"
+  },
+  "d2b": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "debenhams group": {
+    "domain": "debenhamsgroup.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=debenhamsgroup.com&sz=256",
+    "source": "guessed"
+  },
+  "dacodes": {
+    "domain": "dacodes.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=dacodes.com&sz=256",
+    "source": "guessed"
+  },
+  "david": {
+    "domain": "david.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=david.com&sz=256",
+    "source": "guessed"
+  },
+  "dev.pro": {
+    "domain": "devpro.io",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=devpro.io&sz=256",
+    "source": "guessed"
+  },
+  "decathlon singapore": {
+    "domain": "decathlonsingapore.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=decathlonsingapore.com&sz=256",
+    "source": "guessed"
+  },
+  "destinus": {
+    "domain": "destinus.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=destinus.com&sz=256",
+    "source": "guessed"
+  },
+  "devsinc": {
+    "domain": "devs.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=devs.com&sz=256",
+    "source": "guessed"
+  },
+  "dms": {
+    "domain": "dms.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=dms.com&sz=256",
+    "source": "guessed"
+  },
+  "eight&four": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "east bank club": {
+    "domain": "eastbankclub.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=eastbankclub.com&sz=256",
+    "source": "guessed"
+  },
+  "lawy": {
+    "domain": "lawy.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=lawy.com&sz=256",
+    "source": "guessed"
+  },
+  "eightcap": {
+    "domain": "eightcap.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=eightcap.com&sz=256",
+    "source": "guessed"
+  },
+  "european dynamics": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "escape velocity entertainment inc": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "epos": {
+    "domain": "epos.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=epos.com&sz=256",
+    "source": "guessed"
+  },
+  "findasense": {
+    "domain": "findasense.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=findasense.com&sz=256",
+    "source": "guessed"
+  },
+  "centah": {
+    "domain": "centah.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=centah.com&sz=256",
+    "source": "guessed"
+  },
+  "falcomm": {
+    "domain": "falcomm.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=falcomm.com&sz=256",
+    "source": "guessed"
+  },
+  "flatgigs": {
+    "domain": "flatgigs.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=flatgigs.com&sz=256",
+    "source": "guessed"
+  },
+  "loop": {
+    "domain": "loop.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=loop.com&sz=256",
+    "source": "guessed"
+  },
+  "facilities management express": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "fuku": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "sonnox (focusrite group)": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "dexmate": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "future publishing": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "fuse energy": {
+    "domain": "fuseenergy.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=fuseenergy.com&sz=256",
+    "source": "guessed"
+  },
+  "goliath": {
+    "domain": "goliath.co",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=goliath.co&sz=256",
+    "source": "guessed"
+  },
+  "substance": {
+    "domain": "substance.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=substance.com&sz=256",
+    "source": "guessed"
+  },
+  "hr factory": {
+    "domain": "hrfactory.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=hrfactory.com&sz=256",
+    "source": "guessed"
+  },
+  "hadley designs": {
+    "domain": "hadleydesigns.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=hadleydesigns.com&sz=256",
+    "source": "guessed"
+  },
+  "noema consulting": {
+    "domain": "noemaconsulting.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=noemaconsulting.com&sz=256",
+    "source": "guessed"
+  },
+  "huda beauty": {
+    "domain": "hudabeauty.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=hudabeauty.com&sz=256",
+    "source": "guessed"
+  },
+  "hunt st": {
+    "domain": "huntst.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=huntst.com&sz=256",
+    "source": "guessed"
+  },
+  "huzzle": {
+    "domain": "huzzle.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=huzzle.com&sz=256",
+    "source": "guessed"
+  },
+  "impact": {
+    "domain": "impact.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=impact.com&sz=256",
+    "source": "guessed"
+  },
+  "intellectsoft": {
+    "domain": "intellectsoft.io",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=intellectsoft.io&sz=256",
+    "source": "guessed"
+  },
+  "infotrack us": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "interactive investor": {
+    "domain": "interactiveinvestor.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=interactiveinvestor.com&sz=256",
+    "source": "guessed"
+  },
+  "inspired thinking group (itg)": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "jump 450 media": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "idm brands": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "just one": {
+    "domain": "justone.co",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=justone.co&sz=256",
+    "source": "guessed"
+  },
+  "jcc greater boston": {
+    "domain": "jccgreaterboston.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=jccgreaterboston.com&sz=256",
+    "source": "guessed"
+  },
+  "keywords studios": {
+    "domain": "keywordsstudios.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=keywordsstudios.com&sz=256",
+    "source": "guessed"
+  },
+  "digital media management": {
+    "domain": "digitalmediamanagement.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=digitalmediamanagement.com&sz=256",
+    "source": "guessed"
+  },
+  "krush labs b.v.": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "lago": {
+    "domain": "lago.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=lago.com&sz=256",
+    "source": "guessed"
+  },
+  "lokal app": {
+    "domain": "lokalapp.co",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=lokalapp.co&sz=256",
+    "source": "guessed"
+  },
+  "lucidya": {
+    "domain": "lucidya.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=lucidya.com&sz=256",
+    "source": "guessed"
+  },
+  "medical guardian": {
+    "domain": "medicalguardian.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=medicalguardian.com&sz=256",
+    "source": "guessed"
+  },
+  "moomoo": {
+    "domain": "moomoo.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=moomoo.com&sz=256",
+    "source": "guessed"
+  },
+  "methods business and digital technology": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "motor coach industries": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "neowork": {
+    "domain": "neowork.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=neowork.com&sz=256",
+    "source": "guessed"
+  },
+  "ninetwothree ai studio": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "obdeleven": {
+    "domain": "obdeleven.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=obdeleven.com&sz=256",
+    "source": "guessed"
+  },
+  "ninja theory": {
+    "domain": "ninjatheory.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=ninjatheory.com&sz=256",
+    "source": "guessed"
+  },
+  "pavago": {
+    "domain": "pavago.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=pavago.com&sz=256",
+    "source": "guessed"
+  },
+  "perry homes": {
+    "domain": "perryhomes.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=perryhomes.com&sz=256",
+    "source": "guessed"
+  },
+  "pixelogic media partners, llc": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "picnic media limited": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "regex seo": {
+    "domain": "regexseo.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=regexseo.com&sz=256",
+    "source": "guessed"
+  },
+  "ssc hr solutions": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "kymera designs": {
+    "domain": "kymeradesigns.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=kymeradesigns.com&sz=256",
+    "source": "guessed"
+  },
+  "talent-360.me": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "map advertising": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "paradigm studio": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "zhivago": {
+    "domain": "zhivago.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=zhivago.com&sz=256",
+    "source": "guessed"
+  },
+  "z-experience": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "the": {
+    "domain": "the.co",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=the.co&sz=256",
+    "source": "guessed"
+  },
+  "the architects, planners & engineers": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "people of the internet": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "t.h.e. architects, planners & civil engineers": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  },
+  "tmgm": {
+    "domain": "tmgm.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=tmgm.com&sz=256",
+    "source": "guessed"
+  },
+  "zeptolab": {
+    "domain": "zeptolab.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=zeptolab.com&sz=256",
+    "source": "guessed"
+  },
+  "translation empire": {
+    "domain": "",
+    "logoUrl": "",
+    "source": "unresolved"
+  }
+}

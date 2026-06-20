@@ -1,34 +1,89 @@
-import * as cheerio from "cheerio";
 import type { RawJob } from "../types.js";
-import { http, safeAbsoluteUrl } from "../utils/http.js";
+import { http } from "../utils/http.js";
+
+interface GreenhouseJob {
+  title?: string;
+  absolute_url?: string;
+  location?: { name?: string };
+  content?: string;
+  first_published?: string;
+  updated_at?: string;
+}
+
+interface GreenhouseJobsResponse {
+  jobs?: GreenhouseJob[];
+}
+
+interface GreenhouseBoardResponse {
+  name?: string;
+}
+
+/**
+ * Fetch the board's display name (e.g. "2K", "10x Genomics") so jobs carry the
+ * real company rather than the "boards.greenhouse.io" hostname label. One call
+ * per company; failures fall back to the tenant slug.
+ */
+async function fetchBoardName(tenant: string): Promise<string> {
+  try {
+    const response = await http.get<GreenhouseBoardResponse>(
+      `https://boards-api.greenhouse.io/v1/boards/${encodeURIComponent(tenant)}`
+    );
+    const name = response.data?.name?.trim();
+    if (name) return name;
+  } catch {
+    // fall through to slug
+  }
+  return tenant;
+}
+
+/**
+ * Scrape a Greenhouse board via the public no-auth JSON API.
+ * boards-api.greenhouse.io serves both boards.greenhouse.io and the newer
+ * job-boards.greenhouse.io slugs, and (unlike the HTML embed endpoint) does not
+ * 403 under bulk load. Descriptions are fetched later in Stage 2.
+ */
+function decodeHtmlEntities(html: string): string {
+  return html
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&")
+    .replace(/&#39;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'")
+    .replace(/&#x27;/g, "'")
+    .replace(/&#x2F;/g, "/")
+    .replace(/&nbsp;/g, " ");
+}
 
 export async function scrapeGreenhouse(tenant: string): Promise<RawJob[]> {
-  const url = `https://boards.greenhouse.io/embed/job_board?for=${encodeURIComponent(tenant)}`;
-  const response = await http.get<string>(url, { responseType: "text" });
-  const $ = cheerio.load(response.data);
+  const url = `https://boards-api.greenhouse.io/v1/boards/${encodeURIComponent(tenant)}/jobs?content=true`;
+  const response = await http.get<GreenhouseJobsResponse>(url);
+  const ghJobs = response.data?.jobs ?? [];
+  if (ghJobs.length === 0) return [];
+
+  const company = await fetchBoardName(tenant);
+
   const jobs: RawJob[] = [];
+  for (const job of ghJobs) {
+    const title = job.title?.trim();
+    const jobUrl = job.absolute_url?.trim();
+    if (!title || !jobUrl) continue;
 
-  $("a").each((_, element) => {
-    const title = $(element).text().trim();
-    const href = ($(element).attr("href") ?? "").trim();
-    if (!title || !href) return;
-    if (!/\/jobs\/\d+/i.test(href)) return;
+    const rawContent = job.content?.trim() || null;
+    const description = rawContent ? decodeHtmlEntities(rawContent) : null;
 
-    const absolute = safeAbsoluteUrl(href, "https://boards.greenhouse.io");
-    if (!absolute) return;
-
-    const location =
-      $(element).closest(".opening").find(".location").text().trim() ||
-      $(element).closest("li").find(".location").text().trim() ||
-      null;
+    const datePosted = job.first_published?.trim() || job.updated_at?.trim() || null;
 
     jobs.push({
       title,
-      url: absolute,
-      location,
-      ats: "greenhouse"
+      url: jobUrl,
+      location: job.location?.name?.trim() || null,
+      company,
+      ats: "greenhouse",
+      description,
+      datePosted
     });
-  });
+  }
 
   return jobs;
 }

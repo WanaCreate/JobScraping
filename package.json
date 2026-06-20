@@ -7,10 +7,15 @@
     "pipeline": "tsx pipeline/run.ts",
     "stage1": "tsx pipeline/stage1_scrapeCareers.ts",
     "stage2": "tsx pipeline/stage2_collectJobDetails.ts",
-    "stage3": "tsx pipeline/stage3_enrichGpt.ts",
-    "build": "tsc -p ."
+    "stage3": "tsx pipeline/stage3_enrichClaude.ts",
+    "stage4": "tsx pipeline/stage4_enrichLogos.ts",
+    "build": "tsc -p .",
+    "discover-slugs": "tsx scripts/discoverSlugs.ts",
+    "prune-companies": "tsx scripts/pruneCompanies.ts",
+    "promote-pending": "tsx scripts/promotePending.ts"
   },
   "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.3.183",
     "@esbuild/linux-x64": "^0.27.3",
     "axios": "^1.9.0",
     "cheerio": "^1.0.0",

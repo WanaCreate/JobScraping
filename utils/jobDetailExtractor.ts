@@ -1173,6 +1173,21 @@ function extractTitle(html: string, seedTitle: string, jsonLdJob: Record<string,
   return seedTitle;
 }
 
+/**
+ * Sanitize a datePosted value to an ISO date string (YYYY-MM-DD or full ISO).
+ * Returns null if the value is absent or unparseable.
+ */
+function sanitizeDatePosted(raw: string | null | undefined): string | null {
+  if (!raw) return null;
+  const trimmed = raw.trim();
+  if (!trimmed) return null;
+  // Already a valid ISO date/datetime?
+  const parsed = new Date(trimmed);
+  if (Number.isNaN(parsed.getTime())) return null;
+  // Return YYYY-MM-DD format
+  return parsed.toISOString().slice(0, 10);
+}
+
 export async function enrichJobFromUrl(params: {
   seed: NormalizedJob;
   hiringTeamUid: string;
@@ -1189,8 +1204,29 @@ export async function enrichJobFromUrl(params: {
 
   const jsonLdJob = extractJsonLdJobPosting(fetchedHtml);
   let title = extractTitle(fetchedHtml, seed.title, jsonLdJob);
-  let description = extractDescription(fetchedHtml, jsonLdJob);
-  description = cleanDescriptionWithTitle(description, title);
+  let fetchedDescription = extractDescription(fetchedHtml, jsonLdJob);
+  fetchedDescription = cleanDescriptionWithTitle(fetchedDescription, title);
+
+  // Prefer the ATS API-provided description when it's substantially longer than
+  // what was fetched from the HTML page (or when the HTML fetch yielded a thin
+  // placeholder). This avoids the flaky per-job HTML fetch for ATS jobs that
+  // already carry the full description in Stage 1.
+  const apiDescription = seed.description?.trim() || null;
+  let description: string;
+  const API_PREFER_THRESHOLD = 300; // chars: HTML fetch below this → prefer API description
+
+  if (apiDescription && apiDescription.length > 200) {
+    const fetchedIsWeak = fetchedDescription.length < API_PREFER_THRESHOLD ||
+      /^for job details, click apply\.?$/i.test(fetchedDescription.trim());
+    // Use whichever is longer; tie goes to API description (more reliable)
+    if (fetchedIsWeak || apiDescription.length >= fetchedDescription.length) {
+      description = apiDescription;
+    } else {
+      description = fetchedDescription;
+    }
+  } else {
+    description = fetchedDescription;
+  }
 
   const passesGate = passesCreativeGate({
     title,
@@ -1230,10 +1266,13 @@ export async function enrichJobFromUrl(params: {
   const keywords = extractKeywords(title, description, jsonLdJob);
   const skills = extractSkills(title, description, jsonLdJob);
 
+  const datePosted = sanitizeDatePosted(seed.datePosted);
+
   const apiJob: ApiCreateJobRequest = {
     title,
     description,
     deadline,
+    datePosted,
     keywords,
     skills,
     jobType,

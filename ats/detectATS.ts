@@ -26,5 +26,15 @@ export function detectATS(html: string, finalUrl: string): ATS {
 
   if (containsAny(haystack, ["amazon.jobs", "search.json?offset", "\"job_path\""])) return "amazon";
 
+  if (
+    containsAny(haystack, [
+      "apply.workable.com",
+      "jobs.workable.com",
+      "workable.com/api/accounts",
+      "workable.com/j/"
+    ])
+  )
+    return "workable";
+
   return "generic";
 }

@@ -96,6 +96,7 @@ interface CliOptions {
   hiringTeamUid: string;
   minCreativeScore: number;
   maxJobs: number | null;
+  maxAgeDays: number | null;
 }
 
 interface QualityReport {
@@ -177,6 +178,8 @@ function parseCliOptions(): CliOptions {
   const writeHistory = !hasFlag("--noHistory");
   const minCreativeScore = parseNumber(getArg("--minCreativeScore"), 2);
   const maxJobs = maxJobsRaw ? parseNumber(maxJobsRaw, 0) : null;
+  const maxAgeDaysRaw = getArg("--maxAgeDays");
+  const maxAgeDays = maxAgeDaysRaw !== null ? parseNumber(maxAgeDaysRaw, 0) : 30;
   const hiringTeamUid =
     getArg("--hiringTeamUid") ??
     hiringTeamPositional ??
@@ -196,7 +199,8 @@ function parseCliOptions(): CliOptions {
     concurrency,
     hiringTeamUid,
     minCreativeScore,
-    maxJobs: maxJobs && maxJobs > 0 ? maxJobs : null
+    maxJobs: maxJobs && maxJobs > 0 ? maxJobs : null,
+    maxAgeDays: maxAgeDays > 0 ? maxAgeDays : null
   };
 }
 
@@ -378,7 +382,9 @@ function asNormalizedJob(item: unknown): NormalizedJob | null {
     location: typeof record.location === "string" ? record.location : "Not specified",
     ats: typeof record.ats === "string" ? (record.ats as NormalizedJob["ats"]) : "generic",
     company: typeof record.company === "string" ? record.company : "unknown",
-    source: typeof record.source === "string" ? record.source : url
+    source: typeof record.source === "string" ? record.source : url,
+    description: typeof record.description === "string" ? record.description : null,
+    datePosted: typeof record.datePosted === "string" ? record.datePosted : null
   };
 }
 
@@ -528,6 +534,7 @@ function toCsvRows(records: ApiCreateJobRequest[]): string {
     "hiringTeam",
     "workType",
     "workEmail",
+    "createdAt",
     "numberOfPositions",
     "company",
     "companyWebsite",
@@ -554,12 +561,13 @@ function toCsvRows(records: ApiCreateJobRequest[]): string {
       job.description,
       job.jobType,
       job.deadline ?? "",
-      (job.keywords ?? []).join("|"),
-      (job.skills ?? []).join("|"),
+      (job.keywords ?? []).join(", "),
+      (job.skills ?? []).join(", "),
       job.jobLink ?? "",
       (job.hiringTeam ?? []).join("|"),
       job.workType ?? "",
       job.workEmail ?? "",
+      job.datePosted ?? "",
       job.numberOfPositions ? String(job.numberOfPositions) : "",
       job.company?.name ?? "",
       job.company?.website ?? "",
@@ -638,10 +646,31 @@ async function main(): Promise<void> {
   const dedupedJobs = dedupeJobs(prefilteredCreativeJobs);
   const scopedJobs = options.maxJobs ? dedupedJobs.slice(0, options.maxJobs) : dedupedJobs;
 
+  const cutoffDate = options.maxAgeDays
+    ? new Date(Date.now() - options.maxAgeDays * 86400000)
+    : null;
+  const recentJobs = cutoffDate
+    ? scopedJobs.filter((job) => {
+        if (!job.datePosted) return true; // keep if no date (Lever, SmartRecruiters don't emit it)
+        const posted = new Date(job.datePosted);
+        return !Number.isNaN(posted.getTime()) && posted >= cutoffDate;
+      })
+    : scopedJobs;
+
+  if (cutoffDate) {
+    logInfo("Date filter applied", {
+      maxAgeDays: options.maxAgeDays,
+      cutoff: cutoffDate.toISOString().slice(0, 10),
+      beforeFilter: scopedJobs.length,
+      afterFilter: recentJobs.length,
+      dropped: scopedJobs.length - recentJobs.length
+    });
+  }
+
   // Pre-filter: skip noise titles and listing-page URLs
   const preFiltered: NormalizedJob[] = [];
   let skippedPreFilter = 0;
-  for (const job of scopedJobs) {
+  for (const job of recentJobs) {
     if (shouldSkipBeforeFetch(job)) {
       skippedPreFilter++;
       continue;
@@ -651,7 +680,7 @@ async function main(): Promise<void> {
   }
 
   logInfo("Pre-filter complete", {
-    beforePreFilter: scopedJobs.length,
+    beforePreFilter: recentJobs.length,
     skippedPreFilter,
     afterPreFilter: preFiltered.length,
   });

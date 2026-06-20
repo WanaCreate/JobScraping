@@ -1,7 +1,7 @@
 """
 Bulk upload jobs via API using admin credentials.
 1. Log in with email/password -> get token
-2. POST CSV to /api/v1/jobs/bulk-upload
+2. POST CSV to /api/v1/jobs/upload
 
 Usage:
   python bulk_upload_jobs.py
@@ -14,14 +14,14 @@ from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
 API_BASE = os.environ.get("WANA_API_BASE", "http://localhost:8000")
+# This script lives in JobScraping/pipeline/, so the outputs dir is one level up.
 DEFAULT_CSV = os.path.join(
     os.path.dirname(__file__),
     "..",
-    "JobScraping",
     "outputs",
     "api-ready",
     "latest",
-    "results_jobs_api.csv",
+    "results_final_api_claude.csv",
 )
 
 
@@ -51,7 +51,7 @@ def login(email: str, password: str) -> str:
 
 
 def bulk_upload(csv_path: str, token: str) -> None:
-    url = f"{API_BASE.rstrip('/')}/api/v1/jobs/bulk-upload"
+    url = f"{API_BASE.rstrip('/')}/api/v1/jobs/upload"
     boundary = "----FormBoundary" + str(abs(hash(csv_path)) % 10**10)
     with open(csv_path, "rb") as f:
         csv_bytes = f.read()

@@ -36,7 +36,9 @@ export function normalizeJobs(
       location: clean(job.location) || "Not specified",
       ats: job.ats ?? ats,
       company: clean(job.company) || companyFallback,
-      source
+      source,
+      description: job.description ?? null,
+      datePosted: job.datePosted ?? null
     };
 
     const key = `${normalized.title.toLowerCase()}|${normalized.url.toLowerCase()}`;

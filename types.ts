@@ -7,6 +7,7 @@ export type ATS =
   | "ashby"
   | "phenom"
   | "amazon"
+  | "workable"
   | "generic";
 
 export interface RawJob {
@@ -16,6 +17,8 @@ export interface RawJob {
   company?: string | null;
   ats?: ATS;
   source?: string;
+  description?: string | null;
+  datePosted?: string | null;
 }
 
 export interface NormalizedJob {
@@ -25,6 +28,8 @@ export interface NormalizedJob {
   ats: ATS;
   company: string;
   source: string;
+  description?: string | null;
+  datePosted?: string | null;
 }
 
 export interface TenantInfo {
@@ -88,6 +93,7 @@ export interface ApiCreateJobRequest {
   title: string;
   description: string;
   deadline?: string | null;
+  datePosted?: string | null;
   keywords?: string[] | null;
   skills?: string[] | null;
   jobType: JobTypeValue;
