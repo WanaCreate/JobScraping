@@ -2,3 +2,5 @@
 node_modules/
 dist/
 outputs/
+__pycache__/
+*.pyc

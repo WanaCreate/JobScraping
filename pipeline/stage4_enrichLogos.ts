@@ -21,6 +21,7 @@ import path from "node:path";
 import { pathToFileURL } from "node:url";
 import https from "node:https";
 import http from "node:http";
+import crypto from "node:crypto";
 
 // ─── Types ────────────────────────────────────────────────────────
 
@@ -35,7 +36,7 @@ interface CsvJobRow {
   hiringTeam: string;
   workType: string;
   workEmail: string;
-  allowEmailApplications: string;
+  createdAt: string;
   numberOfPositions: string;
   company: string;
   companyWebsite: string;
@@ -66,13 +67,33 @@ type LogoCache = Record<string, CacheEntry>;
 
 const FAVICON_URL = "https://www.google.com/s2/favicons?domain={domain}&sz=256";
 const MIN_LOGO_BYTES = 100;
+const MAX_LOGO_BYTES = 256 * 1024;
 
+// Fallback avatar for companies with no resolvable real logo. DiceBear
+// identicon — free, no API key, SVG, deterministic per company name (same
+// company always gets the same avatar).
+const DEFAULT_AVATAR_BASE = "https://api.dicebear.com/9.x/identicon/svg";
+
+// SHA-256 of Google's generic "globe" favicon — the placeholder it serves for
+// any domain with no real icon (confirmed: 726 bytes, final HTTP 404). It is
+// already excluded by the non-200 reject in fetchBytes, but we also screen by
+// content hash in case Google ever returns the globe with a 200. The runtime
+// capture below augments this set so it self-heals if the bytes change.
+const KNOWN_GLOBE_SHA256 = new Set<string>([
+  "59bfe9bc385ad69f50793ce4a53397316d7a875a7148a63c16df9b674c6cda64",
+]);
+
+// Registrable ATS / job-board domains. isJobBoardDomain matches these as a
+// suffix, so every subdomain is covered (e.g. greenhouse.io catches
+// boards.greenhouse.io, job-boards.greenhouse.io, job-boards.eu.greenhouse.io).
+// Resolving a logo for any of these would yield the ATS's own favicon, not the
+// hiring company's — so we skip the website and guess from the company name.
 const JOB_BOARD_DOMAINS = new Set([
-  "amazon.jobs", "jobs.lever.co", "boards.greenhouse.io",
-  "jobs.smartrecruiters.com", "jobs.ashbyhq.com", "apply.workable.com",
-  "myworkdayjobs.com", "icims.com", "jobvite.com", "ultipro.com",
-  "schooljobs.com", "paycomonline.net", "wd1.myworkdaysite.com",
-  "wd5.myworkdaysite.com",
+  "amazon.jobs", "greenhouse.io", "lever.co", "smartrecruiters.com",
+  "ashbyhq.com", "workable.com", "myworkdayjobs.com", "myworkdaysite.com",
+  "icims.com", "jobvite.com", "ultipro.com", "schooljobs.com",
+  "paycomonline.net", "bamboohr.com", "breezy.hr", "recruitee.com",
+  "teamtailor.com", "applytojob.com", "pinpointhq.com", "jobvite.com",
 ]);
 
 const CAREER_SUBDOMAINS = new Set([
@@ -118,7 +139,7 @@ function getArg(flag: string): string | null {
 
 const CSV_HEADERS: (keyof CsvJobRow)[] = [
   "title", "description", "jobType", "deadline", "keywords", "skills",
-  "jobLink", "hiringTeam", "workType", "workEmail", "allowEmailApplications",
+  "jobLink", "hiringTeam", "workType", "workEmail", "createdAt",
   "numberOfPositions", "company", "companyWebsite", "companyLogo", "companyEmail",
   "locationName", "formattedAddress", "city", "state", "country",
   "latitude", "longitude", "salaryMin", "salaryMax", "salaryCurrency", "salaryPeriod",
@@ -306,14 +327,69 @@ function fetchBytes(url: string, maxBytes: number, timeoutMs = 5000): Promise<Bu
   });
 }
 
+function sha256(buf: Buffer): string {
+  return crypto.createHash("sha256").update(buf).digest("hex");
+}
+
 async function validateLogoUrl(url: string): Promise<string | null> {
   try {
-    const buf = await fetchBytes(url, MIN_LOGO_BYTES + 200);
+    const buf = await fetchBytes(url, MAX_LOGO_BYTES);
     if (buf.length < MIN_LOGO_BYTES) return null;
+    // Reject Google's generic globe placeholder by content hash (identical
+    // bytes for every domain with no real favicon).
+    if (KNOWN_GLOBE_SHA256.has(sha256(buf))) return null;
     return url;
   } catch {
     return null;
   }
+}
+
+/**
+ * Fetch what Google serves for a guaranteed-nonexistent domain — its generic
+ * globe — following redirects and tolerating the 404 it ends on. Resolves to
+ * the body buffer regardless of status (or null on transport failure).
+ */
+function fetchFaviconRaw(url: string, timeoutMs = 8000, hops = 0): Promise<Buffer | null> {
+  return new Promise((resolve) => {
+    const mod = url.startsWith("https") ? https : http;
+    const req = mod.get(url, { timeout: timeoutMs }, (res) => {
+      if (res.statusCode && res.statusCode >= 300 && res.statusCode < 400 && res.headers.location && hops < 5) {
+        res.resume();
+        fetchFaviconRaw(res.headers.location, timeoutMs, hops + 1).then(resolve);
+        return;
+      }
+      const chunks: Buffer[] = [];
+      res.on("data", (c: Buffer) => chunks.push(c));
+      res.on("end", () => resolve(Buffer.concat(chunks)));
+      res.on("close", () => resolve(Buffer.concat(chunks)));
+    });
+    req.on("error", () => resolve(null));
+    req.on("timeout", () => { req.destroy(); resolve(null); });
+  });
+}
+
+/**
+ * Augment KNOWN_GLOBE_SHA256 with the live globe signature so screening
+ * self-heals if Google changes the placeholder bytes. Best-effort: on any
+ * failure the hardcoded hash still covers the common case.
+ */
+async function captureDefaultFaviconSig(): Promise<void> {
+  for (const domain of ["asdkfjqwoeiruzxcv12345.invalid-xyz.com", "no-such-domain-zzqq1734xy.com"]) {
+    const buf = await fetchFaviconRaw(FAVICON_URL.replace("{domain}", domain));
+    if (buf && buf.length >= MIN_LOGO_BYTES) {
+      const hash = sha256(buf);
+      const known = KNOWN_GLOBE_SHA256.has(hash);
+      KNOWN_GLOBE_SHA256.add(hash);
+      console.log(`  Globe-favicon signature: ${buf.length} bytes ${hash.slice(0, 12)}… ${known ? "(matches hardcoded)" : "(new — added)"}`);
+      return;
+    }
+  }
+  console.log(`  Globe-favicon: live capture failed; using hardcoded hash only`);
+}
+
+function defaultAvatarUrl(company: string): string {
+  const seed = encodeURIComponent(company.trim());
+  return `${DEFAULT_AVATAR_BASE}?seed=${seed}`;
 }
 
 async function resolveLogoForDomain(domain: string): Promise<string | null> {
@@ -432,7 +508,7 @@ function shuffleRows(rows: CsvJobRow[]): CsvJobRow[] {
 async function main(): Promise<void> {
   const inputPath = path.resolve(
     process.cwd(),
-    getArg("--input") ?? "outputs/api-ready/latest/results_enriched_api_gpt.csv",
+    getArg("--input") ?? "outputs/api-ready/latest/results_enriched_api_claude.csv",
   );
   const outputPath = path.resolve(
     process.cwd(),
@@ -468,6 +544,8 @@ async function main(): Promise<void> {
   const cachedCount = [...companies.keys()].filter(c => c.toLowerCase().trim() in cache).length;
   console.log(`  Already cached: ${cachedCount}/${companies.size}\n`);
 
+  await captureDefaultFaviconSig();
+
   let resolved = 0;
   let unresolved = 0;
   for (const [name, website] of companies) {
@@ -489,18 +567,24 @@ async function main(): Promise<void> {
     }
   }
 
-  // Apply logos to rows
+  // Apply logos to rows; fall back to a deterministic identicon avatar when a
+  // company has no resolvable real logo.
   let updated = 0;
+  let avatars = 0;
   for (const row of rows) {
     const name = row.company.trim();
-    if (!name) continue;
+    if (!name || row.companyLogo.trim()) continue;
     const entry = cache[name.toLowerCase().trim()];
-    if (entry?.logoUrl && !row.companyLogo.trim()) {
+    if (entry?.logoUrl) {
       row.companyLogo = entry.logoUrl;
       updated++;
+    } else {
+      row.companyLogo = defaultAvatarUrl(name);
+      avatars++;
     }
   }
-  console.log(`\n  Updated ${updated} rows with logo URLs`);
+  console.log(`\n  Updated ${updated} rows with real logos`);
+  console.log(`  Filled ${avatars} rows with fallback identicon avatars`);
 
   // Shuffle
   rows = shuffleRows(rows);
