@@ -4,6 +4,7 @@ import { pathToFileURL } from "node:url";
 import { load } from "cheerio";
 import type { ApiCreateJobRequest, EnrichedJobRecord, NormalizedJob } from "../types.js";
 import { isCreativeTitleStrict } from "../utils/creativeClassifier.js";
+import { flushDiscoveredCompanies } from "../utils/discoverCompanies.js";
 import { enrichJobFromUrl } from "../utils/jobDetailExtractor.js";
 import { logInfo, logWarn } from "../utils/logger.js";
 
@@ -745,6 +746,17 @@ async function main(): Promise<void> {
   await writeFile(apiPath, JSON.stringify(apiJobs, null, 2), "utf8");
   await writeFile(csvPath, toCsvRows(apiJobs), "utf8");
   await writeFile(reportPath, JSON.stringify(report, null, 2), "utf8");
+
+  // Self-expanding loop (JobsDrop Task 4): flush any new company domains
+  // harvested from hiringOrganization.sameAs JSON-LD during enrichment into
+  // pipeline/new_companies_discovered.json for manual review.
+  const newCompaniesCount = await flushDiscoveredCompanies();
+  if (newCompaniesCount > 0) {
+    logInfo("Discovered new companies via JobPosting JSON-LD", {
+      count: newCompaniesCount,
+      file: "pipeline/new_companies_discovered.json"
+    });
+  }
 
   const latestManifestPath = path.join(path.dirname(apiPath), "manifest.json");
   await writeManifest({

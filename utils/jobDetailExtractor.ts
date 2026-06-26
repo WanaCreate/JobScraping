@@ -13,6 +13,7 @@ import type {
   WorkTypeValue
 } from "../types.js";
 import { isCreativeTitleStrict, passesCreativeGate, scoreCreativeText } from "./creativeClassifier.js";
+import { extractDiscoveredDomains, recordDiscoveredDomains } from "./discoverCompanies.js";
 import { fetchPageWithRetry } from "./http.js";
 
 const DESCRIPTION_SELECTORS = [
@@ -1203,6 +1204,17 @@ export async function enrichJobFromUrl(params: {
   const finalUrl = fetched.finalUrl;
 
   const jsonLdJob = extractJsonLdJobPosting(fetchedHtml);
+
+  // Self-expanding loop (JobsDrop Task 4): each job-detail page is the richest
+  // source of hiringOrganization.sameAs JSON-LD. Harvest any company domains we
+  // don't already track into new_companies_discovered.json (flushed once in
+  // Stage 2 main). Never break enrichment if extraction throws.
+  try {
+    recordDiscoveredDomains(extractDiscoveredDomains(fetchedHtml));
+  } catch {
+    // discovery is best-effort; enrichment must never depend on it
+  }
+
   let title = extractTitle(fetchedHtml, seed.title, jsonLdJob);
   let fetchedDescription = extractDescription(fetchedHtml, jsonLdJob);
   fetchedDescription = cleanDescriptionWithTitle(fetchedDescription, title);
