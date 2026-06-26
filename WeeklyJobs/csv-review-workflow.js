@@ -11,22 +11,35 @@ export const meta = {
 }
 
 // ── Args ──────────────────────────────────────────────────────────────────────
-// args.csvPath    (required) absolute path to input CSV
-// args.mdPath     (required) absolute path to the weekly MD review file
-// args.outputPath (optional) defaults to same folder as CSV: <name>-reviewed.csv
+// REQUIRED — always pass both paths explicitly. No hardcoded fallbacks.
 //
-// Usage:
-//   Workflow({ scriptPath: 'C:\\...\\WeeklyJobs\\csv-review-workflow.js',
-//              args: { csvPath:  'C:\\...\\June17-2026\\17-June-2026-jobs.csv',
-//                      mdPath:   'C:\\...\\June17-2026\\review-2026-06-17.md' } })
+// args.csvPath    (required) absolute path to input CSV
+//                 e.g. 'C:\\...\\WeeklyJobs\\June24-2026\\25-june-2026.csv'
+// args.mdPath     (required) absolute path to the weekly MD review file
+//                 e.g. 'C:\\...\\WeeklyJobs\\June24-2026\\review-2026-06-24.md'
+// args.outputPath (optional) absolute path for reviewed output CSV
+//                 defaults to: same folder + same filename + "-reviewed" suffix
+//                 e.g. '25-june-2026.csv' → '25-june-2026-reviewed.csv'
+//
+// Full invocation example:
+//   Workflow({
+//     scriptPath: 'C:\\Users\\vyash\\Desktop\\Business\\Wana\\_Code\\JobScraping\\WeeklyJobs\\csv-review-workflow.js',
+//     args: {
+//       csvPath: 'C:\\Users\\vyash\\Desktop\\Business\\Wana\\_Code\\JobScraping\\WeeklyJobs\\June24-2026\\25-june-2026.csv',
+//       mdPath:  'C:\\Users\\vyash\\Desktop\\Business\\Wana\\_Code\\JobScraping\\WeeklyJobs\\June24-2026\\review-2026-06-24.md',
+//     }
+//   })
+//
+// Smoke test (pass any smaller CSV — e.g. a 3-row slice — as csvPath):
+//   args: { csvPath: '...\\smoke-test.csv', mdPath: '...\\review-2026-06-24.md' }
 
-// Fallback to hardcoded paths if args not passed via scriptPath invocation
-const csvPath  = (args && args.csvPath)    || 'C:\\Users\\vyash\\Desktop\\Business\\Wana\\_Code\\JobScraping\\WeeklyJobs\\June17-2026\\17-June-2026-jobs.csv'
-const mdPath   = (args && args.mdPath)     || 'C:\\Users\\vyash\\Desktop\\Business\\Wana\\_Code\\JobScraping\\WeeklyJobs\\June17-2026\\review-2026-06-17.md'
-const outPath  = (args && args.outputPath) || null
+if (!args || !args.csvPath) throw new Error('args.csvPath is required. Pass the absolute path to the input CSV.')
+if (!args.mdPath)           throw new Error('args.mdPath is required. Pass the absolute path to the MD review file.')
 
-if (!csvPath) throw new Error('csvPath is required.')
-if (!mdPath)  throw new Error('mdPath is required.')
+const csvPath    = args.csvPath
+const mdPath     = args.mdPath
+// outputPath is always derived in the script — never delegated to an agent
+const outputPath = args.outputPath || csvPath.replace(/\.csv$/i, '-reviewed.csv')
 
 // ── Phase 1: Parse ────────────────────────────────────────────────────────────
 phase('Parse')
@@ -57,9 +70,8 @@ const PARSE_SCHEMA = {
         required: ['i', 'title', 'company', 'jobLink', 'description'],
       },
     },
-    outputPath: { type: 'string' },
   },
-  required: ['rows', 'outputPath'],
+  required: ['rows'],
 }
 
 const MD_SCHEMA = {
@@ -107,8 +119,6 @@ Extract every data row (skip header). For each row return:
   jobLink     = "jobLink" column (the external job/listing URL)
   description = full "description" column content (preserve HTML)
 
-Also return outputPath = ${outPath || '(same directory as csvPath, filename = 17-June-2026-jobs-reviewed.csv, full path: C:\\Users\\vyash\\Desktop\\Business\\Wana\\_Code\\JobScraping\\WeeklyJobs\\June17-2026\\17-June-2026-jobs-reviewed.csv)'}
-
 Use the Read tool. Description fields are multi-line quoted — parse carefully.`,
     { label: 'parse-csv', phase: 'Parse', schema: PARSE_SCHEMA }
   ),
@@ -146,9 +156,8 @@ if (!parsed || !parsed.rows || parsed.rows.length === 0)
 if (!mdParsed || !mdParsed.entries || mdParsed.entries.length === 0)
   throw new Error('MD parsing returned no entries.')
 
-const rows       = parsed.rows
-const outputPath = parsed.outputPath
-const mdEntries  = mdParsed.entries
+const rows      = parsed.rows
+const mdEntries = mdParsed.entries
 
 log(`CSV: ${rows.length} rows. MD: ${mdEntries.length} entries. Output: ${outputPath}`)
 

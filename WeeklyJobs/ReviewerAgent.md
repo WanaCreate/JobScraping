@@ -120,7 +120,7 @@ Each listing is scored against all eight rules. A single failed hard rule is eno
 
 | # | Rule | Verdict on failure | Notes |
 |---|------|--------------------|-------|
-| 1 | **No AI-first company** | REJECT | Reject any company whose **core product is building or training AI models** (foundation-model labs, AI data-labeling/RLHF firms, AI-content generators), even if the role itself is a normal creative job. Normal companies that merely *use* AI tools are fine. |
+| 1 | **No AI-first company or AI-dependent role** | REJECT | Two sub-checks — either fails the rule: **(a) AI-first company:** reject any company whose **core product is building or training AI models** (foundation-model labs, AI data-labeling/RLHF firms, AI-content generators), even if the role itself is a normal creative job. **(b) AI-dependent role:** reject any role that **explicitly requires** using AI generation tools (e.g. Midjourney, DALL-E, Runway, Stable Diffusion, ComfyUI, Sora) as a core part of doing the work — not just mentions AI awareness, but mandates AI-generated output. Normal companies that merely *use* AI tools incidentally, or mention AI familiarity as a plus, are fine. |
 | 2 | **No unpaid roles** | REJECT | Reject explicitly unpaid, "for exposure", equity-only, or volunteer roles. |
 | 3 | **No low-paying roles** | REVIEW | Judgment call — no fixed number. Flag anything clearly below market for the role/region/seniority as REVIEW with a short reason. Do **not** auto-reject on pay alone. |
 | 4 | **Remote only** | REJECT | Must be **fully remote**. Reject hybrid and onsite. Region restrictions (e.g. "US-only", "EU timezone") are **allowed** as long as the role is fully remote. |
@@ -251,12 +251,12 @@ a link to the file. Do **not** put the full table only in chat — the file is t
 
 The file contains a markdown table, one row per listing:
 
-| # | Role / Company | Pay | Remote | Niche | Verdict | Notes |
-|---|----------------|-----|--------|-------|---------|-------|
-| 1 | Motion Designer @ Acme | $70k/yr | ✅ Fully remote | Video editor | PASS | Clears all checks. |
-| 2 | 3D Artist @ ScaleAI | unspecified | ✅ | Visual artist | REJECT | Rule 1 — AI-first company. |
-| 3 | Illustrator @ Studio X | "competitive" | Hybrid | Illustrator | REJECT | Rule 4 — hybrid, not fully remote. |
-| 4 | Junior Designer @ Y | $12/hr | ✅ | Graphic design | REVIEW | Rule 3 — pay looks low for role; manual check. |
+| # | Role / Company | Pay | Remote | Niche | Verdict | Notes | Link |
+|---|----------------|-----|--------|-------|---------|-------|------|
+| 1 | Motion Designer @ Acme | $70k/yr | ✅ Fully remote | Video editor | PASS | Clears all checks. | [Apply](https://example.com/job/1) |
+| 2 | 3D Artist @ ScaleAI | unspecified | ✅ | Visual artist | REJECT | Rule 1 — AI-first company. | [Apply](https://example.com/job/2) |
+| 3 | Illustrator @ Studio X | "competitive" | Hybrid | Illustrator | REJECT | Rule 4 — hybrid, not fully remote. | [Apply](https://example.com/job/3) |
+| 4 | Junior Designer @ Y | $12/hr | ✅ | Graphic design | REVIEW | Rule 3 — pay looks low for role; manual check. | [Apply](https://example.com/job/4) |
 
 The file should have, in order:
 
@@ -269,7 +269,7 @@ The file should have, in order:
    **flags only — it never edits the CSV**.
 5. A **Notes & flags** section (resolved duplicates, source-link quirks, action items for REVIEWs).
 6. The **manual duplicate-check reminder** (see Pending Tasks).
-7. A **Sources** list — the URL evaluated for each row.
+7. A **Sources** list — the URL evaluated for each row (also shown inline as the **Link** column in the verdict table above).
 
 After writing it, reply in chat with: the summary line, the file path, and anything needing a
 decision. Keep the chat reply short; the `.md` file is the record of the run.
