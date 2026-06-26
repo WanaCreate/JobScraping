@@ -11,6 +11,8 @@
     "stage4": "tsx pipeline/stage4_enrichLogos.ts",
     "build": "tsc -p .",
     "discover-slugs": "tsx scripts/discoverSlugs.ts",
+    "scrape-pending": "SCRAPER_URLS_FILE=pipeline/pending_review.json SCRAPER_OUTPUT_FILE=outputs/results_pending.json tsx pipeline/stage1_scrapeCareers.ts",
+    "measure-discovery": "tsx scripts/measureDiscovery.ts",
     "prune-companies": "tsx scripts/pruneCompanies.ts",
     "promote-pending": "tsx scripts/promotePending.ts"
   },

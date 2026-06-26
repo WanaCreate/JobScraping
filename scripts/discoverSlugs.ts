@@ -114,6 +114,12 @@ const ALL_HOSTS: HostDef[] = [
       return extractPathSlug(url, "apply.workable.com");
     },
   },
+  {
+    key: "smartrecruiters",
+    cdxPrefix: "jobs.smartrecruiters.com/*",
+    baseUrl: "https://jobs.smartrecruiters.com",
+    extractSlug: (url) => extractPathSlug(url, "jobs.smartrecruiters.com"),
+  },
 ];
 
 // ---------------------------------------------------------------------------
