@@ -119,7 +119,7 @@ function parseCliOptions(): CliOptions {
   return {
     input: getArg("--input") ?? "outputs/api-ready/latest/results_enriched_api.csv",
     output: getArg("--output") ?? "outputs/api-ready/latest/results_enriched_api_claude.csv",
-    concurrency: Number(getArg("--concurrency") ?? "8"),
+    concurrency: Number(getArg("--concurrency") ?? "4"),
     maxJobs: getArg("--maxJobs") ? Number(getArg("--maxJobs")) : null,
     model: getArg("--model") ?? "claude-haiku-4-5",
   };
@@ -993,23 +993,50 @@ async function main(): Promise<void> {
     await runConcurrent(rows, options.concurrency, async (row, index) => {
       // Deterministic title cleanup before sending to the model
       row.title = cleanJobTitle(row.title);
+
+      // Helper: apply deterministic normalisation when AI is unavailable.
+      // Better than raw passthrough — at least the structured fields are clean.
+      const applyFallback = () => {
+        row.jobType = normalizeJobType(row.jobType);
+        row.workType = normalizeWorkType(row.workType);
+        row.keywords = cleanKeywords(row.keywords);
+        row.skills = cleanSkills(row.skills);
+        if (row.salaryMin === "0") row.salaryMin = "";
+        if (row.salaryMax === "0") row.salaryMax = "";
+        if (!row.description || row.description.trim().length < 20) {
+          row.description = "For more details, click apply";
+        }
+        enrichedRows.push(row);
+      };
+
       try {
         const userPrompt = buildUserPrompt(row);
-        const { text, usage } = await claudeEnrich(systemPrompt, userPrompt, options.model);
+        let text: string | null = null;
+        let usage: ClaudeUsage = { inputTokens: 0, outputTokens: 0 };
+
+        // One retry with a 3 s back-off for transient network / timeout errors.
+        for (let attempt = 1; attempt <= 2; attempt++) {
+          try {
+            const result = await claudeEnrich(systemPrompt, userPrompt, options.model);
+            text = result.text;
+            usage = result.usage;
+            break;
+          } catch (err) {
+            if (attempt === 2) throw err;
+            const msg = err instanceof Error ? err.message : String(err);
+            console.log(`[WARN] Row ${index + 1} attempt ${attempt} failed (${msg.slice(0, 80)}), retrying in 3 s…`);
+            await new Promise((r) => setTimeout(r, 3_000));
+          }
+        }
+
         totalInputTokens += usage.inputTokens;
         totalOutputTokens += usage.outputTokens;
-        const aiResult = parseAiResponse(text);
+        const aiResult = text ? parseAiResponse(text) : null;
 
         if (!aiResult) {
-          console.log(`[WARN] Row ${index + 1} (${row.title.slice(0, 40)}): AI parse failed, keeping original`);
+          console.log(`[WARN] Row ${index + 1} (${row.title.slice(0, 40)}): AI parse failed, applying deterministic fallback`);
           aiFailed++;
-          row.jobType = normalizeJobType(row.jobType);
-          row.workType = normalizeWorkType(row.workType);
-          row.keywords = cleanKeywords(row.keywords);
-          row.skills = cleanSkills(row.skills);
-          if (row.salaryMin === "0") row.salaryMin = "";
-          if (row.salaryMax === "0") row.salaryMax = "";
-          enrichedRows.push(row);
+          applyFallback();
           return;
         }
 
@@ -1050,15 +1077,9 @@ async function main(): Promise<void> {
           console.log(`[INFO] Progress: ${processed + dropped}/${rows.length} (${aiFixed} enriched, ${dropped} dropped, ${aiFailed} fallback)`);
         }
       } catch (err) {
-        console.log(`[WARN] Row ${index + 1} (${row.title.slice(0, 40)}): Error - ${err instanceof Error ? err.message : err}`);
+        console.log(`[WARN] Row ${index + 1} (${row.title.slice(0, 40)}): Error after retry - ${err instanceof Error ? err.message : err}`);
         aiFailed++;
-        row.jobType = normalizeJobType(row.jobType);
-        row.workType = normalizeWorkType(row.workType);
-        row.keywords = cleanKeywords(row.keywords);
-        row.skills = cleanSkills(row.skills);
-        if (row.salaryMin === "0") row.salaryMin = "";
-        if (row.salaryMax === "0") row.salaryMax = "";
-        enrichedRows.push(row);
+        applyFallback();
       }
     });
   }
