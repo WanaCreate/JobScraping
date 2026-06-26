@@ -133,6 +133,15 @@ npm run promote-pending -- --input outputs/results_recheck.json --apply
   blocked from this env. Firecrawl unnecessary.
 - **Recheck:** 2.0's scrape JSON wasn't persisted → re-scrape the 9,394 rejects, then promote at 4.
 - **Google daily:** build but gate behind `GOOGLE_API_KEY`; do not block Phase 1 on it.
+- **Task 4 (self-expanding loop):** wired into Stage 2 (was dormant — only fired on Stage 1's
+  HTML-fallback path, which clean-API ATS boards skip, so it never ran). It reads
+  `hiringOrganization.sameAs` from each job's JobPosting JSON-LD and writes unknown company
+  domains to `new_companies_discovered.json` (manual review). **Limitation:** for single-company
+  boards (our entire current pile — Greenhouse/Lever/Ashby slugs) `sameAs` points back to the
+  *same* company we're already scraping, so it discovers ~nothing. It only finds new companies on
+  **multi-company / aggregator pages** (VC portfolio job boards, "hiring across our brands" pages,
+  job aggregators) where each posting names a different employer. Treat it as a free, harmless
+  safety net — **not** a volume lever until multi-company sources are added.
 
 #### Weekly implementation log
 
@@ -140,7 +149,10 @@ npm run promote-pending -- --input outputs/results_recheck.json --apply
 
 - **2026-06-26 (build):** Corrected the page-bump misread; implemented multi-crawl union + HN Lever
   recovery + SmartRecruiters host + min-score 4 + `measure-discovery`/`scrape-recheck`. Smoke-tested
-  source reachability (table above). Real discovery/scrape run + measured numbers: _pending_.
+  source reachability (table above). Also wired Task 4 self-expanding loop into Stage 2 (see
+  Decision log) and added a checkpointing chunked scraper so a multi-hour run survives container
+  reclaim. Discovery run: **28,539 candidate boards** found (greenhouse 13,097 · workable 6,973 ·
+  lever 3,664 via HN · ashby 3,347 · smartrecruiters 1,458). Scrape + measured numbers: _in progress_.
 
 ### Phase 2.1 — (deferred, "as jobs drop") plan refinements
 Park forward-looking refinements here; flesh out when Phase 1 volume is measured.
