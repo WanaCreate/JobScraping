@@ -41,8 +41,7 @@ function runStage(label: string, script: string, args: string[]): void {
   console.log(`  ${label}`);
   console.log(`${"=".repeat(60)}\n`);
 
-  const tsxPath = process.platform === "win32" ? "npx.cmd" : "npx";
-  execFileSync(tsxPath, ["tsx", script, ...args], {
+  execFileSync(process.execPath, ["--import", "tsx/esm", script, ...args], {
     stdio: "inherit",
     cwd: process.cwd(),
     env: process.env,
