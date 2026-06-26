@@ -30,7 +30,11 @@ function getArgValue(flag: string): string | undefined {
   return undefined;
 }
 
-const MAX_PAGES_PER_HOST = parseInt(getArgValue("--max-pages-per-host") ?? "30", 10);
+// Phase 1 (JobsDrop 2.1) "moderate bump": ~10x the 2.0 depth (was 30) on the
+// latest crawl only. This is the volume lever — 2.0's 11K-candidate ceiling was
+// a discovery-depth limit, not an API limit. Raise further (and add multiple
+// monthly crawl snapshots) once we measure yield/runtime at this depth.
+const MAX_PAGES_PER_HOST = parseInt(getArgValue("--max-pages-per-host") ?? "300", 10);
 const hostsFilter = getArgValue("--hosts");
 
 // ---------------------------------------------------------------------------

@@ -59,6 +59,51 @@ All sources emit the same `RawJob[]`, then converge on one shared path:
   gets to 100K and whether/where paid fill is even needed.
 - **Creative-coverage risk: none.** Same adapters + same filter, more companies.
 
+#### What's different from JobsDrop 2.0 (last week)
+
+2.0 ran the *same* discover → scrape → promote loop, but two things capped it:
+
+1. **Discovery depth was capped at 30 CDX pages/host** → only ~11K candidate boards found,
+   of which **1,686** promoted (current live list). Board count, not the API, is the ceiling.
+2. **Promotion floor was score 6**, dropping ~9,394 boards — including creative roles that score
+   4–5 (copywriter ~4, ux ~4.5, content ~4).
+
+Phase 1 changes, by volume lever:
+
+| Lever | Change | Effect |
+|---|---|---|
+| **Discovery depth** (the big one) | `--max-pages-per-host` default **30 → 300**, latest crawl only | ~10× more candidate boards than 2.0 |
+| **New ATS source** | added **SmartRecruiters** (`jobs.smartrecruiters.com`) to discovery hosts | 0 → N new boards |
+| **Promotion floor** | `promote-pending` default min-score **6 → 4** | ~2× promotion yield from the same scrape |
+| **Recheck recovery** | re-scrape 2.0's 9,394 rejects, promote at score 4 | recovers score 4–5 boards 2.0 dropped |
+| **Instrumentation** | new `measure-discovery` script | tells us if the free path reaches 100K |
+
+> Note (recheck): 2.0's scrape JSON was not persisted, so the 9,394 rejects can't be re-promoted
+> from cached results — they must be re-scraped (`npm run scrape-recheck`) before promoting at 4.
+
+#### Phase 1 runbook
+
+```bash
+# 1. Discover boards (moderate depth — raise --max-pages-per-host later based on yield)
+npm run discover-slugs                       # → pipeline/pending_review.json
+
+# 2a. Scrape the newly discovered boards
+npm run scrape-pending                        # → outputs/results_pending.json
+# 2b. Re-scrape last week's rejects (recover score 4–5 boards at the new floor)
+npm run scrape-recheck                        # → outputs/results_recheck.json
+
+# 3. Measure (per-ATS yield, scale factor, distance to 100K)
+npm run measure-discovery                     # reads results_pending.json by default
+
+# 4. Promote qualifying boards (score ≥ 4) into the live list
+npm run promote-pending -- --input outputs/results_pending.json --apply
+npm run promote-pending -- --input outputs/results_recheck.json --apply
+```
+
+**Decision log (this phase):** moderate discovery depth now (300 pages, latest crawl), scale higher
+across multiple crawl snapshots in a later pass once yield/runtime are measured; recover the recheck
+pile via re-scrape since 2.0's results JSON is gone.
+
 ### Phase 2.1 — (deferred, "as jobs drop") plan refinements
 Park forward-looking refinements here; flesh out when Phase 1 volume is measured.
 
