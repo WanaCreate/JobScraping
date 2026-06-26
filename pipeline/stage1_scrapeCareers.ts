@@ -404,25 +404,52 @@ async function main(): Promise<void> {
   const urls = await parseInputUrlsAsync();
   const concurrency = Number(process.env.SCRAPER_CONCURRENCY ?? "8");
   const safeConcurrency = Number.isFinite(concurrency) && concurrency > 0 ? concurrency : 8;
-  const results = await runScraper(urls, safeConcurrency);
+  const outputPath = parseOutputPath();
+
+  // Checkpointed scrape: write accumulated results every CHECKPOINT_SIZE boards
+  // so a container reclaim only costs the in-flight chunk, not the whole run.
+  const CHECKPOINT_SIZE = 500;
+  const resolvedOutputPath = outputPath ? path.resolve(process.cwd(), outputPath) : null;
+
+  // Resume: skip boards already in the output file.
+  const accumulated: ScrapeResult[] = [];
+  const done = new Set<string>();
+  if (resolvedOutputPath) {
+    try {
+      const existing = JSON.parse(await readFile(resolvedOutputPath, "utf8"));
+      if (Array.isArray(existing)) {
+        for (const r of existing) { accumulated.push(r); done.add(r.source); }
+        if (done.size > 0) logInfo("Stage 1 resuming", { alreadyDone: done.size });
+      }
+    } catch { /* no prior output — start fresh */ }
+  }
+
+  const todo = urls.filter((u) => !done.has(u));
+  logInfo("Starting batch scrape", { companies: todo.length, total: urls.length, concurrency: safeConcurrency });
+
+  for (let i = 0; i < todo.length; i += CHECKPOINT_SIZE) {
+    const chunk = todo.slice(i, i + CHECKPOINT_SIZE);
+    const chunkResults = await runScraper(chunk, safeConcurrency);
+    accumulated.push(...chunkResults);
+
+    if (resolvedOutputPath) {
+      await mkdir(path.dirname(resolvedOutputPath), { recursive: true });
+      await writeFile(resolvedOutputPath, JSON.stringify(accumulated, null, 2), "utf8");
+      logInfo("Stage 1 checkpoint", { saved: accumulated.length, total: urls.length });
+    }
+  }
 
   const newCompaniesCount = await flushDiscoveredCompanies();
   if (newCompaniesCount > 0) {
     logInfo("Discovered new companies", { count: newCompaniesCount, file: "pipeline/new_companies_discovered.json" });
   }
 
-  const outputJson = JSON.stringify(results, null, 2);
-  const outputPath = parseOutputPath();
-
-  if (outputPath) {
-    const resolvedPath = path.resolve(process.cwd(), outputPath);
-    await mkdir(path.dirname(resolvedPath), { recursive: true });
-    await writeFile(resolvedPath, outputJson, "utf8");
-    logInfo("Wrote Stage 1 output", { outputPath: resolvedPath, jobCount: results.length });
+  if (!resolvedOutputPath) {
+    // No output path — print to stdout (legacy behaviour).
+    console.log(JSON.stringify(accumulated, null, 2));
     return;
   }
-
-  console.log(outputJson);
+  logInfo("Wrote Stage 1 output", { outputPath: resolvedOutputPath, jobCount: accumulated.length });
 }
 
 const directRunHref = process.argv[1] ? pathToFileURL(process.argv[1]).href : "";
