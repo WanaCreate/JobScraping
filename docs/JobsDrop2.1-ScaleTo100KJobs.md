@@ -61,30 +61,55 @@ All sources emit the same `RawJob[]`, then converge on one shared path:
 
 #### What's different from JobsDrop 2.0 (last week)
 
-2.0 ran the *same* discover → scrape → promote loop, but two things capped it:
+2.0 ran the discover → scrape → promote loop over **one** CommonCrawl snapshot and promoted at
+score 6. We probed the live index (June 2026) to find where the real ceiling is — the findings
+below **corrected our first guess** (that "more CDX pages = more boards"):
 
-1. **Discovery depth was capped at 30 CDX pages/host** → only ~11K candidate boards found,
-   of which **1,686** promoted (current live list). Board count, not the API, is the ceiling.
-2. **Promotion floor was score 6**, dropping ~9,394 boards — including creative roles that score
-   4–5 (copywriter ~4, ux ~4.5, content ~4).
+- ❌ **Pages-per-host is NOT the lever.** Each ATS host exposes only **1–2 CDX pages** per crawl.
+  2.0's 30-page cap already swept the whole latest-crawl index (~8,714 boards across 5 hosts).
+  Raising the cap to 300 captures the *same* boards — it does nothing. (We reverted the bump.)
+- ✅ **Crawl *snapshots* are the lever.** CommonCrawl lists **125 monthly crawls**; 2.0 used only
+  the newest. Unioning slugs across the last ~12 captures companies that dropped out of the latest
+  crawl. Measured: `boards.greenhouse.io` = **1,723 slugs (1 crawl) → 4,161 (6 crawls)**, ≈2.4×.
+- ⚠️ **Lever is uncrawlable.** `jobs.lever.co/robots.txt` sets `CCBot: Disallow /`, so CommonCrawl
+  has **0** usable Lever slugs (only `robots.txt`). 2.0 had no Lever discovery at all. Lever is a
+  large ATS, so this is a real gap — addressed via non-crawl sources (see Discovery sources).
 
 Phase 1 changes, by volume lever:
 
-| Lever | Change | Effect |
+| Lever | Change | Verified effect |
 |---|---|---|
-| **Discovery depth** (the big one) | `--max-pages-per-host` default **30 → 300**, latest crawl only | ~10× more candidate boards than 2.0 |
-| **New ATS source** | added **SmartRecruiters** (`jobs.smartrecruiters.com`) to discovery hosts | 0 → N new boards |
-| **Promotion floor** | `promote-pending` default min-score **6 → 4** | ~2× promotion yield from the same scrape |
-| **Recheck recovery** | re-scrape 2.0's 9,394 rejects, promote at score 4 | recovers score 4–5 boards 2.0 dropped |
-| **Instrumentation** | new `measure-discovery` script | tells us if the free path reaches 100K |
+| **Multi-crawl union** (the big one) | query last ~12 CommonCrawl snapshots, not just newest | ≈2–4× boards per host |
+| **Lever recovery** | discover Lever slugs from **HN Algolia** (+ YC) since CC blocks Lever | 0 → hundreds of Lever boards |
+| **New ATS source** | added **SmartRecruiters** to discovery hosts | 0 → ~671 boards (latest crawl) |
+| **Promotion floor** | `promote-pending` default min-score **6 → 4** | ~2× promotion yield, same scrape |
+| **Recheck recovery** | re-scrape 2.0's 9,394 rejects, promote at score 4 | recovers score 4–5 boards |
+| **Instrumentation** | new `measure-discovery` script | tells us the free-path ceiling |
 
-> Note (recheck): 2.0's scrape JSON was not persisted, so the 9,394 rejects can't be re-promoted
-> from cached results — they must be re-scraped (`npm run scrape-recheck`) before promoting at 4.
+#### Discovery sources (verified reachability, June 2026 — from this environment)
+
+| Source | Reachable? | Use | Notes |
+|---|---|---|---|
+| **CommonCrawl CDX** (multi-crawl) | ✅ 200, fast | GH / GH-job-boards / Ashby / Workable / SmartRecruiters slugs | 1–2 pages/host/crawl; union ~12 crawls |
+| **HN Algolia API** (`hn.algolia.com`) | ✅ 200 | **Lever** slugs (also GH/Ashby) | 42 Lever slugs from 3 pages of one query; no key |
+| **Lever postings API** (`api.lever.co`) | ✅ 200, JSON | scrape discovered Lever boards | different host than crawl-blocked `jobs.lever.co` |
+| **YC company directory** | ⚠️ page 200 | secondary Lever/GH source | JS-rendered; needs YC's frontend Algolia key or Playwright. Optional. |
+| **Getro** (VC aggregator) | ❌ 403 | — | blocked from this env; dropped |
+| **Wayback Machine CDX** | ❌ 403 | — | blocked by egress policy; dropped |
+| **Google / Bing search API** | n/a | optional daily trickle | free tiers ~1K/day (Google), needs `GOOGLE_API_KEY`+CSE id; gated, non-blocking |
+| **Firecrawl** | n/a | — | doesn't enumerate isolated tenant boards; its only real use (JS rendering) is already covered by our Playwright dep. Skipped. |
+
+#### Honest ceiling (measure, don't assume)
+
+Volume ≈ **boards × creative-jobs/board**. Current: 1,686 boards → ~1K/week (≈0.6 creative/board/wk).
+Extrapolating: full multi-crawl + Lever recovery (~25–40K boards) → **~15–24K creative jobs/week** —
+real progress, but **Phase 1 alone will not hit 100K**. That gap is exactly what Phase 2 (free
+aggregators) and Phase 4 (paid fill) are for. Phase 1's job: max the free ATS path and *measure*.
 
 #### Phase 1 runbook
 
 ```bash
-# 1. Discover boards (moderate depth — raise --max-pages-per-host later based on yield)
+# 1. Discover boards across all sources (multi-crawl CC + HN Lever recovery)
 npm run discover-slugs                       # → pipeline/pending_review.json
 
 # 2a. Scrape the newly discovered boards
@@ -100,9 +125,22 @@ npm run promote-pending -- --input outputs/results_pending.json --apply
 npm run promote-pending -- --input outputs/results_recheck.json --apply
 ```
 
-**Decision log (this phase):** moderate discovery depth now (300 pages, latest crawl), scale higher
-across multiple crawl snapshots in a later pass once yield/runtime are measured; recover the recheck
-pile via re-scrape since 2.0's results JSON is gone.
+#### Decision log
+
+- **Discovery depth:** pages-per-host cap removed (a no-op given 1–2 pages/host); volume comes from
+  multi-crawl union instead. Start with last **12** crawls; raise based on measured yield/runtime.
+- **Lever:** recover via HN Algolia (no key) as primary; YC as optional secondary. Getro/Wayback
+  blocked from this env. Firecrawl unnecessary.
+- **Recheck:** 2.0's scrape JSON wasn't persisted → re-scrape the 9,394 rejects, then promote at 4.
+- **Google daily:** build but gate behind `GOOGLE_API_KEY`; do not block Phase 1 on it.
+
+#### Weekly implementation log
+
+> Append a dated entry each week as this runs, so future weeks see what was actually done + yields.
+
+- **2026-06-26 (build):** Corrected the page-bump misread; implemented multi-crawl union + HN Lever
+  recovery + SmartRecruiters host + min-score 4 + `measure-discovery`/`scrape-recheck`. Smoke-tested
+  source reachability (table above). Real discovery/scrape run + measured numbers: _pending_.
 
 ### Phase 2.1 — (deferred, "as jobs drop") plan refinements
 Park forward-looking refinements here; flesh out when Phase 1 volume is measured.
