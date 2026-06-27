@@ -398,6 +398,11 @@ async function fetchBestJobPage(rawUrl: string): Promise<{ html: string; finalUr
     }
   }
 
+  // Playwright launches a fresh headless browser per fetch (90s timeout each) and
+  // hangs hard when the egress proxy rotates mid-fetch. STAGE2_NO_PLAYWRIGHT=1
+  // skips it entirely — jobs that would need it fall back to Stage 1's description
+  // in enrichJobFromUrl rather than being lost.
+  if (process.env.STAGE2_NO_PLAYWRIGHT === "1") return null;
   const shouldUsePlaywright = candidates.some((candidate) => isKnownAtsHost(candidate));
   if (!shouldUsePlaywright) return null;
 
@@ -1196,12 +1201,21 @@ export async function enrichJobFromUrl(params: {
 }): Promise<EnrichedJobRecord | null> {
   const { seed, hiringTeamUid, minCreativeScore = 2 } = params;
   const fetched = await fetchBestJobPage(seed.url);
-  if (!fetched) {
-    return null;
-  }
 
-  const fetchedHtml = fetched.html;
-  const finalUrl = fetched.finalUrl;
+  let fetchedHtml: string;
+  let finalUrl: string;
+  if (fetched) {
+    fetchedHtml = fetched.html;
+    finalUrl = fetched.finalUrl;
+  } else {
+    // HTTP fetch failed (and Playwright is disabled/skipped). Don't drop the job
+    // if Stage 1 already captured a usable description — synthesize from seed
+    // data. ~88% of ATS jobs carry a full description from the Stage 1 API.
+    const seedDesc = seed.description?.trim() || "";
+    if (seedDesc.length < 120) return null;
+    fetchedHtml = "";
+    finalUrl = seed.url;
+  }
 
   const jsonLdJob = extractJsonLdJobPosting(fetchedHtml);
 
