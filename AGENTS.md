@@ -9,6 +9,15 @@
 > [docs/JobsDrop2.0_Handoff.md](docs/JobsDrop2.0_Handoff.md) for the full list of
 > follow-ups (429 recovery, parked 900 prune, Lever coverage).
 
+> **📈 Scaling plan — read before any large discovery/scrape run:**
+> [docs/JobsDrop2.1-ScaleTo100KJobs.md](docs/JobsDrop2.1-ScaleTo100KJobs.md) is the
+> living plan for scaling intake toward 100K creative jobs/week (multi-crawl CDX
+> union, HN Lever recovery, promotion gate, self-expanding loop). **It also contains
+> a "Cloud vs Local" section** documenting which pipeline knobs are throttled to
+> survive the Claude Code cloud proxy (Playwright off, lower concurrency, small
+> checkpoints) — **when running locally, restore full power per that table**
+> (turn Playwright back on, raise concurrency). Update its weekly log as you run.
+
 ## Weekly creative jobs (Instagram / manual batches)
 
 1. **Discover** — [docs/JOB-SCRAPER-AGENT-GUIDE.md](docs/JOB-SCRAPER-AGENT-GUIDE.md) (which URLs to scrape)

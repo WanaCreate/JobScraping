@@ -19,6 +19,12 @@ APIs return titles, locations, company, descriptions, and posted dates directly.
 A browser (Playwright) is only used as a fallback for custom career pages that
 have no API.
 
+> **📈 Scaling & cloud/local note:** before any large discovery/scrape run, read
+> [docs/JobsDrop2.1-ScaleTo100KJobs.md](docs/JobsDrop2.1-ScaleTo100KJobs.md) — the
+> living plan for scaling intake. Its **"Cloud vs Local"** section lists which knobs
+> are throttled to survive the Claude Code cloud proxy (Playwright off, lower
+> concurrency, small checkpoints); **run locally at full power** per that table.
+
 ## Quick Start
 
 ```bash
