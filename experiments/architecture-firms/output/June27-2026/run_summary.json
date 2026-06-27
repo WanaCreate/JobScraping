@@ -1,0 +1,412 @@
+{
+  "scrapedAt": "2026-06-27T12:04:31.141Z",
+  "totalFirms": 44,
+  "totalArchJobs": 1274,
+  "results": [
+    {
+      "firm": "Gensler",
+      "url": "https://gensler.wd1.myworkdayjobs.com/genslercareers",
+      "scraper": "workday",
+      "detectedAts": "workday",
+      "totalJobsFound": 433,
+      "archJobsFound": 255,
+      "status": "ok"
+    },
+    {
+      "firm": "Perkins & Will",
+      "url": "https://recruiting2.ultipro.com/PER1007PWILL/JobBoard/0ca393a4-bf82-4db6-acae-91e6a0315a4a/?q=&o=postedDateDesc&w=&wc=&we=&wpst=",
+      "scraper": "ultipro",
+      "detectedAts": "ultipro",
+      "totalJobsFound": 150,
+      "archJobsFound": 78,
+      "status": "ok"
+    },
+    {
+      "firm": "HKS Architects",
+      "url": "https://hksinc.wd501.myworkdayjobs.com/HKSCareers",
+      "scraper": "workday",
+      "detectedAts": "workday",
+      "totalJobsFound": 64,
+      "archJobsFound": 31,
+      "status": "ok"
+    },
+    {
+      "firm": "Corgan",
+      "url": "https://careers-us-corgan.icims.com/jobs/search?ss=1",
+      "scraper": "skip",
+      "detectedAts": null,
+      "totalJobsFound": 0,
+      "archJobsFound": 0,
+      "status": "skipped",
+      "error": "no url"
+    },
+    {
+      "firm": "HOK",
+      "url": "https://jobs.dayforcehcm.com/en-US/hok/CANDIDATEPORTAL",
+      "scraper": "playwright",
+      "detectedAts": "dayforce",
+      "totalJobsFound": 65,
+      "archJobsFound": 7,
+      "status": "ok"
+    },
+    {
+      "firm": "Stantec",
+      "url": "https://hdhl.fa.us6.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/requisitions",
+      "scraper": "oracle",
+      "detectedAts": "oracle-cloud",
+      "totalJobsFound": 1427,
+      "archJobsFound": 106,
+      "status": "ok"
+    },
+    {
+      "firm": "AECOM",
+      "url": "https://jobs.smartrecruiters.com/AECOM2",
+      "scraper": "smartrecruiters",
+      "detectedAts": "smartrecruiters",
+      "totalJobsFound": 4791,
+      "archJobsFound": 370,
+      "status": "ok"
+    },
+    {
+      "firm": "HDR",
+      "url": "https://hdr.taleo.net/careersection/ex/jobsearch.ftl?lang=en&portal=101430233#",
+      "scraper": "skip",
+      "detectedAts": null,
+      "totalJobsFound": 0,
+      "archJobsFound": 0,
+      "status": "skipped",
+      "error": "no url"
+    },
+    {
+      "firm": "SOM (Skidmore, Owings & Merrill)",
+      "url": "https://www.som.com/culture/careers/",
+      "scraper": "playwright",
+      "detectedAts": "custom",
+      "totalJobsFound": 20,
+      "archJobsFound": 0,
+      "status": "ok"
+    },
+    {
+      "firm": "Jacobs",
+      "url": "https://careers.jacobs.com/en_US/careers/SearchJobs/?4182=%5B76515%5D&4182_format=4422&575=%5B6623%5D&575_format=1824&listFilterMode=1&jobRecordsPerPage=10&",
+      "scraper": "skip",
+      "detectedAts": null,
+      "totalJobsFound": 0,
+      "archJobsFound": 0,
+      "status": "skipped",
+      "error": "no url"
+    },
+    {
+      "firm": "Populous",
+      "url": "https://populous.com/careers#jobs",
+      "scraper": "playwright",
+      "detectedAts": "custom",
+      "totalJobsFound": 4,
+      "archJobsFound": 1,
+      "status": "ok"
+    },
+    {
+      "firm": "Perkins Eastman",
+      "url": "http://perkinseastman.hrmdirect.com/employment/job-openings.php?search=true&dept=-1&city=-1&state=-1&cust_sort1=121226&cust_sort2=70953&jbsrc=1025",
+      "scraper": "playwright",
+      "detectedAts": "hrmdirect",
+      "totalJobsFound": 48,
+      "archJobsFound": 20,
+      "status": "ok"
+    },
+    {
+      "firm": "DLR Group",
+      "url": "https://www.dlrgroup.com/careers/#openings",
+      "scraper": "playwright",
+      "detectedAts": "custom",
+      "totalJobsFound": 20,
+      "archJobsFound": 0,
+      "status": "ok"
+    },
+    {
+      "firm": "Leo A Daly",
+      "url": "https://leoadaly.com/careers",
+      "scraper": "playwright",
+      "detectedAts": "custom",
+      "totalJobsFound": 7,
+      "archJobsFound": 1,
+      "status": "ok"
+    },
+    {
+      "firm": "HNTB",
+      "url": "https://hntb.wd5.myworkdayjobs.com/HNTB_Careers",
+      "scraper": "workday",
+      "detectedAts": "workday",
+      "totalJobsFound": 389,
+      "archJobsFound": 12,
+      "status": "ok"
+    },
+    {
+      "firm": "Payette Associates",
+      "url": "https://www.payette.com/careers/",
+      "scraper": "playwright",
+      "detectedAts": "custom",
+      "totalJobsFound": 6,
+      "archJobsFound": 0,
+      "status": "ok"
+    },
+    {
+      "firm": "Robert A.M.Stern Architects",
+      "url": "https://www.ramsa.com/careers",
+      "scraper": "playwright",
+      "detectedAts": "custom",
+      "totalJobsFound": 2,
+      "archJobsFound": 0,
+      "status": "ok"
+    },
+    {
+      "firm": "Grimshaw",
+      "url": "https://careers.jobscore.com/careers/grimshawarchitects?utf8=%E2%9C%93&department_id=aIFevuZwOr6jM5dNDWqL8o&location_id=",
+      "scraper": "playwright",
+      "detectedAts": "jobscore",
+      "totalJobsFound": 22,
+      "archJobsFound": 9,
+      "status": "ok"
+    },
+    {
+      "firm": "Treanor Architects",
+      "url": "https://treanor.design/open-positions/",
+      "scraper": "playwright",
+      "detectedAts": "custom",
+      "totalJobsFound": 18,
+      "archJobsFound": 5,
+      "status": "ok"
+    },
+    {
+      "firm": "Handel Architects",
+      "url": "https://handelarchitects.com/careers",
+      "scraper": "playwright",
+      "detectedAts": "custom",
+      "totalJobsFound": 5,
+      "archJobsFound": 4,
+      "status": "ok"
+    },
+    {
+      "firm": "HLW International",
+      "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=214ae4ed-5f0a-4657-b50a-6e318870a1f6&ccId=19000101_000001&lang=en_US",
+      "scraper": "skip",
+      "detectedAts": null,
+      "totalJobsFound": 0,
+      "archJobsFound": 0,
+      "status": "skipped",
+      "error": "no url"
+    },
+    {
+      "firm": "CetraRuddy Architecture",
+      "url": "https://cetraruddy.bamboohr.com/careers",
+      "scraper": "bamboohr",
+      "detectedAts": "bamboohr",
+      "totalJobsFound": 6,
+      "archJobsFound": 5,
+      "status": "ok"
+    },
+    {
+      "firm": "STV Group",
+      "url": "https://stvinc.wd5.myworkdayjobs.com/stv",
+      "scraper": "workday",
+      "detectedAts": "workday",
+      "totalJobsFound": 382,
+      "archJobsFound": 25,
+      "status": "ok"
+    },
+    {
+      "firm": "WRNS Studio",
+      "url": "https://wrnsstudio.com/careers/",
+      "scraper": "playwright",
+      "detectedAts": "custom",
+      "totalJobsFound": 11,
+      "archJobsFound": 0,
+      "status": "ok"
+    },
+    {
+      "firm": "Ennead Architects",
+      "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=9662f9b3-e17c-4dab-aace-354cd7c03b0b&ccId=19000101_000001&type=JS&lang=en_US&selectedMenuKey=CareerCenter",
+      "scraper": "skip",
+      "detectedAts": null,
+      "totalJobsFound": 0,
+      "archJobsFound": 0,
+      "status": "skipped",
+      "error": "no url"
+    },
+    {
+      "firm": "Koning Eizenberg Architecture",
+      "url": null,
+      "scraper": "skip",
+      "detectedAts": null,
+      "totalJobsFound": 0,
+      "archJobsFound": 0,
+      "status": "skipped",
+      "error": "no url"
+    },
+    {
+      "firm": "KPF (Kohn Pedersen Fox)",
+      "url": "https://kpf.wd5.myworkdayjobs.com/KPF_Careers",
+      "scraper": "workday",
+      "detectedAts": "workday",
+      "totalJobsFound": 21,
+      "archJobsFound": 13,
+      "status": "ok"
+    },
+    {
+      "firm": "Dattner Architects",
+      "url": "https://www.paycomonline.net/v4/ats/web.php/portal/9A4DB624A7BB628B406914542ADFE606/jobs",
+      "scraper": "skip",
+      "detectedAts": null,
+      "totalJobsFound": 0,
+      "archJobsFound": 0,
+      "status": "skipped",
+      "error": "no url"
+    },
+    {
+      "firm": "Goody Clancy",
+      "url": "https://www.goodyclancy.com/careers/",
+      "scraper": "playwright",
+      "detectedAts": "custom",
+      "totalJobsFound": 16,
+      "archJobsFound": 0,
+      "status": "ok"
+    },
+    {
+      "firm": "LMN Architects",
+      "url": "https://lmnarchitects.com/careers",
+      "scraper": "playwright",
+      "detectedAts": "custom",
+      "totalJobsFound": 10,
+      "archJobsFound": 4,
+      "status": "ok"
+    },
+    {
+      "firm": "Studios Architecture",
+      "url": "https://studios.com/careers/",
+      "scraper": "playwright",
+      "detectedAts": "custom",
+      "totalJobsFound": 116,
+      "archJobsFound": 8,
+      "status": "ok"
+    },
+    {
+      "firm": "Thornton Tomasetti",
+      "url": "https://careers.thorntontomasetti.com/gb/en",
+      "scraper": "playwright",
+      "detectedAts": "custom",
+      "totalJobsFound": 13,
+      "archJobsFound": 0,
+      "status": "ok"
+    },
+    {
+      "firm": "Cannon Design",
+      "url": "https://www.cannondesign.com/careers",
+      "scraper": "playwright",
+      "detectedAts": "custom",
+      "totalJobsFound": 39,
+      "archJobsFound": 6,
+      "status": "ok"
+    },
+    {
+      "firm": "Array Architects",
+      "url": "https://www.array-architects.com/people#career",
+      "scraper": "playwright",
+      "detectedAts": "custom",
+      "totalJobsFound": 6,
+      "archJobsFound": 3,
+      "status": "ok"
+    },
+    {
+      "firm": "NBBJ",
+      "url": "https://jobs.jobvite.com/nbbj",
+      "scraper": "playwright",
+      "detectedAts": "jobvite",
+      "totalJobsFound": 55,
+      "archJobsFound": 18,
+      "status": "ok"
+    },
+    {
+      "firm": "SmithGroup",
+      "url": "https://career4.successfactors.com/career?company=smithgroupP",
+      "scraper": "skip",
+      "detectedAts": null,
+      "totalJobsFound": 0,
+      "archJobsFound": 0,
+      "status": "skipped",
+      "error": "no url"
+    },
+    {
+      "firm": "Zimmer Gunsul Frasca (ZGF)",
+      "url": "https://www.zgf.com/careers/",
+      "scraper": "playwright",
+      "detectedAts": "custom",
+      "totalJobsFound": 26,
+      "archJobsFound": 13,
+      "status": "ok"
+    },
+    {
+      "firm": "Skanska USA",
+      "url": "https://careers-skanska.icims.com/jobs/search?ss=1",
+      "scraper": "skip",
+      "detectedAts": null,
+      "totalJobsFound": 0,
+      "archJobsFound": 0,
+      "status": "skipped",
+      "error": "no url"
+    },
+    {
+      "firm": "WSP USA",
+      "url": "https://emit.fa.ca3.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_2001/requisitions",
+      "scraper": "oracle",
+      "detectedAts": "oracle-cloud",
+      "totalJobsFound": 3679,
+      "archJobsFound": 200,
+      "status": "ok"
+    },
+    {
+      "firm": "Arcadis North America",
+      "url": "https://jobs.arcadis.com/careers?domain=arcadis.com",
+      "scraper": "eightfold",
+      "detectedAts": "eightfold (pw-fallback)",
+      "totalJobsFound": 111,
+      "archJobsFound": 5,
+      "status": "ok"
+    },
+    {
+      "firm": "WATG",
+      "url": "https://recruiting2.ultipro.com/WAT1003WATG/JobBoard/40a8f4fc-f7d8-4099-97da-169f37ab8e95/?q=&o=postedDateDesc",
+      "scraper": "ultipro",
+      "detectedAts": "ultipro",
+      "totalJobsFound": 71,
+      "archJobsFound": 50,
+      "status": "ok"
+    },
+    {
+      "firm": "Elkus Manfredi",
+      "url": "https://www.elkus-manfredi.com/careers/",
+      "scraper": "playwright",
+      "detectedAts": "custom",
+      "totalJobsFound": 9,
+      "archJobsFound": 3,
+      "status": "ok"
+    },
+    {
+      "firm": "EwingCole",
+      "url": "https://recruiting.paylocity.com/recruiting/jobs/All/51ea68bb-1bab-467d-89a7-f55fce6e8647/EwingCole-Inc",
+      "scraper": "playwright",
+      "detectedAts": "paylocity",
+      "totalJobsFound": 27,
+      "archJobsFound": 9,
+      "status": "ok"
+    },
+    {
+      "firm": "BIG (Bjarke Ingels Group)",
+      "url": "https://big.dk/careers",
+      "scraper": "playwright",
+      "detectedAts": "custom",
+      "totalJobsFound": 37,
+      "archJobsFound": 13,
+      "status": "ok"
+    }
+  ]
+}
