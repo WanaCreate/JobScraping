@@ -1070,7 +1070,17 @@ async function main(): Promise<void> {
         // One retry with a 3 s back-off for transient network / timeout errors.
         for (let attempt = 1; attempt <= 2; attempt++) {
           try {
-            const result = await claudeEnrich(systemPrompt, userPrompt, options.model);
+            // Hard outer timeout: the SDK's query() generator does not always
+            // terminate when its AbortController fires (esp. when the proxy
+            // rotates mid-call), which would hang the worker forever and stop the
+            // circuit breaker from ever tripping. Promise.race guarantees each
+            // attempt settles within 75s so the worker always makes progress.
+            const result = await Promise.race([
+              claudeEnrich(systemPrompt, userPrompt, options.model),
+              new Promise<never>((_, rej) =>
+                setTimeout(() => rej(new Error("hard-timeout (75s)")), 75_000)
+              ),
+            ]);
             text = result.text;
             usage = result.usage;
             break;
