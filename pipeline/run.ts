@@ -50,6 +50,7 @@ function runStage(label: string, script: string, args: string[]): void {
 
 async function main(): Promise<void> {
   const startStage = Number(getArg("--stage") ?? "1");
+  const endStage = Number(getArg("--end-stage") ?? "4");
   const runDir = getArg("--run-dir");
   const concurrencyOverride = getArg("--concurrency");
 
@@ -68,7 +69,7 @@ async function main(): Promise<void> {
   console.log(`[RUN] Output dir:   ${outputDir}`);
   console.log(`[RUN] Start stage:  ${startStage}`);
 
-  if (startStage <= 1) {
+  if (startStage <= 1 && endStage >= 1) {
     const args = ["--output", scrapeOutput];
     if (concurrencyOverride) {
       process.env.SCRAPER_CONCURRENCY = concurrencyOverride;
@@ -76,7 +77,7 @@ async function main(): Promise<void> {
     runStage("STAGE 1: Scrape Career Pages", "pipeline/stage1_scrapeCareers.ts", args);
   }
 
-  if (startStage <= 2) {
+  if (startStage <= 2 && endStage >= 2) {
     const args = [
       "--input", scrapeOutput,
       "--csvOutput", jobsCsv,
@@ -87,7 +88,7 @@ async function main(): Promise<void> {
     runStage("STAGE 2: Collect Job Details", "pipeline/stage2_collectJobDetails.ts", args);
   }
 
-  if (startStage <= 3) {
+  if (startStage <= 3 && endStage >= 3) {
     const args = [
       "--input", jobsCsv,
       "--output", enrichedCsv,
@@ -96,7 +97,7 @@ async function main(): Promise<void> {
     runStage("STAGE 3: GPT Enrichment", "pipeline/stage3_enrichGpt.ts", args);
   }
 
-  if (startStage <= 4) {
+  if (startStage <= 4 && endStage >= 4) {
     const args = [
       "--input", enrichedCsv,
       "--output", enrichedCsv,
