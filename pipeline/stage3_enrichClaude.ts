@@ -39,7 +39,7 @@
  *   --model <name>         Claude model (default: claude-haiku-4-5)
  */
 
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { query } from "@anthropic-ai/claude-agent-sdk";
@@ -991,14 +991,57 @@ async function main(): Promise<void> {
   // The system prompt is static — build once, reuse for every SDK call.
   const systemPrompt = buildSystemPrompt();
 
+  // ── Checkpoint/resume (CLOUD survivability) ──
+  // Haiku enrichment is the expensive step; through a rotating proxy a multi-hour
+  // run would die and re-burn tokens from zero. Persist each finalised row
+  // (kept = enriched CsvJobRow, dropped = null) keyed by jobLink, flush every 200,
+  // and resume by skipping rows already in the cache.
+  const cachePath = `${outputPath}.cache.json`;
+  const keyOf = (r: CsvJobRow): string => (r.jobLink ?? "").trim().toLowerCase() || `${r.title}|${r.company}`.toLowerCase();
+  const cache = new Map<string, CsvJobRow | null>();
+  try {
+    const rawCache: unknown = JSON.parse(await readFile(cachePath, "utf8"));
+    if (Array.isArray(rawCache)) {
+      for (const e of rawCache) {
+        if (e && typeof e.key === "string") cache.set(e.key, (e.row as CsvJobRow) ?? null);
+      }
+    }
+  } catch { /* no cache yet */ }
+  if (cache.size > 0) {
+    for (const v of cache.values()) if (v) enrichedRows.push(v);
+    console.log(`[INFO] Stage 3 resuming from cache: ${cache.size} done (${enrichedRows.length} kept)`);
+  }
+
+  let sinceFlush = 0;
+  let flushing = false;
+  const flushCache = async (): Promise<void> => {
+    if (flushing) return;
+    flushing = true;
+    try {
+      await mkdir(path.dirname(cachePath), { recursive: true });
+      const arr = [...cache.entries()].map(([key, row]) => ({ key, row }));
+      const tmp = `${cachePath}.tmp`;
+      await writeFile(tmp, JSON.stringify(arr), "utf8");
+      await rename(tmp, cachePath);
+    } finally {
+      flushing = false;
+    }
+  };
+  const maybeFlush = async () => { if (++sinceFlush >= 200) { sinceFlush = 0; await flushCache(); } };
+  const keep = async (r: CsvJobRow) => { enrichedRows.push(r); cache.set(keyOf(r), r); await maybeFlush(); };
+  const drop = async (r: CsvJobRow) => { cache.set(keyOf(r), null); await maybeFlush(); };
+
+  const todo = rows.filter((r) => !cache.has(keyOf(r)));
+  console.log(`[INFO] Stage 3 enrichment plan: ${rows.length} total, ${rows.length - todo.length} cached, ${todo.length} to enrich`);
+
   {
-    await runConcurrent(rows, options.concurrency, async (row, index) => {
+    await runConcurrent(todo, options.concurrency, async (row, index) => {
       // Deterministic title cleanup before sending to the model
       row.title = cleanJobTitle(row.title);
 
       // Helper: apply deterministic normalisation when AI is unavailable.
       // Better than raw passthrough — at least the structured fields are clean.
-      const applyFallback = () => {
+      const applyFallback = async () => {
         row.jobType = normalizeJobType(row.jobType);
         row.workType = normalizeWorkType(row.workType);
         row.keywords = cleanKeywords(row.keywords);
@@ -1008,7 +1051,7 @@ async function main(): Promise<void> {
         if (!row.description || row.description.trim().length < 20) {
           row.description = "For more details, click apply";
         }
-        enrichedRows.push(row);
+        await keep(row);
       };
 
       try {
@@ -1038,7 +1081,7 @@ async function main(): Promise<void> {
         if (!aiResult) {
           console.log(`[WARN] Row ${index + 1} (${row.title.slice(0, 40)}): AI parse failed, applying deterministic fallback`);
           aiFailed++;
-          applyFallback();
+          await applyFallback();
           return;
         }
 
@@ -1048,6 +1091,7 @@ async function main(): Promise<void> {
             console.log(`[DROP gen-AI] Row ${index + 1}: "${row.title.slice(0, 50)}" | ${row.company}`);
             droppedRows.push({ title: row.title, company: row.company, jobLink: row.jobLink, reason: "GENAI_COMPANY (haiku)" });
             dropped++;
+            await drop(row);
             return;
           }
           // INVALID drops: safety net — keep if title or URL clearly looks real.
@@ -1066,12 +1110,13 @@ async function main(): Promise<void> {
             console.log(`[DROP invalid] Row ${index + 1}: "${row.title.slice(0, 50)}" | ${row.jobLink.slice(0, 60)}`);
             droppedRows.push({ title: row.title, company: row.company, jobLink: row.jobLink, reason: "INVALID" });
             dropped++;
+            await drop(row);
             return;
           }
         }
 
         const updated = applyEnrichment(row, aiResult);
-        enrichedRows.push(updated);
+        await keep(updated);
         aiFixed++;
 
         const processed = aiFixed + aiFailed;
@@ -1081,10 +1126,12 @@ async function main(): Promise<void> {
       } catch (err) {
         console.log(`[WARN] Row ${index + 1} (${row.title.slice(0, 40)}): Error after retry - ${err instanceof Error ? err.message : err}`);
         aiFailed++;
-        applyFallback();
+        await applyFallback();
       }
     });
   }
+
+  await flushCache(); // persist final state
 
   console.log(`\n[INFO] Enrichment complete:`);
   console.log(`  Enriched:     ${aiFixed}`);
