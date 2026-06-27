@@ -402,6 +402,8 @@ async function fetchBestJobPage(rawUrl: string): Promise<{ html: string; finalUr
   // hangs hard when the egress proxy rotates mid-fetch. STAGE2_NO_PLAYWRIGHT=1
   // skips it entirely — jobs that would need it fall back to Stage 1's description
   // in enrichJobFromUrl rather than being lost.
+  // NOTE: this flag is a CLOUD network-constraint workaround. Run LOCALLY without it
+  // to use the full browser fallback. See docs/JobsDrop2.1 "Cloud vs Local" section.
   if (process.env.STAGE2_NO_PLAYWRIGHT === "1") return null;
   const shouldUsePlaywright = candidates.some((candidate) => isKnownAtsHost(candidate));
   if (!shouldUsePlaywright) return null;

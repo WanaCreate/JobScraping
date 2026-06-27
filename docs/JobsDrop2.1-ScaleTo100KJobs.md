@@ -125,6 +125,27 @@ npm run promote-pending -- --input outputs/results_pending.json --apply
 npm run promote-pending -- --input outputs/results_recheck.json --apply
 ```
 
+#### ⚠️ Cloud vs Local — these are network-constraint workarounds, NOT permanent defaults
+
+The Claude Code **cloud** environment routes all egress through a proxy whose **port
+rotates ~every 15 minutes**, which kills any long-running process holding the old port,
+and the browser/network is flaky. To survive that we deliberately *throttled and
+hardened* the pipeline. **When running LOCALLY (stable network), revert these to full
+power** — they exist only to cope with the cloud, and they cost yield/quality:
+
+| Knob | Cloud (constrained) | Local (full power) | Why |
+|---|---|---|---|
+| **Playwright (Stage 2)** | OFF via `STAGE2_NO_PLAYWRIGHT=1` — falls back to Stage 1 description | **ON** (unset the env var) | Browser fallback recovers JS-rendered job pages + richer JSON-LD; hangs only because of proxy rotation |
+| **Stage 2 concurrency** | low (default) | raise `--concurrency` (e.g. 16–32) | Local network handles far more parallel fetches |
+| **Stage 3 concurrency** | 4 (lowered) | raise back to 8+ | Fewer proxy-pressure timeouts locally |
+| **Stage 1 checkpoint size** | 250 (`SCRAPER_CHECKPOINT_SIZE`) | 500–1000 | Smaller chunks = more frequent disk writes; only needed when restarts are frequent |
+| **Stage 1 circuit breaker** | trips on ≥90% empty chunk → exit | harmless locally (won't trip) | Detects dead-proxy; a no-op on a stable network |
+| **Checkpoint/resume (all stages)** | essential | keep — it's free insurance | Lets an interrupted run resume instead of restarting |
+| **Flaky board tail** | accepted Stage 1 at 94% (289 boards hung on browser fallback) | will complete with Playwright on | Those boards need a real browser |
+
+Net: the cloud run trades **completeness + description richness** for **survivability**.
+Locally, turn Playwright back on and crank concurrency to reclaim that quality and speed.
+
 #### Decision log
 
 - **Discovery depth:** pages-per-host cap removed (a no-op given 1–2 pages/host); volume comes from

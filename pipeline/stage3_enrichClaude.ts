@@ -119,6 +119,8 @@ function parseCliOptions(): CliOptions {
   return {
     input: getArg("--input") ?? "outputs/api-ready/latest/results_enriched_api.csv",
     output: getArg("--output") ?? "outputs/api-ready/latest/results_enriched_api_claude.csv",
+    // Default lowered 8→4 as a CLOUD proxy-pressure workaround; raise back to 8+
+    // when running LOCALLY. See docs/JobsDrop2.1 "Cloud vs Local" section.
     concurrency: Number(getArg("--concurrency") ?? "4"),
     maxJobs: getArg("--maxJobs") ? Number(getArg("--maxJobs")) : null,
     model: getArg("--model") ?? "claude-haiku-4-5",

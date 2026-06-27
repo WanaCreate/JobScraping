@@ -408,6 +408,8 @@ async function main(): Promise<void> {
 
   // Checkpointed scrape: write accumulated results every CHECKPOINT_SIZE boards
   // so a container reclaim only costs the in-flight chunk, not the whole run.
+  // 250 is a CLOUD default (frequent restarts → small chunks). Locally set
+  // SCRAPER_CHECKPOINT_SIZE=500-1000. See docs/JobsDrop2.1 "Cloud vs Local".
   const CHECKPOINT_SIZE = Number(process.env.SCRAPER_CHECKPOINT_SIZE ?? "250");
   const resolvedOutputPath = outputPath ? path.resolve(process.cwd(), outputPath) : null;
 
