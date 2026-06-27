@@ -1027,7 +1027,7 @@ async function main(): Promise<void> {
       flushing = false;
     }
   };
-  const maybeFlush = async () => { if (++sinceFlush >= 200) { sinceFlush = 0; await flushCache(); } };
+  const maybeFlush = async () => { if (++sinceFlush >= 25) { sinceFlush = 0; await flushCache(); } };
   const keep = async (r: CsvJobRow) => { enrichedRows.push(r); cache.set(keyOf(r), r); await maybeFlush(); };
   const drop = async (r: CsvJobRow) => { cache.set(keyOf(r), null); await maybeFlush(); };
 
