@@ -1,6 +1,11 @@
 /**
  * Unified pipeline runner.
  *
+ * ⛔️ READ AGENTS.md FIRST (repo root). Every program/agent in this repo must.
+ * 🔁 DEDUP GUARDRAIL: pipeline dedup is within-run only. Do NOT run Stage 3 (or
+ *    publish a drop) before deduping incoming jobs against the PRODUCTION DB.
+ *    See AGENTS.md "DEDUP GUARDRAIL".
+ *
  * Usage:
  *   npx tsx pipeline/run.ts                    # Run all 4 stages
  *   npx tsx pipeline/run.ts --stage 2          # Run stages 2-4 only

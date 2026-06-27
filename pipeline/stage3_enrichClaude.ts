@@ -1,6 +1,13 @@
 /**
  * Claude Haiku job enrichment pipeline (Stage 3).
  *
+ * ⛔️ READ AGENTS.md FIRST (repo root). Every program/agent in this repo must.
+ * 🔁 DEDUP GUARDRAIL: this stage's deduplicateRows() is WITHIN-RUN ONLY. Do NOT
+ *    run Stage 3 before the incoming jobs have been deduped against the jobs
+ *    already in the PRODUCTION DB — otherwise we re-enrich and re-publish jobs
+ *    users have already seen (and burn tokens doing it). See AGENTS.md
+ *    "DEDUP GUARDRAIL". (Cross-run dedup is NOT implemented here yet.)
+ *
  * Reads the Stage 2 CSV and sends each row through Claude Haiku 4.5 via the
  * Claude Agent SDK in-process (billed to the Max plan, NOT an API key) to validate/fix:
  *   a) title        – clean (req-IDs, bilingual dupes, suffixes, emojis) + fix generic titles

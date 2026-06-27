@@ -1,5 +1,10 @@
 # JobScraping Pipeline
 
+> ⛔️ **Before running or changing anything, read [`AGENTS.md`](AGENTS.md) first.**
+> It holds the required contracts and guardrails (output schema, the cross-run /
+> production-DB dedup rule before Stage 3, etc.) that every agent and program in
+> this repo must follow.
+
 **Agent guides (workflow order):**
 
 1. [Job scraper — find latest remote roles](docs/JOB-SCRAPER-AGENT-GUIDE.md)

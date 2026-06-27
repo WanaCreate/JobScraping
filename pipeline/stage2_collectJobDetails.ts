@@ -1,4 +1,16 @@
-﻿import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
+﻿/**
+ * Stage 2: collect job details / build the API-ready CSV.
+ *
+ * ⛔️ READ AGENTS.md FIRST (repo root). Every program/agent in this repo must.
+ * 🔁 DEDUP GUARDRAIL: dedupeJobs() / the API dedup here are WITHIN-RUN ONLY — they
+ *    drop duplicates inside the current batch and know nothing about jobs already
+ *    published. Before the downstream Stage 3 / weekly drop, the jobs MUST be
+ *    deduped against the PRODUCTION DB so we never re-post jobs users already saw.
+ *    That cross-run/DB dedup is NOT implemented in this pipeline yet — see
+ *    AGENTS.md "DEDUP GUARDRAIL".
+ */
+
+import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { load } from "cheerio";
