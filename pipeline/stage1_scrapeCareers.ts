@@ -408,7 +408,7 @@ async function main(): Promise<void> {
 
   // Checkpointed scrape: write accumulated results every CHECKPOINT_SIZE boards
   // so a container reclaim only costs the in-flight chunk, not the whole run.
-  const CHECKPOINT_SIZE = 500;
+  const CHECKPOINT_SIZE = Number(process.env.SCRAPER_CHECKPOINT_SIZE ?? "250");
   const resolvedOutputPath = outputPath ? path.resolve(process.cwd(), outputPath) : null;
 
   // Resume: skip boards already in the output file.
@@ -430,6 +430,22 @@ async function main(): Promise<void> {
   for (let i = 0; i < todo.length; i += CHECKPOINT_SIZE) {
     const chunk = todo.slice(i, i + CHECKPOINT_SIZE);
     const chunkResults = await runScraper(chunk, safeConcurrency);
+
+    // Circuit breaker: these are promoted boards that (almost) all have jobs, so
+    // a healthy chunk is ~99% non-empty. A chunk that comes back overwhelmingly
+    // empty means the egress proxy rotated its port and every fetch is failing.
+    // Exit WITHOUT checkpointing the garbage so the supervisor restarts us with a
+    // fresh proxy and we re-scrape this chunk cleanly (resume skips real done work).
+    const emptyFrac = chunkResults.filter((r) => (r.jobs_count ?? 0) === 0).length / Math.max(chunkResults.length, 1);
+    if (chunk.length >= 20 && emptyFrac >= 0.9) {
+      logError("Stage 1 circuit breaker tripped — proxy likely dead", {
+        chunkSize: chunk.length,
+        emptyFrac: Number(emptyFrac.toFixed(2)),
+        savedSoFar: accumulated.length,
+      });
+      process.exit(2); // non-zero → supervisor restarts from last good checkpoint
+    }
+
     accumulated.push(...chunkResults);
 
     if (resolvedOutputPath) {
