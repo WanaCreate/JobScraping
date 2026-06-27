@@ -1,0 +1,23 @@
+{
+  "startedAt": "2026-06-27T08:09:31.341Z",
+  "inputFile": "/home/user/JobScraping/outputs/history/2026-06-26_181006Z/results_scrape.json",
+  "discoveredJobs": 21233,
+  "prefilteredCreativeJobs": 18195,
+  "dedupedJobs": 13633,
+  "attemptedEnrichment": 13633,
+  "enrichedJobs": 5005,
+  "apiReadyJobs": 5004,
+  "finalDedupedJobs": 5004,
+  "missingFieldCounts": {
+    "location": 28,
+    "salary": 3664,
+    "company": 0,
+    "workType": 2014,
+    "deadline": 4992,
+    "skills": 47,
+    "keywords": 1,
+    "workEmail": 4156,
+    "jobLink": 0
+  },
+  "requiredFieldFailures": 0
+}

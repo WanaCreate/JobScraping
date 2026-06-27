@@ -1,0 +1,11 @@
+{
+  "runTag": "2026-06-27_080930Z",
+  "startedAt": "2026-06-27T08:18:20.935Z",
+  "outputDir": "/home/user/JobScraping/outputs/history/2026-06-26_181006Z",
+  "stages": {
+    "stage1": "skipped",
+    "stage2": "/home/user/JobScraping/outputs/history/2026-06-26_181006Z/results_jobs_api.csv",
+    "stage3": "/home/user/JobScraping/outputs/history/2026-06-26_181006Z/results_enriched_api_gpt.csv",
+    "stage4": "/home/user/JobScraping/outputs/history/2026-06-26_181006Z/results_enriched_api_gpt.csv"
+  }
+}
