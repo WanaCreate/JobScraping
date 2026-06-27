@@ -420,7 +420,7 @@ async function claudeEnrich(
   systemPrompt: string,
   userPrompt: string,
   model: string,
-  timeoutMs = 240_000,
+  timeoutMs = 60_000,
 ): Promise<{ text: string; usage: ClaudeUsage }> {
   const ac = new AbortController();
   const timer = setTimeout(() => ac.abort(), timeoutMs);
@@ -1034,6 +1034,14 @@ async function main(): Promise<void> {
   const todo = rows.filter((r) => !cache.has(keyOf(r)));
   console.log(`[INFO] Stage 3 enrichment plan: ${rows.length} total, ${rows.length - todo.length} cached, ${todo.length} to enrich`);
 
+  // Circuit breaker: when the egress proxy rotates, every SDK call fails. Count
+  // consecutive network failures; once too many, the proxy is dead — flush and
+  // exit(2) so the supervisor restarts with a fresh proxy. We do NOT cache these
+  // failed rows as fallback (that would poison the cache with uncleaned jobs);
+  // they stay in `todo` and get a real Haiku pass on the next run.
+  let consecutiveNetFails = 0;
+  const NET_FAIL_LIMIT = 12;
+
   {
     await runConcurrent(todo, options.concurrency, async (row, index) => {
       // Deterministic title cleanup before sending to the model
@@ -1074,6 +1082,7 @@ async function main(): Promise<void> {
           }
         }
 
+        consecutiveNetFails = 0; // a response came back — proxy is alive
         totalInputTokens += usage.inputTokens;
         totalOutputTokens += usage.outputTokens;
         const aiResult = text ? parseAiResponse(text) : null;
@@ -1124,9 +1133,15 @@ async function main(): Promise<void> {
           console.log(`[INFO] Progress: ${processed + dropped}/${rows.length} (${aiFixed} enriched, ${dropped} dropped, ${aiFailed} fallback)`);
         }
       } catch (err) {
-        console.log(`[WARN] Row ${index + 1} (${row.title.slice(0, 40)}): Error after retry - ${err instanceof Error ? err.message : err}`);
-        aiFailed++;
-        await applyFallback();
+        // Reached only when both attempts threw → treat as a network/proxy failure.
+        // Do NOT cache (no poisoning); leave the row in todo for the next run.
+        consecutiveNetFails++;
+        console.log(`[WARN] Row ${index + 1} (${row.title.slice(0, 40)}): network error (${consecutiveNetFails}/${NET_FAIL_LIMIT}) - ${err instanceof Error ? err.message.slice(0, 60) : err}`);
+        if (consecutiveNetFails >= NET_FAIL_LIMIT) {
+          console.error(`[FATAL] ${NET_FAIL_LIMIT} consecutive network failures — proxy likely rotated. Flushing and exiting for supervisor restart.`);
+          await flushCache();
+          process.exit(2);
+        }
       }
     });
   }
