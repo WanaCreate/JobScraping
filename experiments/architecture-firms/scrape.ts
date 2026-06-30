@@ -14,7 +14,7 @@
  *   --all-jobs         also write every job (pre arch-filter) for inspection
  */
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
-import { join, dirname } from "node:path";
+import { join, dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import type { RawJob } from "../../types.js";
@@ -30,7 +30,7 @@ import { classifyArchTitle } from "./archFilter.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-interface Firm {
+export interface Firm {
   name: string;
   url: string | null;
   scraper: "workday" | "icims" | "ultipro" | "bamboohr" | "jobsyn" | "oracle" | "eightfold" | "smartrecruiters" | "playwright" | "skip";
@@ -38,7 +38,7 @@ interface Firm {
   note?: string;
 }
 
-interface FirmResult {
+export interface FirmResult {
   firm: string;
   url: string | null;
   scraper: string;
@@ -49,12 +49,13 @@ interface FirmResult {
   error?: string;
 }
 
-interface ArchJobRow {
+export interface ArchJobRow {
   firm: string;
   title: string;
   location: string;
   url: string;
   ats: string;
+  datePosted: string;
   sourceUrl: string;
   scrapedAt: string;
 }
@@ -131,7 +132,7 @@ async function scrapeFirmWithFallback(firm: Firm): Promise<{ jobs: RawJob[]; det
   return { jobs, detectedAts: `${firm.ats ?? "generic"} (pw-fallback)` };
 }
 
-async function processFirm(firm: Firm, scrapedAt: string): Promise<{
+export async function processFirm(firm: Firm, scrapedAt: string): Promise<{
   result: FirmResult;
   archRows: ArchJobRow[];
   allJobs: RawJob[];
@@ -157,6 +158,7 @@ async function processFirm(firm: Firm, scrapedAt: string): Promise<{
         location: (j.location ?? "").trim(),
         url: (j.url ?? "").trim(),
         ats: detectedAts ?? j.ats ?? "",
+        datePosted: (j.datePosted ?? "").trim(),
         sourceUrl: firm.url,
         scrapedAt,
       });
@@ -189,16 +191,16 @@ function csvEscape(v: string): string {
   return v;
 }
 
-function toCsv(rows: ArchJobRow[]): string {
-  const header = ["firm", "title", "location", "url", "ats", "sourceUrl", "scrapedAt"];
+export function toCsv(rows: ArchJobRow[]): string {
+  const header = ["firm", "title", "location", "url", "ats", "datePosted", "sourceUrl", "scrapedAt"];
   const lines = [header.join(",")];
   for (const r of rows) {
-    lines.push([r.firm, r.title, r.location, r.url, r.ats, r.sourceUrl, r.scrapedAt].map(csvEscape).join(","));
+    lines.push([r.firm, r.title, r.location, r.url, r.ats, r.datePosted, r.sourceUrl, r.scrapedAt].map(csvEscape).join(","));
   }
   return lines.join("\n");
 }
 
-async function pool<T, R>(items: T[], size: number, fn: (item: T, idx: number) => Promise<R>): Promise<R[]> {
+export async function pool<T, R>(items: T[], size: number, fn: (item: T, idx: number) => Promise<R>): Promise<R[]> {
   const results: R[] = new Array(items.length);
   let cursor = 0;
   async function worker() {
@@ -266,7 +268,13 @@ async function main() {
   console.log(`  ${csvPath}`);
 }
 
-main().catch((e) => {
-  console.error(e);
-  process.exit(1);
-});
+// Only auto-run the full Phase-1 extraction when this file is executed directly
+// (e.g. `tsx scrape.ts`). When track.ts imports processFirm/pool from here, the
+// guard prevents main() from firing as a side effect of the import.
+const invokedDirectly = process.argv[1] && fileURLToPath(import.meta.url) === resolve(process.argv[1]);
+if (invokedDirectly) {
+  main().catch((e) => {
+    console.error(e);
+    process.exit(1);
+  });
+}

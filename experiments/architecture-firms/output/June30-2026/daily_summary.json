@@ -1,0 +1,329 @@
+{
+  "runDate": "2026-06-30",
+  "scrapedAt": "2026-06-30T12:41:46.491Z",
+  "baselineRun": true,
+  "dryRun": false,
+  "firmsScraped": 35,
+  "totalArchOpen": 1281,
+  "newToday": 0,
+  "closedToday": 0,
+  "perFirm": [
+    {
+      "firm": "Gensler",
+      "ats": "workday",
+      "status": "ok",
+      "totalJobsFound": 430,
+      "archJobsFound": 255,
+      "newToday": 0,
+      "closedToday": 0
+    },
+    {
+      "firm": "Perkins & Will",
+      "ats": "ultipro",
+      "status": "ok",
+      "totalJobsFound": 148,
+      "archJobsFound": 76,
+      "newToday": 0,
+      "closedToday": 0
+    },
+    {
+      "firm": "HKS Architects",
+      "ats": "workday",
+      "status": "ok",
+      "totalJobsFound": 61,
+      "archJobsFound": 30,
+      "newToday": 0,
+      "closedToday": 0
+    },
+    {
+      "firm": "HOK",
+      "ats": "dayforce",
+      "status": "ok",
+      "totalJobsFound": 65,
+      "archJobsFound": 9,
+      "newToday": 0,
+      "closedToday": 0
+    },
+    {
+      "firm": "Stantec",
+      "ats": "oracle-cloud",
+      "status": "ok",
+      "totalJobsFound": 1417,
+      "archJobsFound": 106,
+      "newToday": 0,
+      "closedToday": 0
+    },
+    {
+      "firm": "AECOM",
+      "ats": "smartrecruiters",
+      "status": "ok",
+      "totalJobsFound": 4800,
+      "archJobsFound": 377,
+      "newToday": 0,
+      "closedToday": 0
+    },
+    {
+      "firm": "SOM (Skidmore, Owings & Merrill)",
+      "ats": "custom",
+      "status": "ok",
+      "totalJobsFound": 20,
+      "archJobsFound": 0,
+      "newToday": 0,
+      "closedToday": 0
+    },
+    {
+      "firm": "Populous",
+      "ats": "custom",
+      "status": "ok",
+      "totalJobsFound": 4,
+      "archJobsFound": 1,
+      "newToday": 0,
+      "closedToday": 0
+    },
+    {
+      "firm": "Perkins Eastman",
+      "ats": "hrmdirect",
+      "status": "ok",
+      "totalJobsFound": 53,
+      "archJobsFound": 22,
+      "newToday": 0,
+      "closedToday": 0
+    },
+    {
+      "firm": "DLR Group",
+      "ats": "custom",
+      "status": "ok",
+      "totalJobsFound": 20,
+      "archJobsFound": 0,
+      "newToday": 0,
+      "closedToday": 0
+    },
+    {
+      "firm": "Leo A Daly",
+      "ats": "custom",
+      "status": "ok",
+      "totalJobsFound": 7,
+      "archJobsFound": 1,
+      "newToday": 0,
+      "closedToday": 0
+    },
+    {
+      "firm": "HNTB",
+      "ats": "workday",
+      "status": "ok",
+      "totalJobsFound": 384,
+      "archJobsFound": 12,
+      "newToday": 0,
+      "closedToday": 0
+    },
+    {
+      "firm": "Payette Associates",
+      "ats": "custom",
+      "status": "ok",
+      "totalJobsFound": 6,
+      "archJobsFound": 0,
+      "newToday": 0,
+      "closedToday": 0
+    },
+    {
+      "firm": "Robert A.M.Stern Architects",
+      "ats": "custom",
+      "status": "ok",
+      "totalJobsFound": 2,
+      "archJobsFound": 0,
+      "newToday": 0,
+      "closedToday": 0
+    },
+    {
+      "firm": "Grimshaw",
+      "ats": "jobscore",
+      "status": "ok",
+      "totalJobsFound": 22,
+      "archJobsFound": 9,
+      "newToday": 0,
+      "closedToday": 0
+    },
+    {
+      "firm": "Treanor Architects",
+      "ats": "custom",
+      "status": "ok",
+      "totalJobsFound": 18,
+      "archJobsFound": 5,
+      "newToday": 0,
+      "closedToday": 0
+    },
+    {
+      "firm": "Handel Architects",
+      "ats": "custom",
+      "status": "ok",
+      "totalJobsFound": 5,
+      "archJobsFound": 4,
+      "newToday": 0,
+      "closedToday": 0
+    },
+    {
+      "firm": "CetraRuddy Architecture",
+      "ats": "bamboohr",
+      "status": "ok",
+      "totalJobsFound": 6,
+      "archJobsFound": 5,
+      "newToday": 0,
+      "closedToday": 0
+    },
+    {
+      "firm": "STV Group",
+      "ats": "workday",
+      "status": "ok",
+      "totalJobsFound": 383,
+      "archJobsFound": 25,
+      "newToday": 0,
+      "closedToday": 0
+    },
+    {
+      "firm": "WRNS Studio",
+      "ats": "custom",
+      "status": "ok",
+      "totalJobsFound": 11,
+      "archJobsFound": 0,
+      "newToday": 0,
+      "closedToday": 0
+    },
+    {
+      "firm": "KPF (Kohn Pedersen Fox)",
+      "ats": "workday",
+      "status": "ok",
+      "totalJobsFound": 21,
+      "archJobsFound": 13,
+      "newToday": 0,
+      "closedToday": 0
+    },
+    {
+      "firm": "Goody Clancy",
+      "ats": "custom",
+      "status": "ok",
+      "totalJobsFound": 22,
+      "archJobsFound": 1,
+      "newToday": 0,
+      "closedToday": 0
+    },
+    {
+      "firm": "LMN Architects",
+      "ats": "custom",
+      "status": "ok",
+      "totalJobsFound": 10,
+      "archJobsFound": 4,
+      "newToday": 0,
+      "closedToday": 0
+    },
+    {
+      "firm": "Studios Architecture",
+      "ats": "custom",
+      "status": "ok",
+      "totalJobsFound": 116,
+      "archJobsFound": 8,
+      "newToday": 0,
+      "closedToday": 0
+    },
+    {
+      "firm": "Thornton Tomasetti",
+      "ats": "custom",
+      "status": "ok",
+      "totalJobsFound": 18,
+      "archJobsFound": 0,
+      "newToday": 0,
+      "closedToday": 0
+    },
+    {
+      "firm": "Cannon Design",
+      "ats": "custom",
+      "status": "ok",
+      "totalJobsFound": 39,
+      "archJobsFound": 6,
+      "newToday": 0,
+      "closedToday": 0
+    },
+    {
+      "firm": "Array Architects",
+      "ats": "custom",
+      "status": "ok",
+      "totalJobsFound": 6,
+      "archJobsFound": 3,
+      "newToday": 0,
+      "closedToday": 0
+    },
+    {
+      "firm": "NBBJ",
+      "ats": "jobvite",
+      "status": "ok",
+      "totalJobsFound": 55,
+      "archJobsFound": 18,
+      "newToday": 0,
+      "closedToday": 0
+    },
+    {
+      "firm": "Zimmer Gunsul Frasca (ZGF)",
+      "ats": "custom",
+      "status": "ok",
+      "totalJobsFound": 26,
+      "archJobsFound": 13,
+      "newToday": 0,
+      "closedToday": 0
+    },
+    {
+      "firm": "WSP USA",
+      "ats": "oracle-cloud",
+      "status": "ok",
+      "totalJobsFound": 3655,
+      "archJobsFound": 201,
+      "newToday": 0,
+      "closedToday": 0
+    },
+    {
+      "firm": "Arcadis North America",
+      "ats": "eightfold (pw-fallback)",
+      "status": "ok",
+      "totalJobsFound": 109,
+      "archJobsFound": 2,
+      "newToday": 0,
+      "closedToday": 0
+    },
+    {
+      "firm": "WATG",
+      "ats": "ultipro",
+      "status": "ok",
+      "totalJobsFound": 71,
+      "archJobsFound": 50,
+      "newToday": 0,
+      "closedToday": 0
+    },
+    {
+      "firm": "Elkus Manfredi",
+      "ats": "custom",
+      "status": "ok",
+      "totalJobsFound": 9,
+      "archJobsFound": 3,
+      "newToday": 0,
+      "closedToday": 0
+    },
+    {
+      "firm": "EwingCole",
+      "ats": "paylocity",
+      "status": "ok",
+      "totalJobsFound": 27,
+      "archJobsFound": 9,
+      "newToday": 0,
+      "closedToday": 0
+    },
+    {
+      "firm": "BIG (Bjarke Ingels Group)",
+      "ats": "custom",
+      "status": "ok",
+      "totalJobsFound": 37,
+      "archJobsFound": 13,
+      "newToday": 0,
+      "closedToday": 0
+    }
+  ],
+  "newJobs": [],
+  "closedJobs": []
+}

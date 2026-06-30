@@ -5,6 +5,8 @@ interface WorkdayPosting {
   title?: string;
   externalPath?: string;
   locationsText?: string;
+  postedOn?: string;
+  startDate?: string;
   bulletFields?: string[];
 }
 
@@ -78,7 +80,10 @@ async function scrapeEndpoint(endpoint: string): Promise<RawJob[]> {
         title: posting.title ?? null,
         url: buildPostingUrl(endpoint, posting),
         location: posting.locationsText ?? posting.bulletFields?.[0] ?? null,
-        ats: "workday"
+        ats: "workday",
+        // Workday's list endpoint only exposes a relative string ("Posted 12 Days
+        // Ago" / "Posted Today"); the daily tracker normalizes it to a date.
+        datePosted: posting.startDate?.trim() || posting.postedOn?.trim() || null
       });
     }
 

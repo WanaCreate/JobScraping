@@ -30,6 +30,23 @@ const URL_KEYS = [
 
 const LOCATION_KEYS = ["location", "locationsText", "city", "state", "country", "workplaceType"];
 
+const DATE_KEYS = [
+  "datePosted",
+  "date_posted",
+  "datePublished",
+  "publishedAt",
+  "published_at",
+  "published_on",
+  "publishedDate",
+  "postedDate",
+  "postedOn",
+  "posted_at",
+  "createdAt",
+  "created_at",
+  "first_published",
+  "releasedDate"
+];
+
 const URL_HINT = /(job|jobs|career|careers|position|positions|opening|openings|requisition|vacanc|opportunit)/i;
 const TITLE_HINT =
   /\b(designer|design|artist|writer|producer|engineer|developer|manager|director|specialist|analyst|research|intern|architect|lead)\b/i;
@@ -73,7 +90,8 @@ function toRawJob(record: Record<string, unknown>, baseUrl: string): RawJob | nu
     title,
     url,
     location: formatLocation(record),
-    ats: "generic"
+    ats: "generic",
+    datePosted: pickStringValue(record, DATE_KEYS)
   };
 }
 
@@ -107,7 +125,8 @@ function extractFromJsonLdJobPosting(data: unknown, baseUrl: string, jobs: RawJo
         title,
         url,
         location,
-        ats: "generic"
+        ats: "generic",
+        datePosted: typeof record.datePosted === "string" ? record.datePosted.trim() : null
       });
     }
   }

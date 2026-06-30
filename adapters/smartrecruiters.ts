@@ -4,6 +4,7 @@ import { http } from "../utils/http.js";
 interface SmartRecruitersPosting {
   name?: string;
   ref?: string;
+  releasedDate?: string;
   location?: {
     city?: string;
     region?: string;
@@ -49,7 +50,8 @@ export async function scrapeSmartRecruiters(tenant: string): Promise<RawJob[]> {
           ? `https://jobs.smartrecruiters.com/${encodeURIComponent(tenant)}/${posting.ref}`
           : null,
         location: formatLocation(posting.location),
-        ats: "smartrecruiters"
+        ats: "smartrecruiters",
+        datePosted: posting.releasedDate?.trim() || null
       });
     }
 

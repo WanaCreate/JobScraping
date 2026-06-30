@@ -48,6 +48,7 @@ export async function scrapeEightfold(url: string): Promise<RawJob[]> {
         url: p.canonicalPositionUrl ?? `https://${host}/careers?pid=${p.id}&domain=${domain}`,
         location: p.location ?? null,
         ats: "generic",
+        datePosted: p.t_create ? new Date(p.t_create).toISOString() : null,
       });
     }
 
@@ -236,6 +237,7 @@ interface UltiProOpportunity {
   Id?: number | string;
   Title?: string;
   RequisitionNumber?: string;
+  PostedDate?: string;
   Locations?: Array<{
     LocalizedDescription?: string;
     Address?: { City?: string; State?: { Name?: string }; Country?: { Name?: string } };
@@ -309,6 +311,7 @@ export async function scrapeUltiPro(url: string): Promise<RawJob[]> {
           : url,
         location: ultiProLocation(o),
         ats: "generic",
+        datePosted: o.PostedDate ?? null,
       });
     }
 
