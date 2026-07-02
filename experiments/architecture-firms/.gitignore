@@ -1,0 +1,3 @@
+# Bulky / regenerable run artifacts — keep the deliverable CSV + summaries, drop the rest
+output/**/all_jobs_prefilter.json
+output/last_run_log.txt

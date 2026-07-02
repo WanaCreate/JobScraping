@@ -59,6 +59,122 @@ All sources emit the same `RawJob[]`, then converge on one shared path:
   gets to 100K and whether/where paid fill is even needed.
 - **Creative-coverage risk: none.** Same adapters + same filter, more companies.
 
+#### What's different from JobsDrop 2.0 (last week)
+
+2.0 ran the discover → scrape → promote loop over **one** CommonCrawl snapshot and promoted at
+score 6. We probed the live index (June 2026) to find where the real ceiling is — the findings
+below **corrected our first guess** (that "more CDX pages = more boards"):
+
+- ❌ **Pages-per-host is NOT the lever.** Each ATS host exposes only **1–2 CDX pages** per crawl.
+  2.0's 30-page cap already swept the whole latest-crawl index (~8,714 boards across 5 hosts).
+  Raising the cap to 300 captures the *same* boards — it does nothing. (We reverted the bump.)
+- ✅ **Crawl *snapshots* are the lever.** CommonCrawl lists **125 monthly crawls**; 2.0 used only
+  the newest. Unioning slugs across the last ~12 captures companies that dropped out of the latest
+  crawl. Measured: `boards.greenhouse.io` = **1,723 slugs (1 crawl) → 4,161 (6 crawls)**, ≈2.4×.
+- ⚠️ **Lever is uncrawlable.** `jobs.lever.co/robots.txt` sets `CCBot: Disallow /`, so CommonCrawl
+  has **0** usable Lever slugs (only `robots.txt`). 2.0 had no Lever discovery at all. Lever is a
+  large ATS, so this is a real gap — addressed via non-crawl sources (see Discovery sources).
+
+Phase 1 changes, by volume lever:
+
+| Lever | Change | Verified effect |
+|---|---|---|
+| **Multi-crawl union** (the big one) | query last ~12 CommonCrawl snapshots, not just newest | ≈2–4× boards per host |
+| **Lever recovery** | discover Lever slugs from **HN Algolia** (+ YC) since CC blocks Lever | 0 → hundreds of Lever boards |
+| **New ATS source** | added **SmartRecruiters** to discovery hosts | 0 → ~671 boards (latest crawl) |
+| **Promotion floor** | `promote-pending` default min-score **6 → 4** | ~2× promotion yield, same scrape |
+| **Recheck recovery** | re-scrape 2.0's 9,394 rejects, promote at score 4 | recovers score 4–5 boards |
+| **Instrumentation** | new `measure-discovery` script | tells us the free-path ceiling |
+
+#### Discovery sources (verified reachability, June 2026 — from this environment)
+
+| Source | Reachable? | Use | Notes |
+|---|---|---|---|
+| **CommonCrawl CDX** (multi-crawl) | ✅ 200, fast | GH / GH-job-boards / Ashby / Workable / SmartRecruiters slugs | 1–2 pages/host/crawl; union ~12 crawls |
+| **HN Algolia API** (`hn.algolia.com`) | ✅ 200 | **Lever** slugs (also GH/Ashby) | 42 Lever slugs from 3 pages of one query; no key |
+| **Lever postings API** (`api.lever.co`) | ✅ 200, JSON | scrape discovered Lever boards | different host than crawl-blocked `jobs.lever.co` |
+| **YC company directory** | ⚠️ page 200 | secondary Lever/GH source | JS-rendered; needs YC's frontend Algolia key or Playwright. Optional. |
+| **Getro** (VC aggregator) | ❌ 403 | — | blocked from this env; dropped |
+| **Wayback Machine CDX** | ❌ 403 | — | blocked by egress policy; dropped |
+| **Google / Bing search API** | n/a | optional daily trickle | free tiers ~1K/day (Google), needs `GOOGLE_API_KEY`+CSE id; gated, non-blocking |
+| **Firecrawl** | n/a | — | doesn't enumerate isolated tenant boards; its only real use (JS rendering) is already covered by our Playwright dep. Skipped. |
+
+#### Honest ceiling (measure, don't assume)
+
+Volume ≈ **boards × creative-jobs/board**. Current: 1,686 boards → ~1K/week (≈0.6 creative/board/wk).
+Extrapolating: full multi-crawl + Lever recovery (~25–40K boards) → **~15–24K creative jobs/week** —
+real progress, but **Phase 1 alone will not hit 100K**. That gap is exactly what Phase 2 (free
+aggregators) and Phase 4 (paid fill) are for. Phase 1's job: max the free ATS path and *measure*.
+
+#### Phase 1 runbook
+
+```bash
+# 1. Discover boards across all sources (multi-crawl CC + HN Lever recovery)
+npm run discover-slugs                       # → pipeline/pending_review.json
+
+# 2a. Scrape the newly discovered boards
+npm run scrape-pending                        # → outputs/results_pending.json
+# 2b. Re-scrape last week's rejects (recover score 4–5 boards at the new floor)
+npm run scrape-recheck                        # → outputs/results_recheck.json
+
+# 3. Measure (per-ATS yield, scale factor, distance to 100K)
+npm run measure-discovery                     # reads results_pending.json by default
+
+# 4. Promote qualifying boards (score ≥ 4) into the live list
+npm run promote-pending -- --input outputs/results_pending.json --apply
+npm run promote-pending -- --input outputs/results_recheck.json --apply
+```
+
+#### ⚠️ Cloud vs Local — these are network-constraint workarounds, NOT permanent defaults
+
+The Claude Code **cloud** environment routes all egress through a proxy whose **port
+rotates ~every 15 minutes**, which kills any long-running process holding the old port,
+and the browser/network is flaky. To survive that we deliberately *throttled and
+hardened* the pipeline. **When running LOCALLY (stable network), revert these to full
+power** — they exist only to cope with the cloud, and they cost yield/quality:
+
+| Knob | Cloud (constrained) | Local (full power) | Why |
+|---|---|---|---|
+| **Playwright (Stage 2)** | OFF via `STAGE2_NO_PLAYWRIGHT=1` — falls back to Stage 1 description | **ON** (unset the env var) | Browser fallback recovers JS-rendered job pages + richer JSON-LD; hangs only because of proxy rotation |
+| **Stage 2 concurrency** | low (default) | raise `--concurrency` (e.g. 16–32) | Local network handles far more parallel fetches |
+| **Stage 3 concurrency** | 4 (lowered) | raise back to 8+ | Fewer proxy-pressure timeouts locally |
+| **Stage 1 checkpoint size** | 250 (`SCRAPER_CHECKPOINT_SIZE`) | 500–1000 | Smaller chunks = more frequent disk writes; only needed when restarts are frequent |
+| **Stage 1 circuit breaker** | trips on ≥90% empty chunk → exit | harmless locally (won't trip) | Detects dead-proxy; a no-op on a stable network |
+| **Checkpoint/resume (all stages)** | essential | keep — it's free insurance | Lets an interrupted run resume instead of restarting |
+| **Flaky board tail** | accepted Stage 1 at 94% (289 boards hung on browser fallback) | will complete with Playwright on | Those boards need a real browser |
+
+Net: the cloud run trades **completeness + description richness** for **survivability**.
+Locally, turn Playwright back on and crank concurrency to reclaim that quality and speed.
+
+#### Decision log
+
+- **Discovery depth:** pages-per-host cap removed (a no-op given 1–2 pages/host); volume comes from
+  multi-crawl union instead. Start with last **12** crawls; raise based on measured yield/runtime.
+- **Lever:** recover via HN Algolia (no key) as primary; YC as optional secondary. Getro/Wayback
+  blocked from this env. Firecrawl unnecessary.
+- **Recheck:** 2.0's scrape JSON wasn't persisted → re-scrape the 9,394 rejects, then promote at 4.
+- **Google daily:** build but gate behind `GOOGLE_API_KEY`; do not block Phase 1 on it.
+- **Task 4 (self-expanding loop):** wired into Stage 2 (was dormant — only fired on Stage 1's
+  HTML-fallback path, which clean-API ATS boards skip, so it never ran). It reads
+  `hiringOrganization.sameAs` from each job's JobPosting JSON-LD and writes unknown company
+  domains to `new_companies_discovered.json` (manual review). **Limitation:** for single-company
+  boards (our entire current pile — Greenhouse/Lever/Ashby slugs) `sameAs` points back to the
+  *same* company we're already scraping, so it discovers ~nothing. It only finds new companies on
+  **multi-company / aggregator pages** (VC portfolio job boards, "hiring across our brands" pages,
+  job aggregators) where each posting names a different employer. Treat it as a free, harmless
+  safety net — **not** a volume lever until multi-company sources are added.
+
+#### Weekly implementation log
+
+> Append a dated entry each week as this runs, so future weeks see what was actually done + yields.
+
+- **2026-06-26 (build):** Corrected the page-bump misread; implemented multi-crawl union + HN Lever
+  recovery + SmartRecruiters host + min-score 4 + `measure-discovery`/`scrape-recheck`. Smoke-tested
+  source reachability (table above). Also wired Task 4 self-expanding loop into Stage 2 (see
+  Decision log) and added a checkpointing chunked scraper so a multi-hour run survives container
+  reclaim. Discovery run: **28,539 candidate boards** found (greenhouse 13,097 · workable 6,973 ·
+  lever 3,664 via HN · ashby 3,347 · smartrecruiters 1,458). Scrape + measured numbers: _in progress_.
+
 ### Phase 2.1 — (deferred, "as jobs drop") plan refinements
 Park forward-looking refinements here; flesh out when Phase 1 volume is measured.
 

@@ -13,6 +13,7 @@ import type {
   WorkTypeValue
 } from "../types.js";
 import { isCreativeTitleStrict, passesCreativeGate, scoreCreativeText } from "./creativeClassifier.js";
+import { extractDiscoveredDomains, recordDiscoveredDomains } from "./discoverCompanies.js";
 import { fetchPageWithRetry } from "./http.js";
 
 const DESCRIPTION_SELECTORS = [
@@ -397,6 +398,13 @@ async function fetchBestJobPage(rawUrl: string): Promise<{ html: string; finalUr
     }
   }
 
+  // Playwright launches a fresh headless browser per fetch (90s timeout each) and
+  // hangs hard when the egress proxy rotates mid-fetch. STAGE2_NO_PLAYWRIGHT=1
+  // skips it entirely — jobs that would need it fall back to Stage 1's description
+  // in enrichJobFromUrl rather than being lost.
+  // NOTE: this flag is a CLOUD network-constraint workaround. Run LOCALLY without it
+  // to use the full browser fallback. See docs/JobsDrop2.1 "Cloud vs Local" section.
+  if (process.env.STAGE2_NO_PLAYWRIGHT === "1") return null;
   const shouldUsePlaywright = candidates.some((candidate) => isKnownAtsHost(candidate));
   if (!shouldUsePlaywright) return null;
 
@@ -1195,14 +1203,34 @@ export async function enrichJobFromUrl(params: {
 }): Promise<EnrichedJobRecord | null> {
   const { seed, hiringTeamUid, minCreativeScore = 2 } = params;
   const fetched = await fetchBestJobPage(seed.url);
-  if (!fetched) {
-    return null;
+
+  let fetchedHtml: string;
+  let finalUrl: string;
+  if (fetched) {
+    fetchedHtml = fetched.html;
+    finalUrl = fetched.finalUrl;
+  } else {
+    // HTTP fetch failed (and Playwright is disabled/skipped). Don't drop the job
+    // if Stage 1 already captured a usable description — synthesize from seed
+    // data. ~88% of ATS jobs carry a full description from the Stage 1 API.
+    const seedDesc = seed.description?.trim() || "";
+    if (seedDesc.length < 120) return null;
+    fetchedHtml = "";
+    finalUrl = seed.url;
   }
 
-  const fetchedHtml = fetched.html;
-  const finalUrl = fetched.finalUrl;
-
   const jsonLdJob = extractJsonLdJobPosting(fetchedHtml);
+
+  // Self-expanding loop (JobsDrop Task 4): each job-detail page is the richest
+  // source of hiringOrganization.sameAs JSON-LD. Harvest any company domains we
+  // don't already track into new_companies_discovered.json (flushed once in
+  // Stage 2 main). Never break enrichment if extraction throws.
+  try {
+    recordDiscoveredDomains(extractDiscoveredDomains(fetchedHtml));
+  } catch {
+    // discovery is best-effort; enrichment must never depend on it
+  }
+
   let title = extractTitle(fetchedHtml, seed.title, jsonLdJob);
   let fetchedDescription = extractDescription(fetchedHtml, jsonLdJob);
   fetchedDescription = cleanDescriptionWithTitle(fetchedDescription, title);

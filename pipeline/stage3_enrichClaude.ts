@@ -1,6 +1,13 @@
 /**
  * Claude Haiku job enrichment pipeline (Stage 3).
  *
+ * ⛔️ READ AGENTS.md FIRST (repo root). Every program/agent in this repo must.
+ * 🔁 DEDUP GUARDRAIL: this stage's deduplicateRows() is WITHIN-RUN ONLY. Do NOT
+ *    run Stage 3 before the incoming jobs have been deduped against the jobs
+ *    already in the PRODUCTION DB — otherwise we re-enrich and re-publish jobs
+ *    users have already seen (and burn tokens doing it). See AGENTS.md
+ *    "DEDUP GUARDRAIL". (Cross-run dedup is NOT implemented here yet.)
+ *
  * Reads the Stage 2 CSV and sends each row through Claude Haiku 4.5 via the
  * Claude Agent SDK in-process (billed to the Max plan, NOT an API key) to validate/fix:
  *   a) title        – clean (req-IDs, bilingual dupes, suffixes, emojis) + fix generic titles
@@ -39,7 +46,7 @@
  *   --model <name>         Claude model (default: claude-haiku-4-5)
  */
 
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { query } from "@anthropic-ai/claude-agent-sdk";
@@ -119,7 +126,9 @@ function parseCliOptions(): CliOptions {
   return {
     input: getArg("--input") ?? "outputs/api-ready/latest/results_enriched_api.csv",
     output: getArg("--output") ?? "outputs/api-ready/latest/results_enriched_api_claude.csv",
-    concurrency: Number(getArg("--concurrency") ?? "8"),
+    // Default lowered 8→4 as a CLOUD proxy-pressure workaround; raise back to 8+
+    // when running LOCALLY. See docs/JobsDrop2.1 "Cloud vs Local" section.
+    concurrency: Number(getArg("--concurrency") ?? "4"),
     maxJobs: getArg("--maxJobs") ? Number(getArg("--maxJobs")) : null,
     model: getArg("--model") ?? "claude-haiku-4-5",
   };
@@ -418,7 +427,7 @@ async function claudeEnrich(
   systemPrompt: string,
   userPrompt: string,
   model: string,
-  timeoutMs = 240_000,
+  timeoutMs = 60_000,
 ): Promise<{ text: string; usage: ClaudeUsage }> {
   const ac = new AbortController();
   const timer = setTimeout(() => ac.abort(), timeoutMs);
@@ -989,27 +998,116 @@ async function main(): Promise<void> {
   // The system prompt is static — build once, reuse for every SDK call.
   const systemPrompt = buildSystemPrompt();
 
+  // ── Checkpoint/resume (CLOUD survivability) ──
+  // Haiku enrichment is the expensive step; through a rotating proxy a multi-hour
+  // run would die and re-burn tokens from zero. Persist each finalised row
+  // (kept = enriched CsvJobRow, dropped = null) keyed by jobLink, flush every 200,
+  // and resume by skipping rows already in the cache.
+  const cachePath = `${outputPath}.cache.json`;
+  const keyOf = (r: CsvJobRow): string => (r.jobLink ?? "").trim().toLowerCase() || `${r.title}|${r.company}`.toLowerCase();
+  const cache = new Map<string, CsvJobRow | null>();
+  try {
+    const rawCache: unknown = JSON.parse(await readFile(cachePath, "utf8"));
+    if (Array.isArray(rawCache)) {
+      for (const e of rawCache) {
+        if (e && typeof e.key === "string") cache.set(e.key, (e.row as CsvJobRow) ?? null);
+      }
+    }
+  } catch { /* no cache yet */ }
+  if (cache.size > 0) {
+    for (const v of cache.values()) if (v) enrichedRows.push(v);
+    console.log(`[INFO] Stage 3 resuming from cache: ${cache.size} done (${enrichedRows.length} kept)`);
+  }
+
+  let sinceFlush = 0;
+  let flushing = false;
+  const flushCache = async (): Promise<void> => {
+    if (flushing) return;
+    flushing = true;
+    try {
+      await mkdir(path.dirname(cachePath), { recursive: true });
+      const arr = [...cache.entries()].map(([key, row]) => ({ key, row }));
+      const tmp = `${cachePath}.tmp`;
+      await writeFile(tmp, JSON.stringify(arr), "utf8");
+      await rename(tmp, cachePath);
+    } finally {
+      flushing = false;
+    }
+  };
+  const maybeFlush = async () => { if (++sinceFlush >= 25) { sinceFlush = 0; await flushCache(); } };
+  const keep = async (r: CsvJobRow) => { enrichedRows.push(r); cache.set(keyOf(r), r); await maybeFlush(); };
+  const drop = async (r: CsvJobRow) => { cache.set(keyOf(r), null); await maybeFlush(); };
+
+  const todo = rows.filter((r) => !cache.has(keyOf(r)));
+  console.log(`[INFO] Stage 3 enrichment plan: ${rows.length} total, ${rows.length - todo.length} cached, ${todo.length} to enrich`);
+
+  // Circuit breaker: when the egress proxy rotates, every SDK call fails. Count
+  // consecutive network failures; once too many, the proxy is dead — flush and
+  // exit(2) so the supervisor restarts with a fresh proxy. We do NOT cache these
+  // failed rows as fallback (that would poison the cache with uncleaned jobs);
+  // they stay in `todo` and get a real Haiku pass on the next run.
+  let consecutiveNetFails = 0;
+  const NET_FAIL_LIMIT = 12;
+
   {
-    await runConcurrent(rows, options.concurrency, async (row, index) => {
+    await runConcurrent(todo, options.concurrency, async (row, index) => {
       // Deterministic title cleanup before sending to the model
       row.title = cleanJobTitle(row.title);
+
+      // Helper: apply deterministic normalisation when AI is unavailable.
+      // Better than raw passthrough — at least the structured fields are clean.
+      const applyFallback = async () => {
+        row.jobType = normalizeJobType(row.jobType);
+        row.workType = normalizeWorkType(row.workType);
+        row.keywords = cleanKeywords(row.keywords);
+        row.skills = cleanSkills(row.skills);
+        if (row.salaryMin === "0") row.salaryMin = "";
+        if (row.salaryMax === "0") row.salaryMax = "";
+        if (!row.description || row.description.trim().length < 20) {
+          row.description = "For more details, click apply";
+        }
+        await keep(row);
+      };
+
       try {
         const userPrompt = buildUserPrompt(row);
-        const { text, usage } = await claudeEnrich(systemPrompt, userPrompt, options.model);
+        let text: string | null = null;
+        let usage: ClaudeUsage = { inputTokens: 0, outputTokens: 0 };
+
+        // One retry with a 3 s back-off for transient network / timeout errors.
+        for (let attempt = 1; attempt <= 2; attempt++) {
+          try {
+            // Hard outer timeout: the SDK's query() generator does not always
+            // terminate when its AbortController fires (esp. when the proxy
+            // rotates mid-call), which would hang the worker forever and stop the
+            // circuit breaker from ever tripping. Promise.race guarantees each
+            // attempt settles within 75s so the worker always makes progress.
+            const result = await Promise.race([
+              claudeEnrich(systemPrompt, userPrompt, options.model),
+              new Promise<never>((_, rej) =>
+                setTimeout(() => rej(new Error("hard-timeout (75s)")), 75_000)
+              ),
+            ]);
+            text = result.text;
+            usage = result.usage;
+            break;
+          } catch (err) {
+            if (attempt === 2) throw err;
+            const msg = err instanceof Error ? err.message : String(err);
+            console.log(`[WARN] Row ${index + 1} attempt ${attempt} failed (${msg.slice(0, 80)}), retrying in 3 s…`);
+            await new Promise((r) => setTimeout(r, 3_000));
+          }
+        }
+
+        consecutiveNetFails = 0; // a response came back — proxy is alive
         totalInputTokens += usage.inputTokens;
         totalOutputTokens += usage.outputTokens;
-        const aiResult = parseAiResponse(text);
+        const aiResult = text ? parseAiResponse(text) : null;
 
         if (!aiResult) {
-          console.log(`[WARN] Row ${index + 1} (${row.title.slice(0, 40)}): AI parse failed, keeping original`);
+          console.log(`[WARN] Row ${index + 1} (${row.title.slice(0, 40)}): AI parse failed, applying deterministic fallback`);
           aiFailed++;
-          row.jobType = normalizeJobType(row.jobType);
-          row.workType = normalizeWorkType(row.workType);
-          row.keywords = cleanKeywords(row.keywords);
-          row.skills = cleanSkills(row.skills);
-          if (row.salaryMin === "0") row.salaryMin = "";
-          if (row.salaryMax === "0") row.salaryMax = "";
-          enrichedRows.push(row);
+          await applyFallback();
           return;
         }
 
@@ -1019,6 +1117,7 @@ async function main(): Promise<void> {
             console.log(`[DROP gen-AI] Row ${index + 1}: "${row.title.slice(0, 50)}" | ${row.company}`);
             droppedRows.push({ title: row.title, company: row.company, jobLink: row.jobLink, reason: "GENAI_COMPANY (haiku)" });
             dropped++;
+            await drop(row);
             return;
           }
           // INVALID drops: safety net — keep if title or URL clearly looks real.
@@ -1037,12 +1136,13 @@ async function main(): Promise<void> {
             console.log(`[DROP invalid] Row ${index + 1}: "${row.title.slice(0, 50)}" | ${row.jobLink.slice(0, 60)}`);
             droppedRows.push({ title: row.title, company: row.company, jobLink: row.jobLink, reason: "INVALID" });
             dropped++;
+            await drop(row);
             return;
           }
         }
 
         const updated = applyEnrichment(row, aiResult);
-        enrichedRows.push(updated);
+        await keep(updated);
         aiFixed++;
 
         const processed = aiFixed + aiFailed;
@@ -1050,18 +1150,20 @@ async function main(): Promise<void> {
           console.log(`[INFO] Progress: ${processed + dropped}/${rows.length} (${aiFixed} enriched, ${dropped} dropped, ${aiFailed} fallback)`);
         }
       } catch (err) {
-        console.log(`[WARN] Row ${index + 1} (${row.title.slice(0, 40)}): Error - ${err instanceof Error ? err.message : err}`);
-        aiFailed++;
-        row.jobType = normalizeJobType(row.jobType);
-        row.workType = normalizeWorkType(row.workType);
-        row.keywords = cleanKeywords(row.keywords);
-        row.skills = cleanSkills(row.skills);
-        if (row.salaryMin === "0") row.salaryMin = "";
-        if (row.salaryMax === "0") row.salaryMax = "";
-        enrichedRows.push(row);
+        // Reached only when both attempts threw → treat as a network/proxy failure.
+        // Do NOT cache (no poisoning); leave the row in todo for the next run.
+        consecutiveNetFails++;
+        console.log(`[WARN] Row ${index + 1} (${row.title.slice(0, 40)}): network error (${consecutiveNetFails}/${NET_FAIL_LIMIT}) - ${err instanceof Error ? err.message.slice(0, 60) : err}`);
+        if (consecutiveNetFails >= NET_FAIL_LIMIT) {
+          console.error(`[FATAL] ${NET_FAIL_LIMIT} consecutive network failures — proxy likely rotated. Flushing and exiting for supervisor restart.`);
+          await flushCache();
+          process.exit(2);
+        }
       }
     });
   }
+
+  await flushCache(); // persist final state
 
   console.log(`\n[INFO] Enrichment complete:`);
   console.log(`  Enriched:     ${aiFixed}`);

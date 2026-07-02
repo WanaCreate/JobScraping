@@ -1,9 +1,22 @@
-﻿import { mkdir, readFile, writeFile } from "node:fs/promises";
+﻿/**
+ * Stage 2: collect job details / build the API-ready CSV.
+ *
+ * ⛔️ READ AGENTS.md FIRST (repo root). Every program/agent in this repo must.
+ * 🔁 DEDUP GUARDRAIL: dedupeJobs() / the API dedup here are WITHIN-RUN ONLY — they
+ *    drop duplicates inside the current batch and know nothing about jobs already
+ *    published. Before the downstream Stage 3 / weekly drop, the jobs MUST be
+ *    deduped against the PRODUCTION DB so we never re-post jobs users already saw.
+ *    That cross-run/DB dedup is NOT implemented in this pipeline yet — see
+ *    AGENTS.md "DEDUP GUARDRAIL".
+ */
+
+import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { load } from "cheerio";
 import type { ApiCreateJobRequest, EnrichedJobRecord, NormalizedJob } from "../types.js";
 import { isCreativeTitleStrict } from "../utils/creativeClassifier.js";
+import { flushDiscoveredCompanies } from "../utils/discoverCompanies.js";
 import { enrichJobFromUrl } from "../utils/jobDetailExtractor.js";
 import { logInfo, logWarn } from "../utils/logger.js";
 
@@ -694,13 +707,64 @@ async function main(): Promise<void> {
     minCreativeScore: options.minCreativeScore
   });
 
-  const enrichedRaw = await runWithConcurrency(preFiltered, options.concurrency, async (job) =>
-    enrichJobFromUrl({
+  // Checkpointed enrichment: persist per-job results so a proxy rotation or crash
+  // resumes instead of re-enriching ~20K jobs from scratch. We cache ONLY
+  // successful (non-null) records — a job that returns null (fetch failed through
+  // a dead proxy, or dropped) is left out so it is retried on the next run. This
+  // makes a dead-proxy run a no-op rather than poisoning the cache with ghosts.
+  const cachePath = path.resolve(process.cwd(), options.latestDir, "stage2_enrich_cache.json");
+  const keyOf = (j: NormalizedJob): string =>
+    canonicalizeJobUrl(j.url ?? "").toLowerCase() || (j.url ?? "") || `${j.title}|${j.company}`;
+  const cache = new Map<string, EnrichedJobRecord>();
+  try {
+    const rawCache: unknown = JSON.parse(await readFile(cachePath, "utf8"));
+    if (Array.isArray(rawCache)) {
+      for (const e of rawCache) {
+        if (e && typeof e.key === "string" && e.record) cache.set(e.key, e.record as EnrichedJobRecord);
+      }
+    }
+    if (cache.size > 0) logInfo("Stage 2 resuming from enrich cache", { cached: cache.size });
+  } catch { /* no cache yet — fresh run */ }
+
+  const todo = preFiltered.filter((j) => !cache.has(keyOf(j)));
+  logInfo("Stage 2 enrichment plan", {
+    total: preFiltered.length,
+    alreadyCached: preFiltered.length - todo.length,
+    toEnrich: todo.length,
+  });
+
+  let sinceFlush = 0;
+  let flushing = false;
+  const flushCache = async (): Promise<void> => {
+    if (flushing) return;
+    flushing = true;
+    try {
+      await mkdir(path.dirname(cachePath), { recursive: true });
+      const arr = [...cache.entries()].map(([key, record]) => ({ key, record }));
+      const tmp = `${cachePath}.tmp`;
+      await writeFile(tmp, JSON.stringify(arr), "utf8");
+      await rename(tmp, cachePath);
+    } finally {
+      flushing = false;
+    }
+  };
+
+  await runWithConcurrency(todo, options.concurrency, async (job) => {
+    const rec = await enrichJobFromUrl({
       seed: job,
       hiringTeamUid: options.hiringTeamUid,
-      minCreativeScore: options.minCreativeScore
-    })
-  );
+      minCreativeScore: options.minCreativeScore,
+    });
+    if (rec) {
+      cache.set(keyOf(job), rec);
+      if (++sinceFlush >= 200) { sinceFlush = 0; await flushCache(); }
+    }
+    return rec;
+  });
+  await flushCache();
+
+  // Reassemble in original order from the cache (null for jobs that never enriched).
+  const enrichedRaw = preFiltered.map((j) => cache.get(keyOf(j)) ?? null);
 
   const enriched = enrichedRaw
     .filter((record): record is EnrichedJobRecord => record !== null)
@@ -745,6 +809,17 @@ async function main(): Promise<void> {
   await writeFile(apiPath, JSON.stringify(apiJobs, null, 2), "utf8");
   await writeFile(csvPath, toCsvRows(apiJobs), "utf8");
   await writeFile(reportPath, JSON.stringify(report, null, 2), "utf8");
+
+  // Self-expanding loop (JobsDrop Task 4): flush any new company domains
+  // harvested from hiringOrganization.sameAs JSON-LD during enrichment into
+  // pipeline/new_companies_discovered.json for manual review.
+  const newCompaniesCount = await flushDiscoveredCompanies();
+  if (newCompaniesCount > 0) {
+    logInfo("Discovered new companies via JobPosting JSON-LD", {
+      count: newCompaniesCount,
+      file: "pipeline/new_companies_discovered.json"
+    });
+  }
 
   const latestManifestPath = path.join(path.dirname(apiPath), "manifest.json");
   await writeManifest({

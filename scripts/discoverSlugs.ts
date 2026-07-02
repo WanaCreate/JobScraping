@@ -1,13 +1,20 @@
 /**
  * scripts/discoverSlugs.ts
  *
- * Slug discovery via Common Crawl CDX index.
- * Queries each ATS host prefix, extracts company slugs, deduplicates against
- * pipeline/company_career_urls.json, and writes new candidates to
+ * ATS board (tenant slug) discovery for JobsDrop 2.1 Phase 1.
+ *
+ * Two source families, unioned and deduped:
+ *  1. CommonCrawl CDX — union slugs across the last N monthly crawl snapshots
+ *     (Greenhouse, Ashby, Workable, SmartRecruiters). Multi-crawl is the real
+ *     volume lever; pages-per-host is not (each host has only 1–2 CDX pages).
+ *  2. Hacker News Algolia — recovers Lever slugs (jobs.lever.co blocks CCBot,
+ *     so CommonCrawl sees 0 Lever boards) plus bonus GH/Ashby/Workable slugs.
+ *
+ * Dedups against pipeline/company_career_urls.json and writes new candidates to
  * pipeline/pending_review.json.
  *
  * Usage:
- *   npx tsx scripts/discoverSlugs.ts [--max-pages-per-host N] [--hosts greenhouse,lever,...]
+ *   npx tsx scripts/discoverSlugs.ts [--crawls N] [--max-pages-per-host N] [--hosts greenhouse,lever,...]
  */
 
 import fs from "fs";
@@ -30,7 +37,15 @@ function getArgValue(flag: string): string | undefined {
   return undefined;
 }
 
-const MAX_PAGES_PER_HOST = parseInt(getArgValue("--max-pages-per-host") ?? "30", 10);
+// Pages-per-host is NOT the volume lever: each ATS host exposes only 1–2 CDX
+// pages per crawl, so any cap ≥2 already sweeps the whole index for one crawl.
+// (2.0's "30" was already plenty.) The real lever is --crawls: unioning slugs
+// across the last N monthly CommonCrawl snapshots. Default 100 = effectively
+// "all pages" for these hosts; left as a safety valve, not a tuning knob.
+const MAX_PAGES_PER_HOST = parseInt(getArgValue("--max-pages-per-host") ?? "100", 10);
+// Number of recent CommonCrawl monthly snapshots to union slugs across.
+// JobsDrop 2.0 used 1 (latest only); measured ≈2.4× more GH slugs at 6 crawls.
+const NUM_CRAWLS = parseInt(getArgValue("--crawls") ?? "12", 10);
 const hostsFilter = getArgValue("--hosts");
 
 // ---------------------------------------------------------------------------
@@ -69,6 +84,9 @@ const JUNK_SLUGS = new Set([
 function isJunkSlug(slug: string): boolean {
   if (!slug) return true;
   if (JUNK_SLUGS.has(slug.toLowerCase())) return true;
+  // Reject percent-encoded / non-slug characters (e.g. "%20forbes", whitespace).
+  // Valid ATS slugs are [a-z0-9._-] only.
+  if (/[^a-z0-9._-]/i.test(slug)) return true;
   // Skip slugs that look like UUIDs (all hex + dashes, 36 chars)
   if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(slug)) return true;
   // Skip slugs that look like pure numeric IDs
@@ -113,6 +131,12 @@ const ALL_HOSTS: HostDef[] = [
       // workable paths: /company-slug/j/JOBID or /company-slug
       return extractPathSlug(url, "apply.workable.com");
     },
+  },
+  {
+    key: "smartrecruiters",
+    cdxPrefix: "jobs.smartrecruiters.com/*",
+    baseUrl: "https://jobs.smartrecruiters.com",
+    extractSlug: (url) => extractPathSlug(url, "jobs.smartrecruiters.com"),
   },
 ];
 
@@ -173,17 +197,103 @@ interface CrawlInfo {
   name?: string;
 }
 
-async function getLatestCdxApiUrl(): Promise<string> {
+/**
+ * Return the CDX API URLs for the most recent `count` monthly crawl snapshots.
+ * collinfo.json is newest-first. Unioning slugs across snapshots is the real
+ * volume lever (a company present 6 months ago but absent from June's crawl
+ * still gets discovered).
+ */
+async function getRecentCdxApiUrls(count: number): Promise<Array<{ id: string; cdxApi: string }>> {
   console.log("Fetching Common Crawl index list...");
   const text = await fetchWithRetry("https://index.commoncrawl.org/collinfo.json");
   const collections: CrawlInfo[] = JSON.parse(text);
   if (!collections || collections.length === 0) {
     throw new Error("No crawl collections returned from collinfo.json");
   }
-  // Collections are returned newest-first
-  const latest = collections[0];
-  console.log(`Using crawl: ${latest.id} — ${latest["cdx-api"]}`);
-  return latest["cdx-api"];
+  const picked = collections.slice(0, Math.max(1, count));
+  console.log(`Using ${picked.length} crawl snapshot(s): ${picked.map((c) => c.id).join(", ")}`);
+  return picked.map((c) => ({ id: c.id, cdxApi: c["cdx-api"] }));
+}
+
+// ---------------------------------------------------------------------------
+// Hacker News "Who is hiring" recovery — discovers Lever slugs that CommonCrawl
+// can't see (jobs.lever.co sets CCBot: Disallow /). HN's public Algolia API has
+// no key requirement. We also pick up bonus Greenhouse/Ashby/Workable slugs.
+// ---------------------------------------------------------------------------
+const HN_ALGOLIA = "https://hn.algolia.com/api/v1/search";
+
+interface HnHit { comment_text?: string | null; story_text?: string | null }
+interface HnResponse { hits?: HnHit[]; nbPages?: number }
+
+/** Extract ATS slugs from a blob of HN comment text for the hosts we support. */
+function extractAtsSlugsFromText(text: string): Map<string, Set<string>> {
+  const out = new Map<string, Set<string>>();
+  const add = (host: string, slug: string) => {
+    if (isJunkSlug(slug)) return;
+    if (!out.has(host)) out.set(host, new Set());
+    out.get(host)!.add(slug.toLowerCase());
+  };
+  const patterns: Array<[RegExp, string]> = [
+    [/jobs\.lever\.co\/([a-z0-9_.-]+)/gi, "jobs.lever.co"],
+    [/(?:boards|job-boards)\.greenhouse\.io\/([a-z0-9_-]+)/gi, "boards.greenhouse.io"],
+    [/jobs\.ashbyhq\.com\/([a-z0-9_-]+)/gi, "jobs.ashbyhq.com"],
+    [/apply\.workable\.com\/([a-z0-9_-]+)/gi, "apply.workable.com"],
+  ];
+  for (const [re, host] of patterns) {
+    let m: RegExpExecArray | null;
+    while ((m = re.exec(text)) !== null) if (m[1]) add(host, m[1]);
+  }
+  return out;
+}
+
+/** Build canonical board URLs (host → baseUrl) for HN-discovered slugs. */
+const HOST_BASE_URL: Record<string, string> = {
+  "jobs.lever.co": "https://jobs.lever.co",
+  "boards.greenhouse.io": "https://boards.greenhouse.io",
+  "jobs.ashbyhq.com": "https://jobs.ashbyhq.com",
+  "apply.workable.com": "https://apply.workable.com",
+};
+
+async function discoverFromHackerNews(maxPagesPerQuery = 5): Promise<Map<string, Set<string>>> {
+  const merged = new Map<string, Set<string>>();
+  const queries = ["jobs.lever.co", "boards.greenhouse.io", "jobs.ashbyhq.com", "apply.workable.com"];
+
+  console.log(`\n[hackernews] Recovering ATS slugs via HN Algolia (${queries.length} queries)`);
+  for (const q of queries) {
+    let captured = 0;
+    for (let page = 0; page < maxPagesPerQuery; page++) {
+      const url = `${HN_ALGOLIA}?query=${encodeURIComponent(q)}&restrictSearchableAttributes=comment_text&hitsPerPage=100&page=${page}`;
+      let body: string;
+      try {
+        body = await fetchWithRetry(url, 4, 1000);
+      } catch (err) {
+        console.log(`  [${q}] page ${page} failed: ${(err as Error).message}`);
+        break;
+      }
+      let parsed: HnResponse;
+      try {
+        parsed = JSON.parse(body) as HnResponse;
+      } catch {
+        break;
+      }
+      const hits = parsed.hits ?? [];
+      if (hits.length === 0) break;
+      for (const h of hits) {
+        const blob = `${h.comment_text ?? ""} ${h.story_text ?? ""}`;
+        const found = extractAtsSlugsFromText(blob);
+        for (const [host, slugs] of found) {
+          if (!merged.has(host)) merged.set(host, new Set());
+          for (const s of slugs) { merged.get(host)!.add(s); captured++; }
+        }
+      }
+      if (parsed.nbPages !== undefined && page >= parsed.nbPages - 1) break;
+      await sleep(250 + Math.floor(Math.random() * 200));
+    }
+    console.log(`  [${q}] +${captured} slug-mentions`);
+  }
+  const total = [...merged.values()].reduce((a, s) => a + s.size, 0);
+  console.log(`[hackernews] ${total} unique slugs across ${merged.size} hosts`);
+  return merged;
 }
 
 async function getCdxPageCount(cdxApiUrl: string, urlPattern: string): Promise<number> {
@@ -327,12 +437,13 @@ async function main(): Promise<void> {
     }
   }
 
-  console.log(`=== Slug Discovery via Common Crawl CDX ===`);
+  console.log(`=== Slug Discovery via Common Crawl CDX (+ HN Lever recovery) ===`);
   console.log(`Hosts: ${hosts.map((h) => h.key).join(", ")}`);
-  console.log(`Max pages per host: ${MAX_PAGES_PER_HOST}`);
+  console.log(`Crawl snapshots to union: ${NUM_CRAWLS}`);
+  console.log(`Max pages per host per crawl: ${MAX_PAGES_PER_HOST}`);
 
-  // Get CDX API URL
-  const cdxApiUrl = await getLatestCdxApiUrl();
+  // Get CDX API URLs for the last N crawl snapshots (union is the volume lever)
+  const crawls = await getRecentCdxApiUrls(NUM_CRAWLS);
 
   // Load existing URLs for dedup
   const existingPath = path.join(ROOT, "pipeline", "company_career_urls.json");
@@ -363,17 +474,21 @@ async function main(): Promise<void> {
   const newUrls: string[] = [];
 
   for (const hostDef of hosts) {
-    let result: { slugs: Set<string>; captured: number };
-    try {
-      result = await discoverHost(cdxApiUrl, hostDef);
-    } catch (err) {
-      console.error(`\n[${hostDef.key}] FATAL error, skipping host: ${(err as Error).message}`);
-      stats.push({ key: hostDef.key, captured: 0, uniqueSlugs: 0, newAfterDedup: 0 });
-      continue;
+    // Union slugs for this host across every crawl snapshot.
+    const unionSlugs = new Set<string>();
+    let totalCaptured = 0;
+    for (const crawl of crawls) {
+      try {
+        const result = await discoverHost(crawl.cdxApi, hostDef);
+        for (const s of result.slugs) unionSlugs.add(s);
+        totalCaptured += result.captured;
+      } catch (err) {
+        console.error(`  [${hostDef.key} @ ${crawl.id}] error, skipping crawl: ${(err as Error).message}`);
+      }
     }
 
     let newCount = 0;
-    for (const slug of result.slugs) {
+    for (const slug of unionSlugs) {
       const canonicalUrl = `${hostDef.baseUrl}/${slug}`;
       const key = hostSlugKey(canonicalUrl);
       if (!existingKeys.has(key) && !pendingKeys.has(key)) {
@@ -385,10 +500,37 @@ async function main(): Promise<void> {
 
     stats.push({
       key: hostDef.key,
-      captured: result.captured,
-      uniqueSlugs: result.slugs.size,
+      captured: totalCaptured,
+      uniqueSlugs: unionSlugs.size,
       newAfterDedup: newCount,
     });
+  }
+
+  // --- HN Lever recovery (and bonus GH/Ashby/Workable slugs CommonCrawl missed)
+  try {
+    const hnSlugsByHost = await discoverFromHackerNews();
+    for (const [host, slugs] of hnSlugsByHost) {
+      const baseUrl = HOST_BASE_URL[host];
+      if (!baseUrl) continue;
+      let newCount = 0;
+      for (const slug of slugs) {
+        const canonicalUrl = `${baseUrl}/${slug}`;
+        const key = hostSlugKey(canonicalUrl);
+        if (!existingKeys.has(key) && !pendingKeys.has(key)) {
+          newUrls.push(canonicalUrl);
+          pendingKeys.add(key);
+          newCount++;
+        }
+      }
+      stats.push({
+        key: `hackernews:${host}`,
+        captured: slugs.size,
+        uniqueSlugs: slugs.size,
+        newAfterDedup: newCount,
+      });
+    }
+  } catch (err) {
+    console.error(`[hackernews] discovery failed, skipping: ${(err as Error).message}`);
   }
 
   // Merge with existing pending_review and write

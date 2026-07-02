@@ -1,6 +1,11 @@
 /**
  * Unified pipeline runner.
  *
+ * ⛔️ READ AGENTS.md FIRST (repo root). Every program/agent in this repo must.
+ * 🔁 DEDUP GUARDRAIL: pipeline dedup is within-run only. Do NOT run Stage 3 (or
+ *    publish a drop) before deduping incoming jobs against the PRODUCTION DB.
+ *    See AGENTS.md "DEDUP GUARDRAIL".
+ *
  * Usage:
  *   npx tsx pipeline/run.ts                    # Run all 4 stages
  *   npx tsx pipeline/run.ts --stage 2          # Run stages 2-4 only
@@ -41,8 +46,7 @@ function runStage(label: string, script: string, args: string[]): void {
   console.log(`  ${label}`);
   console.log(`${"=".repeat(60)}\n`);
 
-  const tsxPath = process.platform === "win32" ? "npx.cmd" : "npx";
-  execFileSync(tsxPath, ["tsx", script, ...args], {
+  execFileSync(process.execPath, ["--import", "tsx/esm", script, ...args], {
     stdio: "inherit",
     cwd: process.cwd(),
     env: process.env,
@@ -51,6 +55,7 @@ function runStage(label: string, script: string, args: string[]): void {
 
 async function main(): Promise<void> {
   const startStage = Number(getArg("--stage") ?? "1");
+  const endStage = Number(getArg("--end-stage") ?? "4");
   const runDir = getArg("--run-dir");
   const concurrencyOverride = getArg("--concurrency");
 
@@ -69,7 +74,7 @@ async function main(): Promise<void> {
   console.log(`[RUN] Output dir:   ${outputDir}`);
   console.log(`[RUN] Start stage:  ${startStage}`);
 
-  if (startStage <= 1) {
+  if (startStage <= 1 && endStage >= 1) {
     const args = ["--output", scrapeOutput];
     if (concurrencyOverride) {
       process.env.SCRAPER_CONCURRENCY = concurrencyOverride;
@@ -77,7 +82,7 @@ async function main(): Promise<void> {
     runStage("STAGE 1: Scrape Career Pages", "pipeline/stage1_scrapeCareers.ts", args);
   }
 
-  if (startStage <= 2) {
+  if (startStage <= 2 && endStage >= 2) {
     const args = [
       "--input", scrapeOutput,
       "--csvOutput", jobsCsv,
@@ -88,7 +93,7 @@ async function main(): Promise<void> {
     runStage("STAGE 2: Collect Job Details", "pipeline/stage2_collectJobDetails.ts", args);
   }
 
-  if (startStage <= 3) {
+  if (startStage <= 3 && endStage >= 3) {
     const args = [
       "--input", jobsCsv,
       "--output", enrichedCsv,
@@ -97,7 +102,7 @@ async function main(): Promise<void> {
     runStage("STAGE 3: GPT Enrichment", "pipeline/stage3_enrichGpt.ts", args);
   }
 
-  if (startStage <= 4) {
+  if (startStage <= 4 && endStage >= 4) {
     const args = [
       "--input", enrichedCsv,
       "--output", enrichedCsv,

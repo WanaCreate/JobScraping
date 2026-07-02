@@ -1,5 +1,27 @@
 ﻿# JobScraping Agent Runbook
 
+> ⛔️ **MANDATORY — READ THIS FILE FIRST.** Every agent, contributor, script, or
+> automated program operating in this repo MUST read this `AGENTS.md` (top to
+> bottom) before running, editing, or scheduling anything. It encodes contracts
+> and guardrails that are NOT obvious from the code and have broken production
+> before. If you are an AI agent: treat this as required context for the whole
+> session. If you are wiring up a new program/stage/cron: add a header pointer to
+> this file (see how the pipeline stages do it) so the next reader can't miss it.
+
+> 🔁 **DEDUP GUARDRAIL — READ BEFORE RUNNING STAGE 3 OR PUBLISHING A DROP.**
+> The pipeline's built-in dedup (Stage 2 `dedupeJobs`, Stage 3 `deduplicateRows`)
+> is **within-run only** — it removes duplicates *inside the current batch* and
+> knows nothing about jobs we have already published. **Stage 3 must NOT be run,
+> and a weekly drop must NOT be published, before the new jobs are deduped against
+> the jobs already in the production DB** — otherwise we re-post jobs users have
+> already seen. The DB is the source of truth for "already shipped"; do not rely on
+> last week's CSV for this going forward.
+>
+> _History:_ for the 2026-06-27 drop this was done as a one-time pass that removed
+> rows whose normalized `jobLink` matched the prior week's final
+> (`outputs/api-ready/latest/results_final_api_claude.csv`). That CSV approach was a
+> stopgap; the durable solution is a DB-backed dedup step ahead of Stage 3.
+
 > For repo overview, pipeline stages, and commands, read `README.md` first.
 
 > **Open follow-up (set 2026-06-18):** `pipeline/companies_to_recheck.json` holds
@@ -8,6 +30,15 @@
 > volume) and promote any that now pass — see "Reminders / open follow-ups" in
 > [docs/JobsDrop2.0_Handoff.md](docs/JobsDrop2.0_Handoff.md) for the full list of
 > follow-ups (429 recovery, parked 900 prune, Lever coverage).
+
+> **📈 Scaling plan — read before any large discovery/scrape run:**
+> [docs/JobsDrop2.1-ScaleTo100KJobs.md](docs/JobsDrop2.1-ScaleTo100KJobs.md) is the
+> living plan for scaling intake toward 100K creative jobs/week (multi-crawl CDX
+> union, HN Lever recovery, promotion gate, self-expanding loop). **It also contains
+> a "Cloud vs Local" section** documenting which pipeline knobs are throttled to
+> survive the Claude Code cloud proxy (Playwright off, lower concurrency, small
+> checkpoints) — **when running locally, restore full power per that table**
+> (turn Playwright back on, raise concurrency). Update its weekly log as you run.
 
 ## Weekly creative jobs (Instagram / manual batches)
 

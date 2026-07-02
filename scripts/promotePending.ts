@@ -13,7 +13,7 @@
  * Flags:
  *   --input <path>    Stage 1 JSON (array of ScrapeResult) of the pending URLs.
  *                     Default: outputs/results_pending_11k.json
- *   --min-score <N>   Quality floor for a creative job. Default: 6
+ *   --min-score <N>   Quality floor for a creative job. Default: 4
  *   --apply           Append promoted URLs to company_career_urls.json (deduped)
  *                     and drop them from pending_review.json. Without --apply the
  *                     script only proposes (writes promoted_companies.json + report).
@@ -45,8 +45,8 @@ function parseArgs(): { input: string; minScore: number; apply: boolean } {
       : path.join(ROOT, "outputs", "results_pending_11k.json");
 
   const minScoreIdx = args.indexOf("--min-score");
-  const minScoreRaw = minScoreIdx >= 0 ? Number(args[minScoreIdx + 1]) : 6;
-  const minScore = Number.isFinite(minScoreRaw) && minScoreRaw >= 1 ? Math.round(minScoreRaw) : 6;
+  const minScoreRaw = minScoreIdx >= 0 ? Number(args[minScoreIdx + 1]) : 4;
+  const minScore = Number.isFinite(minScoreRaw) && minScoreRaw >= 1 ? Math.round(minScoreRaw) : 4;
 
   const apply = args.includes("--apply");
 
